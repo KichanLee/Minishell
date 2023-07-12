@@ -6,19 +6,19 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 22:24:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 10:36:43 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:36:26 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_bool		syntax(t_data *data);
+void		syntax(t_data *data);
 static void	syntax_none(t_list *cur);
 static void	syntax_word(t_list *cur);
 static void	syntax_redirect(t_list *cur);
 static void	syntax_pipe(t_list *cur);
 
-t_bool	syntax(t_data *data)
+void	syntax(t_data *data)
 {
 	t_list	*cur;
 
@@ -35,7 +35,6 @@ t_bool	syntax(t_data *data)
 			syntax_redirect(cur);
 		cur = cur->next;
 	}
-	return (TRUE);
 }
 
 static void	syntax_none(t_list *cur)
@@ -75,6 +74,7 @@ static void	syntax_redirect(t_list *cur)
 
 static void	syntax_pipe(t_list *cur)
 {
+	// syntax
 	if (cur->pre->token->type == T_PIPE)
 		syntax_error_exit(E_SYNTAX_PIPE);
 	if (cur->pre->token->type == T_REDIRECT)

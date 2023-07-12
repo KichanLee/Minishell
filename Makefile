@@ -19,6 +19,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/lexer/quote.c \
 	$(SRCS_DIR)/lexer/expand.c \
 	$(SRCS_DIR)/parser/syntax.c \
+	$(SRCS_DIR)/parser/parser.c \
 	$(SRCS_DIR)/utils/env.c \
 	$(SRCS_DIR)/utils/list.c \
 	$(SRCS_DIR)/utils/list_remove.c \
