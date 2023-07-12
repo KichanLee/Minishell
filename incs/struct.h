@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/11 15:09:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:11:34 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,20 @@ typedef enum e_bool
 	TRUE
 }t_bool;
 
-typedef enum e_token_type
+typedef enum e_type
 {
-	T_NULL,
 	T_PIPE,
 	T_WORD,
-	T_REDIRECT,
 	T_CMD,
+	// T_SIMPLE_xCMD,
 	T_ARG,
+	T_REDIRECT,
+	// T_REDIRECTS,
 	T_INPUT,
 	T_OUTPUT,
 	T_HEREDOC,
-	T_APPEND
-}t_token_type;
+	T_APPEND,
+}t_type;
 
 typedef struct s_token
 {
@@ -60,12 +61,11 @@ typedef struct s_leaf
 //최종 가공된 데이터들 담은 구조체
 typedef struct s_data
 {
-	int			table_size;
 	char		*input;
 	t_list		*tokens;
 	t_list		*envs;
 	char		**env_array;
-	// t_leaf		*root;
+	t_leaf		*root;
 }	t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/11 17:18:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:44:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_leaf	*t_create_leaf(t_token *token, t_bool exist);
 t_bool	t_add_left(t_leaf *parent, t_leaf *new);
 t_bool	t_add_right(t_leaf *parent, t_leaf *new);
 
+void	syntax_error_exit(char *str);
 void	error_exit(char *str);
 
 #endif
