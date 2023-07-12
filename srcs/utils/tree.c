@@ -6,43 +6,74 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 11:56:35 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:33:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_leaf	*tree_create_leaf(t_token *token, t_bool exist)
+t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type);
+t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
+t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
+void	tree_print(t_leaf *leaf); //임시 함수
+
+t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 {
 	t_leaf	*new;
 
 	new = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
 	if (!new)
 		return (NULL);
-	new->token = token;
-	new->exist = exist;
+	new->leaf_type = leaf_type;
+	new->parent = parent;
 	new->left_child = NULL;
 	new->right_child = NULL;
 	return (new);
 }
 
-t_bool	tree_add_left(t_leaf *parent, t_leaf *new)
+t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type)
 {
-	if (!parent || parent->left_child || !new)
+	t_leaf	*child;
+	
+	if (!parent || !new_token)
 		return (FALSE);
-	parent->left_child = new;
+	while (parent->left_child)
+		parent = parent->left_child;
+	child = tree_create_leaf(parent, leaf_type);
+	child->token = new_token;
+	parent->left_child = child;
 	return (TRUE);
 }
 
-t_bool	tree_add_right(t_leaf *parent, t_leaf *new)
+t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type)
 {
-	if (!parent || parent->right_child || !new)
+	t_leaf	*child;
+	
+	if (!parent || !new_token)
 		return (FALSE);
-	parent->right_child = new;
+	while (parent->right_child)
+		parent = parent->right_child;
+	child = tree_create_leaf(parent, leaf_type);
+	child->token = new_token;
+	parent->right_child = child;
 	return (TRUE);
 }
 
-// t_leaf	*t_preorder(t_data *data)
+//트리 전위순회 출력 임시 함수
+void	tree_print(t_leaf *leaf)
+{
+	if (!leaf)
+		return ;
+	if (leaf->token)
+		printf("exist: %d, token: %d, redirect: %d, str: %s\n", leaf->exist, leaf->token->type, leaf->token->redirect_type, leaf->token->str);
+	else
+		printf("exist: %d\n", leaf->exist);
+	tree_print(leaf->left_child);
+	tree_print(leaf->right_child);
+}
+
+// //현재 노드에서부터 전위순회
+// void	tree_preorder(t_leaf *cur)
 // {
 	
 // }

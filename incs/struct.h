@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 12:11:34 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 15:05:08 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ typedef enum e_type
 	T_PIPE,
 	T_WORD,
 	T_CMD,
-	// T_SIMPLE_xCMD,
 	T_ARG,
 	T_REDIRECT,
-	// T_REDIRECTS,
 	T_INPUT,
 	T_OUTPUT,
 	T_HEREDOC,
@@ -52,10 +50,12 @@ typedef struct s_list
 
 typedef struct s_leaf
 {
+	struct s_leaf	*parent;
 	struct s_leaf	*left_child;
 	struct s_leaf	*right_child;
-	t_bool			exist;
+	int				leaf_type;
 	t_token			*token;
+	t_bool			exist;
 }t_leaf;
 
 //최종 가공된 데이터들 담은 구조체

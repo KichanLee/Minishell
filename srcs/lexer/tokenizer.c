@@ -6,41 +6,30 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 07:31:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:36:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_bool	tokenizer(t_data *data, t_token **token, int *i);
+void	tokenizer(t_data *data, t_token **token, int *i);
 t_token	*token_create();
-t_bool	token_redirect(t_data *data, t_token *token, int *i);
-t_bool	token_add_list(t_list **head, t_token **token, t_bool token_flag);
+void	token_redirect(t_data *data, t_token *token, int *i);
+void	token_add_list(t_list **head, t_token **token, t_bool token_flag);
 
-t_bool	tokenizer(t_data *data, t_token **token, int *i)
+void	tokenizer(t_data *data, t_token **token, int *i)
 {
 	if (data->input[*i] == '|')
 		(*token)->type = T_PIPE;
 	else if (data->input[*i] == '\"')
-	{
-		if (double_quote(data->input, *token, i, data) == FALSE)
-			return (FALSE);
-	}
+		double_quote(data->input, *token, i, data);
 	else if (data->input[*i] == '\'')
-	{
-		if (single_quote(data->input, *token, i) == FALSE)
-			return (FALSE);
-	}
+		single_quote(data->input, *token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
-	{
-		if (token_redirect(data, *token, i) == FALSE)
-			return (FALSE);
-	}
+		token_redirect(data, *token, i);
 	if ((data->input[*i] == '\'' || data->input[*i] == '\"') && (data->input[*i + 1] != ' ' && data->input[*i + 1] != '\t'))
-		return (TRUE);
-	if (token_add_list(&data->tokens, token, TRUE) == FALSE)
-		return (FALSE);
-	return (TRUE);
+		return ;
+	token_add_list(&data->tokens, token, TRUE);
 }
 
 t_token	*token_create()
@@ -49,18 +38,15 @@ t_token	*token_create()
 	
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
-		return (NULL); //list clear
+		error_exit("bash");
 	token->type = T_WORD;
 	token->str = ft_strdup("");
 	if (!token->str)
-	{
-		free(token);
-		return (NULL);
-	}
+		error_exit("bash");
 	return (token);
 }
 
-t_bool	token_redirect(t_data *data, t_token *token, int *i)
+void	token_redirect(t_data *data, t_token *token, int *i)
 {
 	token->type = T_REDIRECT;
 	if (data->input[*i] == '<')
@@ -83,23 +69,21 @@ t_bool	token_redirect(t_data *data, t_token *token, int *i)
 		else
 			token->redirect_type = T_OUTPUT;
 	}
-	return (TRUE);
 }
 
-t_bool	token_add_list(t_list **head, t_token **token, t_bool token_flag)
+void	token_add_list(t_list **head, t_token **token, t_bool token_flag)
 {
 	t_list	*new;
 	
 	new = ft_lstnew();
 	if (!new)
-		return (FALSE);
+		error_exit("bash");
 	new->token = *token;
 	ft_lstadd_back(head, new);
 	if (token_flag == TRUE)
 	{
 		*token = token_create();
 		if (!*token)
-			return (FALSE);
+			error_exit("bash");
 	}
-	return (TRUE);
 }
