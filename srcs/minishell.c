@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/11 18:48:20 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 10:37:00 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int argc, char **argv, char **envp)
 	char *str = get_next_line(0);
 	data->input = ft_substr(str, 0, ft_strlen(str) - 1); //-1 개행 떼기
 	lexer(data);
+	syntax(data);
 
 	// env_print(data);
 	// env_array_print(data);

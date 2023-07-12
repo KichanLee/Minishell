@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/11 17:18:11 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:51:37 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,20 @@ static t_bool	find_next_quote(char *input, int i, char quote);
 
 t_bool single_quote(char *input, t_token *token, int *i)
 {
+	t_bool	next_quote;
+	
 	*i += 1;
-	if (find_next_quote(input, *i, '\'') == FALSE)
+	next_quote = find_next_quote(input, *i, '\'');
+	if (next_quote == FALSE)
 		token->str = ft_strncat(token->str, "\'", 1);
 	while (input[*i] != '\'' && input[*i] != '\0')
 	{
+		if (next_quote == FALSE \
+			&& (input[*i] != ' ' || input[*i] != '\t'))
+		{
+			*i -= 1;
+			return (TRUE);
+		}
 		if (input[*i] == '\\' && input[*i + 1] == '\'')
 		{
 			token->str = ft_strncat(token->str, "\\\'", 1);
@@ -41,11 +50,20 @@ t_bool single_quote(char *input, t_token *token, int *i)
 
 t_bool double_quote(char *input, t_token *token, int *i, t_data *data)
 {
+	t_bool	next_quote;
+	
 	*i += 1;
-	if (find_next_quote(input, *i, '\"') == FALSE)
+	next_quote = find_next_quote(input, *i, '\"');
+	if (next_quote == FALSE)
 		token->str = ft_strncat(token->str, "\"", 1);
 	while (input[*i] != '\"' && input[*i] != '\0')
 	{
+		if (next_quote == FALSE \
+			&& (input[*i] != ' ' || input[*i] != '\t'))
+		{
+			*i -= 1;
+			return (TRUE);
+		}
 		if (input[*i] == '\\' && input[*i + 1] == '\"')
 		{
 			token->str = ft_strncat(token->str, "\\\"", 1);
