@@ -5,17 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 14:56:33 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 16:38:50 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/07/12 19:40:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+void	syntax_error_exit(char *str);
+void	error_exit(char *str);
+
+//부모가 258로 받게 해야 함
 void	syntax_error_exit(char *str)
 {
 	printf("%s\n", str);
-	exit(2); //부모가 258로 받게 해야 함
+	exit(2);
 }
 
 void	error_exit(char *str)
@@ -23,3 +27,12 @@ void	error_exit(char *str)
 	perror(str);
 	exit(errno);
 }
+
+//free는 구현 끝나고 마지막에 하기
+// void	all_free(t_data *data)
+// {
+// 	ft_lstclear(&data->envs);
+// 	free(data->input);
+// 	data->root;
+// 	data->tokens;
+// }

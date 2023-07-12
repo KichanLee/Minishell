@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 16:37:12 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:14:56 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		replace(t_data *data, t_token *token, char *name);
 void	expand(t_data *data, t_token *token, int *i, t_bool quote)
 {
 	char	*name;
-	
+
 	*i += 1;
 	name = NULL;
 	if (check_heredoc(data, token, i) == TRUE)
@@ -31,7 +31,8 @@ void	expand(t_data *data, t_token *token, int *i, t_bool quote)
 	if (check_other(data, token, i) == TRUE)
 		return ;
 	while (data->input[*i] != '\'' && data->input[*i] != '\"' \
-		&& data->input[*i] != ' ' && data->input[*i] != '\t' && data->input[*i] != '\0')
+		&& data->input[*i] != ' ' && data->input[*i] != '\t' \
+		&& data->input[*i] != '\0')
 	{
 		name = ft_strncat(name, &data->input[*i], 1);
 		if (!name)
@@ -98,6 +99,7 @@ static t_bool	check_other(t_data *data, t_token *token, int *i)
 
 static void	replace(t_data *data, t_token *token, char *name)
 {
+	int		j;
 	t_list	*tmp;
 
 	tmp = env_search(data, name);
@@ -112,10 +114,11 @@ static void	replace(t_data *data, t_token *token, char *name)
 	}
 	else
 	{
-		int j = 0;
+		j = 0;
 		while (tmp->env[j] != '=')
 			j++;
-		token->str = ft_strncat(token->str, &tmp->env[j + 1], ft_strlen(&tmp->env[j + 1]));
+		token->str = ft_strncat(token->str, \
+			&tmp->env[j + 1], ft_strlen(&tmp->env[j + 1]));
 		if (!token->str)
 			error_exit("bash");
 	}

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 16:01:43 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/10 19:30:27 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:41:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_g_list	*get_new_nod(int fd)
 {
-	char	*buff;
+	char		*buff;
 	t_g_list	*nod;
 
 	buff = (char *)malloc(sizeof(char) * 1);
@@ -118,7 +118,7 @@ static int	get_read_line(int fd, t_g_list *nod)
 
 char	*get_next_line(int fd)
 {
-	t_g_list			*nod;
+	t_g_list		*nod;
 	char			*line;
 	static t_g_list	*head;
 

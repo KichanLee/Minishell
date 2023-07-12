@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 16:30:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:15:46 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	lexer(t_data *data)
 
 static void	check_char(t_data *data, t_token **token, int *i)
 {
-	if (data->input[*i] == '|' || data->input[*i] == '<' || data->input[*i] == '>')
+	if (data->input[*i] == '|' \
+		|| data->input[*i] == '<' || data->input[*i] == '>')
 	{
 		if (*(*token)->str)
 			token_add_list(&data->tokens, token, TRUE);

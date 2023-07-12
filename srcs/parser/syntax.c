@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 22:24:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 16:36:26 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:37:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	syntax_redirect(t_list *cur)
 
 static void	syntax_pipe(t_list *cur)
 {
-	// syntax
 	if (cur->pre->token->type == T_PIPE)
 		syntax_error_exit(E_SYNTAX_PIPE);
 	if (cur->pre->token->type == T_REDIRECT)

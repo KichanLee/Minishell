@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/11 17:18:51 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:39:06 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ t_bool	env_remove(t_data *data, char *key)
 	env = env_search(data, key);
 	if (!env)
 		return (FALSE);
-	if (env->pre)//지우려는게 첫번째 노드일때 처리
-	env->pre->next = env->next;
+	if (env->pre)
+		data->envs = env->next;
+	else
+		env->pre->next = env->next;
 	ft_lstdelone(env);
 	return (TRUE);
 }
@@ -72,7 +74,7 @@ char	**env_to_array(t_data *data)
 		return (NULL);
 	i = -1;
 	cur = data->envs;
-	while(++i < cnt)
+	while (++i < cnt)
 	{
 		array[i] = cur->env;
 		if (!array[i])
@@ -84,13 +86,4 @@ char	**env_to_array(t_data *data)
 		cur = cur->next;
 	}
 	return (array);
-}
-
-//배열에 넣은 환경변수 출력용 임시 변수
-void	env_array_print(t_data *data)
-{
-	char **array = env_to_array(data);
-
-	for(int i=0; array[i]; i++)
-		printf("%s\n", array[i]);
 }
