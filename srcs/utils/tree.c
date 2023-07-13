@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 16:33:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:45:31 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type);
 t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
 t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
-void	tree_print(t_leaf *leaf); //임시 함수
+void	tree_clear(t_leaf *leaf);
 
 t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 {
@@ -34,7 +34,7 @@ t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type)
 {
 	t_leaf	*child;
-	
+
 	if (!parent || !new_token)
 		return (FALSE);
 	while (parent->left_child)
@@ -48,7 +48,7 @@ t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type)
 t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type)
 {
 	t_leaf	*child;
-	
+
 	if (!parent || !new_token)
 		return (FALSE);
 	while (parent->right_child)
@@ -59,21 +59,12 @@ t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type)
 	return (TRUE);
 }
 
-//트리 전위순회 출력 임시 함수
-void	tree_print(t_leaf *leaf)
+//토큰은 환경변수 리스트에서 삭제하기 때문에 트리의 큰 틀만 삭제
+void	tree_clear(t_leaf *leaf)
 {
 	if (!leaf)
 		return ;
-	if (leaf->token)
-		printf("exist: %d, token: %d, redirect: %d, str: %s\n", leaf->exist, leaf->token->type, leaf->token->redirect_type, leaf->token->str);
-	else
-		printf("exist: %d\n", leaf->exist);
-	tree_print(leaf->left_child);
-	tree_print(leaf->right_child);
+	free(leaf);
+	tree_clear(leaf->left_child);
+	tree_clear(leaf->left_child);
 }
-
-// //현재 노드에서부터 전위순회
-// void	tree_preorder(t_leaf *cur)
-// {
-	
-// }
