@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 22:24:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/14 08:25:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:10:38 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static void	syntax_none(t_list *cur)
 
 static void	syntax_word(t_list *cur)
 {
-	if (cur->pre->token->type == T_CMD \
+	if (cur->pre->token->type == T_ARG \
+		&& cur->pre->pre->token->type == T_REDIRECT)
+		cur->token->type = T_CMD;
+	else if (cur->pre->token->type == T_CMD \
 		|| cur->pre->token->type == T_ARG \
 		|| cur->pre->token->type == T_REDIRECT)
 		cur->token->type = T_ARG;
