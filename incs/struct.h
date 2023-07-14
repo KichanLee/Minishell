@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 15:05:08 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/14 08:44:30 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_leaf
 	t_bool			exist;
 }t_leaf;
 
-//최종 가공된 데이터들 담은 구조체
 typedef struct s_data
 {
 	char		*input;

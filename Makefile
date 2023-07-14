@@ -22,9 +22,10 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/parser/parser.c \
 	$(SRCS_DIR)/utils/env.c \
 	$(SRCS_DIR)/utils/list.c \
-	$(SRCS_DIR)/utils/list_remove.c \
+	$(SRCS_DIR)/utils/list_clear.c \
 	$(SRCS_DIR)/utils/tree.c \
 	$(SRCS_DIR)/utils/utils.c \
+	$(SRCS_DIR)/utils/temp.c \
 
 OBJS = $(SRCS:%.c=%.o)
 
