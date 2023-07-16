@@ -3,40 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/15 20:40:32 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:37:10 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	char	*command = NULL;
+
+	atexit(check_leak);
+	
 	(void)argc;
 	(void)argv;
 	init(&data, envp);
-	while (1)
-	{
-		sig(command);
-		command = readline("minishell$ ");
-		if (!command)
-		{
-			printf("exit\n");
-			return(0);
-		}
-		data->input = ft_substr(command, 0, ft_strlen(command) - 1); //-1 개행 떼기
-		lexer(data);
-		syntax(data);
-		parser(data);
 
-		print_token(data);
-		printf("\n\n");
-		tree_print(data->root);
-	}
+	char *str = get_next_line(0);
+	data->input = ft_substr(str, 0, ft_strlen(str) - 1); //-1 개행 떼기
+	lexer(data);
+	syntax(data);
+	parser(data);
 
+	// print_token(data);
+	// printf("\n\n");
+	// tree_print(data->root);
+	
+	all_free(data);
 	return (0);
 }
