@@ -7,7 +7,7 @@ INCS_DIR = incs
 SRCS_DIR = srcs
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include 
 
 RM = rm -rf
 MAKE = make
@@ -26,16 +26,18 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/utils/tree.c \
 	$(SRCS_DIR)/utils/utils.c \
 	$(SRCS_DIR)/utils/temp.c \
+	$(SRCS_DIR)/exec/sig.c \
+
 
 OBJS = $(SRCS:%.c=%.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
+	$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR) 
 
 all: $(NAME)
 
 $(NAME): $(L_NAME) $(OBJS)
-	$(CC) $^ -o $@ -I $(INCS_DIR)
+	$(CC) $^ -o $@ -I $(INCS_DIR)  -lreadline -L ~/.brew/opt/readline/lib
 
 $(L_NAME):
 	$(MAKE) re -C $(L_DIR)
