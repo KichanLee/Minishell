@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:03:31 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 18:25:49 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:38:40 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	ft_lstdelone(t_list *lst)
 	if (!lst)
 		return ;
 	if (lst->token)
+	{
+		if (lst->token->str)
+			free(lst->token->str);
 		free(lst->token);
+	}
 	if (lst->env)
 		free(lst->env);
 	free(lst);

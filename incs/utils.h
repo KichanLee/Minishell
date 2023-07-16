@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:45:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:35:18 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	tree_clear(t_leaf *leaf);
 
 void	syntax_error_exit(char *str);
 void	error_exit(char *str);
+void	all_free(t_data *data);
 
 /*temp.c 임시 함수*/
 void	tree_print(t_leaf *leaf);

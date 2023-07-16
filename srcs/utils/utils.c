@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/14 08:48:12 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:37:45 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	syntax_error_exit(char *str);
 void	error_exit(char *str);
+void	all_free(t_data *data);
 
 //부모가 258로 받게 해야 함
 void	syntax_error_exit(char *str)
@@ -28,11 +29,11 @@ void	error_exit(char *str)
 	exit(errno);
 }
 
-//free는 구현 끝나고 마지막에 하기
-// void	all_free(t_data *data)
-// {
-// 	ft_lstclear(&data->envs);
-// 	free(data->input);
-// 	data->root;
-// 	data->tokens;
-// }
+void	all_free(t_data *data)
+{
+	free(data->input);
+	ft_lstclear(&data->tokens);
+	ft_lstclear(&data->envs);
+	tree_clear(data->root);
+	free(data);
+}
