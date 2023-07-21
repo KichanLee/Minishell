@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 18:15:48 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:33:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 	t_leaf	*new;
 
 	new = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
-	printf("new: %p\n", new);
 	if (!new)
 		return (NULL);
 	new->leaf_type = leaf_type;
@@ -62,10 +61,14 @@ t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type)
 
 void	tree_clear(t_leaf *leaf)
 {
-	printf("%p\n", leaf);
+	t_leaf	*left;
+	t_leaf	*right;
+
 	if (!leaf)
 		return ;
+	left = leaf->left_child;
+	right = leaf->right_child;
 	free(leaf);
-	tree_clear(leaf->left_child);
-	tree_clear(leaf->right_child);
+	tree_clear(left);
+	tree_clear(right);
 }

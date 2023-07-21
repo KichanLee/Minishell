@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 18:11:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:35:07 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	program_error_exit(char *str)
 //input 한번 끝났을 때 사용
 void	input_free(t_data *data)
 {
-	// ft_lstclear(&data->tokens);
-	// data->tokens = NULL;
+	ft_lstclear(&data->tokens);
+	data->tokens = NULL;
 	free(data->input);
 	data->input = NULL;
 	tree_clear(data->root);	
