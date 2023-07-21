@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 17:26:33 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:38:18 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int main(int argc, char **argv, char **envp)
 		// print_token(data);
 		// printf("\n\n");
 		// tree_print(data->root);
-		
-		// builtin_cd(data, &command);
 	}
 
 	return (0);
