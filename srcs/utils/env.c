@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:39:06 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 08:49:50 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	env_print(t_data *data)
 	}
 }
 
+//환경변수 이름에 해당하는 노드를 반환하는 함수입니다
 t_list	*env_search(t_data *data, char *key)
 {
 	char	*tmp;
@@ -60,7 +61,7 @@ t_bool	env_remove(t_data *data, char *key)
 	return (TRUE);
 }
 
-//data->env_array에 담아서 사용, 쓰고 나서 더블포인터만 free해주면 됨
+//리턴값 더블포인터를 data->env_array에 담아서 사용하시고, 쓰고 나서 더블포인터만 free해주면 됩니다
 char	**env_to_array(t_data *data)
 {
 	t_list	*cur;

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:45:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 08:38:22 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
 t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
 void	tree_clear(t_leaf *leaf);
 
-void	syntax_error_exit(char *str);
-void	error_exit(char *str);
+t_bool	error_back_readline(t_data *data, char *str, int error_code);
+void	program_error_exit(char *str);
+void	input_free(t_data *data);
+void	data_free(t_data *data);
 
 /*temp.c 임시 함수*/
 void	tree_print(t_leaf *leaf);
