@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 08:36:07 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:15:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 	t_leaf	*new;
 
 	new = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
+	printf("new: %p\n", new);
 	if (!new)
 		return (NULL);
 	new->leaf_type = leaf_type;
@@ -59,9 +60,9 @@ t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type)
 	return (TRUE);
 }
 
-//토큰은 환경변수 리스트에서 삭제하기 때문에 트리의 큰 틀만 삭제
 void	tree_clear(t_leaf *leaf)
 {
+	printf("%p\n", leaf);
 	if (!leaf)
 		return ;
 	free(leaf);

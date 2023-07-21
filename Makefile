@@ -27,6 +27,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/utils/utils.c \
 	$(SRCS_DIR)/utils/temp.c \
 	$(SRCS_DIR)/exec/sig.c \
+	$(SRCS_DIR)/builtin/builtin.c \
 	$(SRCS_DIR)/builtin/ft_cd.c \
 	$(SRCS_DIR)/builtin/ft_echo.c \
 	$(SRCS_DIR)/builtin/ft_exit.c \

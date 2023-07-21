@@ -6,11 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/21 17:32:53 by eunwolee         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/16 17:37:07 by eunwolee         ###   ########.fr       */
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
+/*   Updated: 2023/07/21 17:54:07 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +93,8 @@ typedef struct s_data
 	char		**env_array;
 	t_leaf		*root;
 	int			error_code;
-<<<<<<< HEAD
 	t_pipe		*pipe;
 	t_info		*info;
-=======
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 }	t_data;
 
 #endif

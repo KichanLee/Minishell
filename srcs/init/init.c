@@ -6,11 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/21 17:40:23 by eunwolee         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/21 08:50:37 by eunwolee         ###   ########.fr       */
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
+/*   Updated: 2023/07/21 17:55:31 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +24,10 @@ void	init(t_data **data, char **envp)
 	*data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!*data)
 		program_error_exit("bash");
-<<<<<<< HEAD
 	pipe_init(&pipe);
 	info_init(&info);
 	(*data)->pipe= pipe;
 	(*data)->info= info;
-=======
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 	env_init(*data, envp);
 }
 

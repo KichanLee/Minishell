@@ -6,11 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/21 17:38:18 by eunwolee         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/21 15:58:00 by eunwolee         ###   ########.fr       */
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
+/*   Updated: 2023/07/21 18:21:14 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +20,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	init(&data, envp);
 
-	while (1)
+	while (TRUE)
 	{
 		sig(command);
 		command = readline("minishell$ ");
@@ -38,46 +34,15 @@ int main(int argc, char **argv, char **envp)
 		syntax(data);
 		parser(data);
 
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "cd", 2) == 0)
-	{
-		// printf("cd check!");
-		ft_cd(data);
-		printf("data name : %s\n", data->root->left_child->right_child->right_child->token->str);
-		// printf("%s", env_search(data, "HOME")->env);
-	}
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "echo", 4) == 0)
-	{
-		// printf("echo check!");
-		ft_echo(data);
-	}
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "exit", 4) == 0)
-	{
-		// printf("exit check!");
-		ft_exit(data);
-	}
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "pwd", 3) == 0)
-	{
-		// printf("pwd check!");
-		ft_pwd();
-	}
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "unset", 5) == 0)
-	{
-		// printf("unset check!");
-		ft_unset(data);
-	}
-	if (ft_strncmp(data->root->left_child->right_child->token->str, "export", 5) == 0)
-	{
-		// printf("export check!");
-		ft_export(data);
-	}
+		count_pipe(data);
+		execute(data);
+		builtin(data);
+
+		input_free(data);
 
 		// print_token(data);
 		// printf("\n\n");
 		// tree_print(data->root);
-<<<<<<< HEAD
-=======
-		// builtin_cd(data, &command);
->>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 	}
 
 	return (0);
