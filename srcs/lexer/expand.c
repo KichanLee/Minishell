@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/14 08:45:36 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:31:43 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,5 @@ static void	replace(t_data *data, t_token *token, char *name)
 		if (!token->str)
 			error_exit("bash");
 	}
-	free(name);
+	free(name); // test.
 }
