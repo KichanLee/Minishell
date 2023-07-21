@@ -6,7 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/21 17:38:18 by eunwolee         ###   ########.fr       */
+=======
+/*   Updated: 2023/07/21 15:58:00 by eunwolee         ###   ########.fr       */
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +74,10 @@ int main(int argc, char **argv, char **envp)
 		// print_token(data);
 		// printf("\n\n");
 		// tree_print(data->root);
+<<<<<<< HEAD
+=======
+		// builtin_cd(data, &command);
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 	}
 
 	return (0);

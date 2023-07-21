@@ -3,10 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/21 15:56:43 by eunwolee         ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2023/07/21 15:56:43 by eunwolee         ###   ########.fr       */
+=======
+/*   Updated: 2023/07/21 17:31:43 by kichlee          ###   ########.fr       */
+>>>>>>> 78a3320df2eb8d80f749bde9f55419632351d2e3
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +151,5 @@ static void	replace(t_data *data, t_token *token, char *name)
 		if (!token->str)
 			program_error_exit("bash");
 	}
-	free(name);
+	free(name); // test.
 }

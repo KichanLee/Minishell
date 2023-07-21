@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
 /*   Updated: 2023/07/21 17:20:03 by eunwolee         ###   ########.fr       */
+=======
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
+/*   Updated: 2023/07/20 22:20:42 by kichlee          ###   ########.fr       */
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +103,10 @@ void ft_echo(t_data *data)
 			printf(" ");
 		++k;
 	}
+<<<<<<< HEAD
 	if(flag == 0)
+=======
+	if(flag == 1)
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 		printf("\n");
 }

@@ -6,7 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:05:33 by eunwolee          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/21 17:31:49 by eunwolee         ###   ########.fr       */
+=======
+/*   Updated: 2023/07/21 15:48:18 by eunwolee         ###   ########.fr       */
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +20,19 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
+<<<<<<< HEAD
 # include <unistd.h>
 # include <signal.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "exec.h"
 # include "pipe.h"
+=======
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include "exec.h"
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 # include "parse.h"
 # include "utils.h"
 # include "struct.h"
@@ -30,9 +41,12 @@
 
 void	init(t_data **data, char **envp);
 void	env_init(t_data *data, char **envp);
+<<<<<<< HEAD
 
 //signal
 void	child_handler(int signo);
 void	herdoc_signal(void);
+=======
+>>>>>>> 568d9f62bcec9cbc64147565fd0f66fcf8aaab4e
 
 #endif
