@@ -12,10 +12,34 @@ void	tree_print(t_leaf *leaf)
 {
 	if (!leaf)
 		return ;
+	if (!leaf->parent)
+		printf("\n\n--------------tree preorder--------------\n");
 	if (leaf->token)
-		printf("exist: %d, token: %d, redirect: %d, str: %s\n", leaf->exist, leaf->token->type, leaf->token->redirect_type, leaf->token->str);
+	{
+		if (leaf->token->type == T_CMD)
+			printf("CMD, str: %s\n", leaf->token->str);
+		else if (leaf->token->type == T_ARG)
+			printf("ARG, str: %s\n", leaf->token->str);
+		else if (leaf->token->type == T_REDIRECT)
+		{
+			printf("REDIRECT, ");
+			if (leaf->token->redirect_type == T_INPUT)
+				printf("type: <\n");
+			else if (leaf->token->redirect_type == T_OUTPUT)
+				printf("type: >\n");
+			else if (leaf->token->redirect_type == T_HEREDOC)
+				printf("type: <<\n");
+			else if (leaf->token->redirect_type == T_APPEND)
+				printf("type: >>\n");
+		}
+	}
 	else
-		printf("exist: %d\n", leaf->exist);
+	{
+		if (leaf->leaf_type == T_PIPE)
+			printf("\nPIPE, exist: %d\n", leaf->exist);
+		else
+			printf("CMD\n");
+	}
 	tree_print(leaf->left_child);
 	tree_print(leaf->right_child);
 }
@@ -24,9 +48,38 @@ void	tree_print(t_leaf *leaf)
 void	print_token(t_data *data)
 {
 	t_list *tmp = data->tokens;
+	printf("\n\n--------------token list--------------\n");
 	while (tmp)
 	{
-		printf("token: %d, redirect: %d, str: %s\n", tmp->token->type, tmp->token->redirect_type, tmp->token->str);
+		if (tmp->token->type == T_PIPE)
+			printf("token: pipe\n");
+		else if (tmp->token->type == T_REDIRECT)
+		{
+			printf("token: redirect, ");
+			if (tmp->token->redirect_type == T_INPUT)
+				printf("type: <\n");
+			else if (tmp->token->redirect_type == T_OUTPUT)
+				printf("type: >\n");
+			else if (tmp->token->redirect_type == T_HEREDOC)
+				printf("type: <<\n");
+			else if (tmp->token->redirect_type == T_APPEND)
+				printf("type: >>\n");
+		}
+		else if (tmp->token->type == T_WORD)
+		{
+			printf("token: word, ");
+			printf("str: %s\n", tmp->token->str);
+		}
+		else if (tmp->token->type == T_CMD)
+		{
+			printf("token: cmd, ");
+			printf("str: %s\n", tmp->token->str);
+		}
+		else if (tmp->token->type == T_ARG)
+		{
+			printf("token: arg, ");
+			printf("str: %s\n", tmp->token->str);
+		}
 		tmp = tmp->next;
 	}
 }

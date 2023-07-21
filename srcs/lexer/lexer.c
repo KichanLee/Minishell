@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:15:46 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:56:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	lexer(t_data *data)
 
 	token = token_create();
 	if (!token)
-		error_exit("bash");
+		program_error_exit("bash");
 	i = -1;
 	while (data->input[++i])
 		check_char(data, &token, &i);
@@ -51,5 +51,9 @@ static void	check_char(t_data *data, t_token **token, int *i)
 	else if (data->input[*i] == '$')
 		expand(data, *token, i, FALSE);
 	else
+	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
+		if (!(*token)->str)
+			program_error_exit("bash");
+	}
 }

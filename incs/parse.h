@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:12:43 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:34:55 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	double_quote(char *input, t_token *token, int *i, t_data *data);
 
 void	lexer(t_data *data);
 
-void	syntax(t_data *data);
+t_bool	syntax(t_data *data);
 
 void	parser(t_data *data);
 
-void	expand(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool	expand(t_data *data, t_token *token, int *i, t_bool quote);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:45:31 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 08:36:07 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void	tree_clear(t_leaf *leaf)
 		return ;
 	free(leaf);
 	tree_clear(leaf->left_child);
-	tree_clear(leaf->left_child);
+	tree_clear(leaf->right_child);
 }
