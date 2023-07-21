@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/21 15:53:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:43:26 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ t_list *create_env_node(char *key, char *value)
 
 void add_env_back(t_data *head, char *key, char *value)
 {
-    if (head->envs == NULL)
+    if (head->input->envs == NULL)
     {
         printf("\nenv dose not exit!\n");
-        head->envs = create_env_node(key, value);
+        head->input->envs = create_env_node(key, value);
     }
     else
     {
         printf("\nenv exit!\n");
-        ft_lstadd_back(&(head->envs), create_env_node(key, value));
+        ft_lstadd_back(&(head->input->envs), create_env_node(key, value));
     }
 }
 
@@ -60,7 +60,7 @@ void update_env(t_data *data, char *key, char *value)
 {
     t_list *tmp;
     char *key_equal;
-    tmp = env_search(data, key);
+    tmp = env_search(data->input, key);
     if (!tmp)
     {
         add_env_back(data, key, value);
@@ -140,7 +140,7 @@ void ft_export(t_data *data)
     int i;
 
     i = 1;
-    cmd = join_cmd(data->root->left_child->right_child);
+    cmd = join_cmd(data->input->root->left_child->right_child);
     arg_count = count_args(cmd);
 
     printf("arg_count : %d\n", arg_count);
@@ -221,8 +221,8 @@ void print_export_order(t_data *data)
     t_list *cur;
 
     i = 0;
-    lst_size = ft_lstsize(data->envs);
-    cur = data->envs;
+    lst_size = ft_lstsize(data->input->envs);
+    cur = data->input->envs;
     order_copy = (char **)ft_calloc(sizeof(char *), lst_size + 1);
     while (cur)
     {

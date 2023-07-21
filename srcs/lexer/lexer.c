@@ -6,16 +6,16 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 15:56:51 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 20:55:32 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void		lexer(t_data *data);
-static void	check_char(t_data *data, t_token **token, int *i);
+void		lexer(t_input *input);
+static void	check_char(t_input *input, t_token **token, int *i);
 
-void	lexer(t_data *data)
+void	lexer(t_input *input)
 {
 	int			i;
 	t_token		*token;
@@ -24,35 +24,35 @@ void	lexer(t_data *data)
 	if (!token)
 		program_error_exit("bash");
 	i = -1;
-	while (data->input[++i])
-		check_char(data, &token, &i);
+	while (input->line[++i])
+		check_char(input, &token, &i);
 	if (token->str && *(token->str))
-		token_add_list(&data->tokens, &token, FALSE);
+		token_add_list(&input->tokens, &token, FALSE);
 }
 
-static void	check_char(t_data *data, t_token **token, int *i)
+static void	check_char(t_input *input, t_token **token, int *i)
 {
-	if (data->input[*i] == '|' \
-		|| data->input[*i] == '<' || data->input[*i] == '>')
+	if (input->line[*i] == '|' \
+		|| input->line[*i] == '<' || input->line[*i] == '>')
 	{
 		if (*(*token)->str)
-			token_add_list(&data->tokens, token, TRUE);
-		tokenizer(data, token, i);
+			token_add_list(&input->tokens, token, TRUE);
+		tokenizer(input, token, i);
 	}
-	else if (data->input[*i] == '\'' || data->input[*i] == '\"')
+	else if (input->line[*i] == '\'' || input->line[*i] == '\"')
 	{
-		tokenizer(data, token, i);
+		tokenizer(input, token, i);
 	}
-	else if (data->input[*i] == ' ' || data->input[*i] == '\t')
+	else if (input->line[*i] == ' ' || input->line[*i] == '\t')
 	{
 		if (*(*token)->str)
-			token_add_list(&data->tokens, token, TRUE);
+			token_add_list(&input->tokens, token, TRUE);
 	}
-	else if (data->input[*i] == '$')
-		expand(data, *token, i, FALSE);
+	else if (input->line[*i] == '$')
+		expand(input, *token, i, FALSE);
 	else
 	{
-		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
+		(*token)->str = ft_strncat((*token)->str, &input->line[*i], 1);
 		if (!(*token)->str)
 			program_error_exit("bash");
 	}

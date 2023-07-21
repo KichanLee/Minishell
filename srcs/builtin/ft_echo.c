@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/21 18:41:23 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:40:44 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void ft_echo(t_data *data)
 	int flag = 0;
 	// int i = 0;
 	int blank = 0;
-	cmd = join_cmd(data->root->left_child->right_child);
+	cmd = join_cmd(data->input->root->left_child->right_child);
 	int k = 1;
 	check_echo_flag(cmd, &cnt, &flag);
 	blank = count_args(cmd);

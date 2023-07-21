@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichan <kichan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/19 21:50:38 by kichan           ###   ########.fr       */
+/*   Updated: 2023/07/21 21:40:55 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		is_num_str(char *str)
 void	exit_not_num(t_data *data)
 {
 	printf("exit\n");
-	printf("bash: exit: %s: numeric argument required\n", data->root->left_child->right_child->token->str);
+	printf("bash: exit: %s: numeric argument required\n", data->input->root->left_child->right_child->token->str);
 	exit(255);
 }
 
@@ -85,7 +85,7 @@ void	ft_exit(t_data *data)
     char    **cmd;
 	int		count;
 	
-    cmd = join_cmd_two(data->root->left_child->right_child);
+    cmd = join_cmd_two(data->input->root->left_child->right_child);
     count = count_args_two(cmd);
 	status = 0;
 	if (count == 1)

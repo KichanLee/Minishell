@@ -6,32 +6,30 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 17:55:31 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:16:09 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void	init(t_data **data, char **envp);
-void	env_init(t_data *data, char **envp);
+void	init_env(t_input *input, char **envp);
 
-//필요하신 초기화 내용 여기 넣어주시면 됩니당
 void	init(t_data **data, char **envp)
 {
-	t_pipe *pipe;
-	t_info *info;
-		
 	*data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!*data)
 		program_error_exit("bash");
-	pipe_init(&pipe);
-	info_init(&info);
-	(*data)->pipe= pipe;
-	(*data)->info= info;
-	env_init(*data, envp);
+	(*data)->input = (t_input *)ft_calloc(1, sizeof(t_input));
+	(*data)->pipe = (t_pipe *)ft_calloc(1, sizeof(t_pipe));
+	if (!(*data)->input || !(*data)->pipe)
+		program_error_exit("bash");
+	(*data)->oristdin = dup(STDIN_FILENO);
+	(*data)->oristdout = dup(STDOUT_FILENO);
+	init_env((*data)->input, envp);
 }
 
-void	env_init(t_data *data, char **envp)
+void	init_env(t_input *input, char **envp)
 {
 	int		i;
 	t_list	*new;
@@ -45,31 +43,6 @@ void	env_init(t_data *data, char **envp)
 		new->env = ft_strdup(envp[i]);
 		if (!new->env)
 			program_error_exit("bash");
-		ft_lstadd_back(&data->envs, new);
+		ft_lstadd_back(&input->envs, new);
 	}
-}
-
-void pipe_init(t_pipe **pipe)
-{
-	*pipe = (t_pipe *)malloc(sizeof(t_pipe));
-	if (!*pipe)
-		program_error_exit("bash");
-	(*pipe)->cmd_path = NULL;
-	(*pipe)->command = NULL;
-	(*pipe)->cmd_abs = NULL;
-	
-}
-
-void	info_init(t_info **info)
-{
-	*info = (t_info *)malloc(sizeof(t_info));
-	if (!*info)
-		program_error_exit("bash");
-	(*info)->index = 0;
-	(*info)->heredoc_flag = 0;
-	(*info)->heredoc_file = NULL;
-	(*info)->oristdin = dup(STDIN_FILENO);
-	(*info)->oristdout = dup(STDOUT_FILENO);
-	(*info)->pipe_num = 0;
-	(*info)->parent  =0;
 }

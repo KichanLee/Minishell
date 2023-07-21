@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 17:54:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:48:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 # include "struct.h"
 
-void	env_print(t_data *data);
-t_list	*env_search(t_data *data, char *key);
-t_bool	env_remove(t_data *data, char *key);
-char	**env_to_array(t_data *data);
+void	env_print(t_input *input);
+t_list	*env_search(t_input *input, char *key);
+t_bool	env_remove(t_input *input, char *key);
+char	**env_to_array(t_input *input);
 
 t_list	*ft_lstnew(void);
 void	ft_lstadd_back(t_list **lst, t_list *new);
@@ -34,15 +34,18 @@ t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
 t_bool	tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
 void	tree_clear(t_leaf *leaf);
 
-t_bool	error_back_readline(t_data *data, char *str, int error_code);
+t_bool	error_back_readline(t_input *input, char *str, int error_code);
 void	program_error_exit(char *str);
-void	input_free(t_data *data);
-void	data_free(t_data *data);
+void	free_input(t_input *input);
+void	free_data(t_data *data);
+
+char **join_cmd(t_leaf * com_leaf);
+
 
 /*temp.c 임시 함수*/
 void	tree_print(t_leaf *leaf);
-void	print_token(t_data *data);
-void	env_array_print(t_data *data);
+void	print_token(t_input *input);
+void	env_array_print(t_input *input);
 void	check_leak(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichan <kichan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/19 23:56:22 by kichan           ###   ########.fr       */
+/*   Updated: 2023/07/21 21:42:05 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void env_clear(t_data *data)
 {
     printf("env clear start!\n");
-	t_list *current = data->envs;
+	t_list *current = data->input->envs;
 	while (current != NULL)
 	{
 		t_list *next = current->next;
 		ft_lstdelone(current);
 		current = next;
 	}
-	data->envs = NULL;
+	data->input->envs = NULL;
 }
 
 void    ft_unset(t_data *data)
@@ -31,7 +31,7 @@ void    ft_unset(t_data *data)
     int     arg_cnt;
     int     i;
     
-    cmd = join_cmd(data->root->left_child->right_child);
+    cmd = join_cmd(data->input->root->left_child->right_child);
     arg_cnt = count_args(cmd) - 1;
     i = 1;
     printf("\n=====arg_Cnt : %d\n========", arg_cnt);
@@ -45,7 +45,7 @@ void    ft_unset(t_data *data)
         printf("else start!");
         while (i < arg_cnt)
         {
-            env_remove(data, cmd[i]);
+            env_remove(data->input, cmd[i]);
             ++i;
         }
     }

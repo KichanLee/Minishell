@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichan <kichan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 23:26:37 by kichan           ###   ########.fr       */
+/*   Updated: 2023/07/21 20:44:56 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ void    handle_sigint(int sig)
     (void) sig;
 }
 
-void    sig(char *command)
+void    sig(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-    if(command)
-        free(command);
 }

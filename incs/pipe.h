@@ -4,10 +4,9 @@
 # include "struct.h"
 
 int g_exit_status;
-//info init
-void	info_init(t_info **info);
-void pipe_init(t_pipe **pipe);
-void	count_pipe(t_data*data);
+
+void	set_pipe(t_data *data);
+
 void	execute_cmd(t_data *data,int flag);
 int	fork_heredoc(t_data *data);
 int check_bulitin(t_data * data);

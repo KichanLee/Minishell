@@ -16,12 +16,12 @@ void	do_cmd(t_data *data)
 
 void	execute(t_data *data)
 {
-	heredoc_flag(data->root,data); //heredoc 이 있는 지판별해준다 
-	data->info->heredoc_file= (char **)ft_calloc(data->info->pipe_num+1,sizeof(char *));
-	if (!data->info->heredoc_file) // 파이프 기준으로 <<a <<b | 여러개 생성할 수있음덮어씌우는개념
+	heredoc_flag(data->root,data); //heredoc이 있는지 판별해준다 
+	data->info->heredoc_file = (char **)ft_calloc(data->pipe_num + 1, sizeof(char *));
+	if (!data->info->heredoc_file) // 파이프 기준으로 <<a | <<b | << c 여러개 생성할 수 있음, 덮어씌우는개념
 		program_error_exit("bash");
-	if (!data->info->pipe_num && !data->info->heredoc_flag)//단일 커맨들일때 히어독도 x
-		if(check_bulitin(data)) // bulitin 일때는 바로 실행하고 종료 아닌경우에는 sigle command frok 해야함
+	if (!data->pipe_num && !data->info->heredoc_flag)//단일 커맨들일때 히어독도 x
+		if(check_bulitin(data) == TRUE) // bulitin 일때는 바로 실행하고 종료 아닌경우에는 sigle command frok 해야함
 			return;
 	if(data->info->heredoc_flag) // heredoc 일 경우에는 무조건 fork 를 해줘야함 
 	{ // 시그널 함수  때문인거같음 ctrl +d 눌렀을때 종료가되면안되는데 포크안햇을시 종료가됨 
@@ -58,10 +58,10 @@ void	execute_cmd(t_data *data,int flag) // flag 는 자식이랑 부모 차이�
     t_pipe *base = data->pipe;
     t_leaf *head = data->root;
 	
-	while (i < data->info->pipe_num+1)
+	while (i < data->pipe_num+1)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		if (i < data->info->pipe_num)
+		if (i < data->pipe_num)
 		{
 			if (pipe(base->com[i].fd) < 0)
 				exit(1);
@@ -77,7 +77,7 @@ void	execute_cmd(t_data *data,int flag) // flag 는 자식이랑 부모 차이�
 		if (base->com[i].pid == 0)
 		{
 			data->info->parent =1;
-			if(data->info->pipe_num != 0)
+			if(data->pipe_num != 0)
 				link_pipe(i, base,data);
             do_cmd(data);
 		}

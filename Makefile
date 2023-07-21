@@ -26,6 +26,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/utils/tree.c \
 	$(SRCS_DIR)/utils/utils.c \
 	$(SRCS_DIR)/utils/temp.c \
+	$(SRCS_DIR)/exec/get_input.c \
 	$(SRCS_DIR)/exec/sig.c \
 	$(SRCS_DIR)/builtin/builtin.c \
 	$(SRCS_DIR)/builtin/ft_cd.c \
@@ -34,15 +35,15 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/builtin/ft_pwd.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
-	$(SRCS_DIR)/execute/checkbulitin.c \
-	$(SRCS_DIR)/execute/execve.c \
-	$(SRCS_DIR)/execute/freepipe.c \
-	$(SRCS_DIR)/execute/heredoc.c \
-	$(SRCS_DIR)/execute/heredocutils.c \
-	$(SRCS_DIR)/execute/pipe.c \
-	$(SRCS_DIR)/execute/pipeutils.c \
-	$(SRCS_DIR)/execute/redirection.c \
-	$(SRCS_DIR)/execute/setpath.c \
+	# $(SRCS_DIR)/execute/checkbulitin.c \
+	# $(SRCS_DIR)/execute/execve.c \
+	# $(SRCS_DIR)/execute/freepipe.c \
+	# $(SRCS_DIR)/execute/heredoc.c \
+	# $(SRCS_DIR)/execute/heredocutils.c \
+	# $(SRCS_DIR)/execute/pipe.c \
+	# $(SRCS_DIR)/execute/pipeutils.c \
+	# $(SRCS_DIR)/execute/redirection.c \
+	# $(SRCS_DIR)/execute/setpath.c \
 
 OBJS = $(SRCS:%.c=%.o)
 

@@ -3,7 +3,7 @@
 
 # include "struct.h"
  
-void    sig(char *command);
+void    sig(void);
 t_bool	builtin(t_data *data);
 void    ft_cd(t_data *data);
 void	ft_echo(t_data *data);
@@ -15,5 +15,8 @@ char    **join_cmd(t_leaf * com_leaf);
 int     count_args(char **args);
 void	update_env(t_data *data, char *key, char *value);
 void    print_export_order(t_data *data);
+
+
+void	get_input(t_data *data);
 
 #endif

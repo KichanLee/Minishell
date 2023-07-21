@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 22:02:40 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/07/21 19:06:16 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/07/21 21:10:55 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#ifndef INIT_H
+# define INIT_H
 
-int main(int argc, char **argv, char **envp)
-{
-	t_data *data;
+# include "struct.h"
 
-	(void)argc;
-	(void)argv;
-	init(&data, envp);
-	while (TRUE)
-	{
-		get_input(data);
-		sig();
+void	init(t_data **data, char **envp);
+void	init_env(t_input *input, char **envp);
 
-		set_pipe(data);
-		// preorder(data, data->input->root);
-		builtin(data);
-
-		free_input(data->input);
-	}
-
-	return (0);
-}
+#endif
