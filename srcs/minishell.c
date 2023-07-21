@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 15:58:00 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:17:37 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int main(int argc, char **argv, char **envp)
 		// printf("\n\n");
 		// tree_print(data->root);
 		// builtin_cd(data, &command);
+		free(data->input);
+		free(data->tokens);
+		free(command);
 	}
 
 	return (0);

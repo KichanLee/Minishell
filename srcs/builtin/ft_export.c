@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/21 15:53:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:14:49 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void print_export_order(t_data *data)
     int j = 0;
     while (order_set[j])
     {
-        printf("%s\n", order_set[j]);
+        printf("declare -x %s\n", order_set[j]);
         ++j;
     }
 }

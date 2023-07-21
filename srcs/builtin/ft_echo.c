@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/20 22:20:42 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/07/21 18:12:28 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,23 @@ int count_args(char **args)
 
     return count;
 }
+char	*check_dollar(t_data *data, char *str)
+{
+	t_list *tmp;
+	str++;
+	tmp = env_search(data, str);
+	if(tmp == NULL)
+		return (NULL);
+	else
+		return (tmp->env);
+}
+
 void ft_echo(t_data *data)
 {
 	char **cmd;
+	char *tmp;
 	int cnt;
 	int flag = 0;
-	// int i = 0;
 	int blank = 0;
 	cmd = join_cmd(data->root->left_child->right_child);
 	int k = 1;
@@ -91,11 +102,24 @@ void ft_echo(t_data *data)
 		k = 2;
 	while (cmd[k])
 	{
+		if(cmd[k][0] == '$')
+		{
+			tmp = check_dollar(data, cmd[k]);
+			if(!tmp)
+			{
+				++k;
+				continue;
+			}
+			tmp += ft_strlen(cmd[k]);
+			printf("%s", tmp);
+			++k;
+			continue;
+		}
 		printf("%s", cmd[k]);
 		if(k < blank - 1)
 			printf(" ");
 		++k;
 	}
-	if(flag == 1)
+	if(flag == 0)
 		printf("\n");
 }
