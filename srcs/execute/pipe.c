@@ -18,23 +18,23 @@ void	link_pipe(t_data *data, t_cmd *cur_cmd, t_cmd *pre_cmd)
 		return ;
 	if (data->cmd_idx == 0)
 	{
-		if (close(cur_cmd->fd[0]) == -1 \
-			|| dup2(cur_cmd->fd[1], STDOUT_FILENO) == -1 \
-			|| close(cur_cmd->fd[1])== -1)
+		if (close(cur_cmd->fd[P_READ]) == -1 \
+			|| dup2(cur_cmd->infile_fd, STDIN_FILENO) == -1 \
+			|| dup2(cur_cmd->fd[P_WRITE], STDOUT_FILENO) == -1)
 			program_error_exit("pipe");
 	}
 	else if (data->cmd_idx == data->input->pipe_num)
 	{
-		if (dup2(pre_cmd->fd[0], STDIN_FILENO) == -1 \
-			|| close(pre_cmd->fd[0]) == -1)
+		if (close(pre_cmd->fd[P_WRITE]) == -1 \
+			|| dup2(pre_cmd->fd[P_READ], STDIN_FILENO) == -1 \
+			|| dup2(cur_cmd->outfile_fd, STDOUT_FILENO) == -1)
 			program_error_exit("pipe");
 	}
 	else
 	{
-		if (dup2(pre_cmd->fd[0], STDIN_FILENO) == -1 \
-			|| close(pre_cmd->fd[0]) == -1 \
-			||dup2(cur_cmd->fd[1], STDOUT_FILENO) == -1 \
-			|| close(cur_cmd->fd[1]) == -1)
+		if (close(cur_cmd->fd[P_READ]) == -1 \
+			|| dup2(pre_cmd->fd[P_READ], STDIN_FILENO) == -1 \
+			|| dup2(cur_cmd->fd[P_WRITE], STDOUT_FILENO) == -1)
 			program_error_exit("pipe");
 	}
 }
@@ -42,13 +42,20 @@ void	link_pipe(t_data *data, t_cmd *cur_cmd, t_cmd *pre_cmd)
 void	close_pipe(t_data *data, t_cmd *cur_cmd, t_cmd *pre_cmd)
 {
 	if (data->cmd_idx == 0)
-		close(cur_cmd->fd[1]);
+	{
+		if (close(cur_cmd->fd[P_WRITE]) == -1)
+			program_error_exit("pipe");
+	}
 	else if (data->cmd_idx == data->input->pipe_num)
-		close(pre_cmd->fd[0]);
+	{
+		if (close(pre_cmd->fd[P_READ] == -1))
+			program_error_exit("pipe");
+	}
 	else
 	{
-		close(pre_cmd->fd[0]);
-		close(cur_cmd->fd[1]);
+		if (close(pre_cmd->fd[P_READ]) \
+			|| close(cur_cmd->fd[P_WRITE]))
+			program_error_exit("pipe");
 	}
 }
 

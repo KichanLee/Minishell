@@ -36,8 +36,9 @@ void	make_unique_num(char *str, int num);
 void	read_heredoc(t_data *data, char *content, int fd);
 
 /*redirect*/
-void	input_redirect(t_data *data, t_leaf *cur_leaf);
-void	output_redirect(t_data *data, t_leaf *cur_leaf);
+void	redirect(t_data *data, t_leaf *cur_root);
+void	redirect_input(t_data *data, t_leaf *cur_leaf);
+void	redirect_output(t_data *data, t_leaf *cur_leaf);
 
 /*pipe*/
 void	set_pipe(t_data *data);

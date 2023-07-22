@@ -1,46 +1,43 @@
 #include "../../incs/minishell.h"
 
-void		input_redirect(t_data *data, t_leaf *cur_leaf);
-void		output_redirect(t_data *data, t_leaf *cur_leaf);
+void		redirect(t_data *data, t_leaf *cur_root);
+void		redirect_input(t_data *data, t_leaf *cur_leaf);
+void		redirect_output(t_data *data, t_leaf *cur_leaf);
 static void	check_file(t_data *data, int fd);
 
-void	input_redirect(t_data *data, t_leaf *cur_leaf)
+void	redirect(t_data *data, t_leaf *cur_root)
 {
-	t_leaf	*input;
+	t_leaf	*tmp;
 
-	if (data->cmd[data->cmd_idx].infile_fd > 0)
+	tmp = cur_root->left_child->left_child;
+	while (tmp)
 	{
-		dup2 (data->cmd[data->cmd_idx].infile_fd, STDIN_FILENO);
-		return ;
+		if (tmp->token->redirect_type == T_HEREDOC)
+			heredoc(data, cur_root);
+		else if (tmp->token->redirect_type == T_INPUT)
+			redirect_input(data, tmp);
+		else if (tmp->token->redirect_type == T_OUTPUT \
+			|| tmp->token->redirect_type == T_APPEND)
+			redirect_output(data, tmp);
+		tmp = tmp->left_child;
 	}
-	while (cur_leaf)
-	{
-		if (cur_leaf->token->redirect_type == T_INPUT)
-			input = cur_leaf;
-		cur_leaf = cur_leaf->left_child;
-	}
-	data->cmd[data->cmd_idx].infile_fd = open(input->left_child->token->str, O_RDONLY);
-	check_file(data, data->cmd[data->cmd_idx].infile_fd);
-	dup2(data->cmd[data->cmd_idx].infile_fd, STDIN_FILENO);
 }
 
-void	output_redirect(t_data *data, t_leaf *cur_leaf)
+void	redirect_input(t_data *data, t_leaf *cur_leaf)
 {
-	t_leaf	*output;
+	if (data->cmd[data->cmd_idx].infile_fd)
+		close(data->cmd[data->cmd_idx].infile_fd); //에러처리
+	data->cmd[data->cmd_idx].infile_fd = open(cur_leaf->left_child->token->str, O_RDONLY);
+	check_file(data, data->cmd[data->cmd_idx].infile_fd);
+}
 
-	while (cur_leaf)
-	{
-		if (cur_leaf->token->redirect_type == T_OUTPUT \
-			|| cur_leaf->token->redirect_type == T_APPEND)
-			output = cur_leaf;
-		cur_leaf = cur_leaf->left_child;
-	}
+void	redirect_output(t_data *data, t_leaf *cur_leaf)
+{
 	if (cur_leaf->token->redirect_type == T_OUTPUT)
 		data->cmd[data->cmd_idx].outfile_fd = open (cur_leaf->left_child->token->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (cur_leaf->token->redirect_type == T_APPEND)
 		data->cmd[data->cmd_idx].outfile_fd = open (cur_leaf->left_child->token->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	check_file(data, data->cmd[data->cmd_idx].outfile_fd);
-	dup2(data->cmd[data->cmd_idx].outfile_fd, STDOUT_FILENO);
 }
 
 static void	check_file(t_data *data, int fd)

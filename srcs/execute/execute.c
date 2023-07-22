@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 12:06:55 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 15:59:24 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:52:50 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ t_bool	execute(t_data *data)
 	while (cur_root)
 	{
 		if (cur_root->left_child->left_child)
-		{
-			heredoc(data, cur_root);
-			input_redirect(data, cur_root->left_child->left_child);
-			output_redirect(data, cur_root->left_child->left_child);
-		}
+			redirect(data, cur_root);
 		command(data, cur_root);
 		data->cmd_idx++;
 		cur_root = cur_root->right_child;
@@ -51,7 +47,7 @@ static t_bool	command(t_data *data, t_leaf *cur_root)
 		return (FALSE);
 	}
     func = get_builtin_func(cur_root->left_child->right_child->token->str);
-    if (!func) // execve
+    if (!func || data->input->pipe_num) // execve
 		exec_cmd(data, cur_root);
     if (func(data, cur_root) == FALSE)
         return (FALSE);
@@ -69,15 +65,15 @@ static void	exec_cmd(t_data *data, t_leaf *cur_root)
 	if (pipe(cur_cmd->fd) < 0)
 		// exit(1); 에러처리
 	cur_cmd->pid = fork();
+	printf("%d\n", cur_cmd->pid);
 	// if (cmd->pid == -1) 에러처리
 		// return;
 	if (cur_cmd->pid == CHILD)
 	{
-		// data->parent =1; 무슨 용도?
+		data->parent = 1;
 		link_pipe(data, cur_cmd, pre_cmd);
 		exec_fork(data, cur_root, cur_cmd);
 	}
-	printf("a\n");
 	close_pipe(data, cur_cmd, pre_cmd);
 	signal(SIGQUIT, SIG_IGN);
 }

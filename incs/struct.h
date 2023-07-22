@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 14:55:27 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:45:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <sys/types.h>
 
 # define CHILD 0
+# define P_READ 0
+# define P_WRITE 1
 # define BUF_SIZE 1024
 
 typedef enum e_bool
@@ -92,7 +94,7 @@ typedef struct s_data
 	int			cmd_idx;
 	int			oristdin; // 이놈은 redirection이 나오면 fd 가변경 되는데 안돌려주면 계속 그 fd 를 사용 
 	int			oristdout; // 같은이유 
-	int			parent;
+	int			parent; //signal에 필요
 	t_input		*input;
 }	t_data;
 

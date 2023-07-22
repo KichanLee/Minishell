@@ -1,47 +1,19 @@
 #include "../../incs/minishell.h"
 
 t_bool			heredoc(t_data *data, t_leaf *cur_root);
-static t_leaf	*find_heredoc(t_leaf *cur_leaf);
-static int		 fork_heredoc(t_data *data, t_leaf *heredoc);
+static int		fork_heredoc(t_data *data, t_leaf *cur_leaf);
 
-t_bool	heredoc(t_data *data, t_leaf *cur_root)
+//heredoc 여러개 들어올때 다 실행하긴 해야 함
+t_bool	heredoc(t_data *data, t_leaf *cur_leaf)
 {
-	t_leaf	*heredoc;
-
-	heredoc = find_heredoc(cur_root->left_child->left_child);
-	// data->cmd[i].heredoc_file = (char **)ft_calloc(data->input->pipe_num + 1, sizeof(char *));
-	// if (!data->cmd[i].heredoc_file)
-	// 	program_error_exit("bash");
-	// if (!data->input->pipe_num && data->heredoc_flag == FALSE)//단일 커맨드고 히어독도 없으면
-	// 	if(check_bulitin(data, cur_root) == TRUE) // bulitin 일때는 바로 실행하고 종료 아닌경우에는 sigle command fork 해야함
-	// 		return (FALSE);
-
-
-	// heredoc 일 경우에는 무조건 fork 를 해줘야함
-	// 시그널 함수  때문인거같음 ctrl +d 눌렀을때 종료가되면안되는데 포크안햇을시 종료가됨 
-	if (heredoc)
-		if (fork_heredoc(data, heredoc))
-			return (FALSE);
+	if (data->cmd[data->cmd_idx].infile_fd)
+		close(data->cmd[data->cmd_idx].infile_fd); //에러처리
+	if (fork_heredoc(data, cur_leaf))
+		return (FALSE);
 	return (TRUE);
 }
 
-static t_leaf	*find_heredoc(t_leaf *cur_leaf) 
-{
-	t_leaf	*heredoc;
-
-	heredoc = NULL;
-	while (cur_leaf)
-	{
-		if (cur_leaf->token->redirect_type == T_HEREDOC)
-			heredoc = cur_leaf;
-		cur_leaf = cur_leaf->left_child;
-	}
-	if (cur_leaf->parent->token->redirect_type != T_HEREDOC) //output이 있을 수 있으니 수정해야함
-		return (NULL);
-	return (heredoc);
-}
-
-static int	fork_heredoc(t_data *data, t_leaf *heredoc)
+static int	fork_heredoc(t_data *data, t_leaf *cur_leaf)
 {
 	int		status;
 
@@ -49,7 +21,7 @@ static int	fork_heredoc(t_data *data, t_leaf *heredoc)
 	if (data->cmd[data->input->pipe_num + 1].pid == CHILD)
 	{
 		data->parent = 1;
-		make_heredoc(data, heredoc);
+		make_heredoc(data, cur_leaf);
 		// exit (g_exit_status);// 전역변수 
 	}
 	else
