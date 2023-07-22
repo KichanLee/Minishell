@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:16:09 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 08:20:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	init(t_data **data, char **envp)
 	if (!*data)
 		program_error_exit("bash");
 	(*data)->input = (t_input *)ft_calloc(1, sizeof(t_input));
-	(*data)->pipe = (t_pipe *)ft_calloc(1, sizeof(t_pipe));
-	if (!(*data)->input || !(*data)->pipe)
+	if (!(*data)->input)
 		program_error_exit("bash");
 	(*data)->oristdin = dup(STDIN_FILENO);
 	(*data)->oristdout = dup(STDOUT_FILENO);

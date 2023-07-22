@@ -6,12 +6,17 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:58:24 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 13:25:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+# include <sys/types.h>
+
+# define CHILD 0
+# define BUF_SIZE 1024
 
 typedef enum e_bool
 {
@@ -65,6 +70,8 @@ typedef struct s_cmd
 	char	**cmd_path;//명령어 +옵션 
 	char	*command;
 	char	**cmd_abs; // 절대경로 
+	int		infile_fd;
+	int		outfile_fd;
 }	t_cmd;
 
 typedef struct s_input
@@ -82,9 +89,7 @@ typedef struct s_data
 {
 	// 항상 기준은 파이프  한커맨드라는건 파이프 기준으로 <<a <<b <<c 로들어올수가있음
 	t_cmd		*cmd;
-	int			index; //이거는 heredocfile[index] open 할때 접근 할수 있어야함
-	int			heredoc_flag;// 히어독이있는지 판별해줘야함 -> 히어독은 포크로 진행되기때문에
-	char		**heredoc_file; // 한 커맨드에 여러개 리다이렉션이 들어올수 있다  
+	int			cmd_idx;
 	int			oristdin; // 이놈은 redirection이 나오면 fd 가변경 되는데 안돌려주면 계속 그 fd 를 사용 
 	int			oristdout; // 같은이유 
 	int			parent;

@@ -6,11 +6,48 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/21 21:43:26 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 13:28:14 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+t_bool ft_export(t_data *data, t_leaf *cur_root)
+{
+    char **cmd;
+    char **tmp;
+    int arg_count;
+    int i;
+
+    i = 1;
+    cmd = join_cmd(data->input->root->left_child->right_child);
+    arg_count = count_args(cmd);
+
+    printf("arg_count : %d\n", arg_count);
+    if (arg_count == 1)
+        print_export_order(data);
+    else
+    {
+        while (i < arg_count)
+        {
+            printf("\nft_export while loop start!\n");
+            if (!ft_isalpha(cmd[1][0]) && !check_underbar(cmd[1][0]) && !check_name(cmd[i]))
+                printf("bash: export: `%s': not a valid identifier\n", cmd[i]);
+            else if (!ft_strchr(cmd[i], '=')) // = 가 없는 경우
+            {
+                ++i;
+                continue;
+            }
+            else
+            {
+                tmp = ft_split(cmd[i], '=');
+                update_env(data, tmp[0], tmp[1]);
+                free(tmp);
+            }
+            ++i;
+        }
+    }
+}
 
 t_list *create_env_node(char *key, char *value)
 {
@@ -53,26 +90,6 @@ void add_env_back(t_data *head, char *key, char *value)
     {
         printf("\nenv exit!\n");
         ft_lstadd_back(&(head->input->envs), create_env_node(key, value));
-    }
-}
-
-void update_env(t_data *data, char *key, char *value)
-{
-    t_list *tmp;
-    char *key_equal;
-    tmp = env_search(data->input, key);
-    if (!tmp)
-    {
-        add_env_back(data, key, value);
-    }
-    else
-    {
-        free(tmp->env);
-        key_equal = (char *)ft_calloc(sizeof(char), ft_strlen(key) + 2);
-        key_equal = ft_strdup(key);
-        key_equal[ft_strlen(key)] = '=';
-        key_equal[ft_strlen(key) + 1] = '\0';
-        tmp->env = ft_strjoin(key_equal, value);
     }
 }
 
@@ -132,43 +149,6 @@ int check_name(char *str)
 //     return (0);
 // }
 
-void ft_export(t_data *data)
-{
-    char **cmd;
-    char **tmp;
-    int arg_count;
-    int i;
-
-    i = 1;
-    cmd = join_cmd(data->input->root->left_child->right_child);
-    arg_count = count_args(cmd);
-
-    printf("arg_count : %d\n", arg_count);
-    if (arg_count == 1)
-        print_export_order(data);
-    else
-    {
-        while (i < arg_count)
-        {
-            printf("\nft_export while loop start!\n");
-            if (!ft_isalpha(cmd[1][0]) && !check_underbar(cmd[1][0]) && !check_name(cmd[i]))
-                printf("bash: export: `%s': not a valid identifier\n", cmd[i]);
-            else if (!ft_strchr(cmd[i], '=')) // = 가 없는 경우
-            {
-                ++i;
-                continue;
-            }
-            else
-            {
-                tmp = ft_split(cmd[i], '=');
-                update_env(data, tmp[0], tmp[1]);
-                free(tmp);
-            }
-            ++i;
-        }
-    }
-}
-
 char **sort_bubble(char **str, int size)
 {
     char **res = (char **)ft_calloc(sizeof(char *), (size + 1));
@@ -212,7 +192,7 @@ char **sort_bubble(char **str, int size)
     return res;
 }
 
-void print_export_order(t_data *data)
+static void print_export_order(t_data *data)
 {
     int i;
     int lst_size;
@@ -238,3 +218,4 @@ void print_export_order(t_data *data)
         ++j;
     }
 }
+

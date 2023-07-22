@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:48:40 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 13:23:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,4 @@ void	free_data(t_data *data)
 {
 	ft_lstclear(&data->input->envs);
 	free(data->input);
-}
-
-char **join_cmd(t_leaf * com_leaf)
-{
-	int cnt =1;
-
-	t_leaf *temp = com_leaf;
-	t_leaf *leaf = com_leaf;
-	
-	while(temp && temp->right_child)
-	{
-		temp= temp->right_child;
-		cnt++;
-	}
-	char **str = (char **)ft_calloc(cnt + 1, sizeof(char *));
-	if(!str)
-		return NULL;
-	int i=1;
-	str[0]= leaf->token->str;
-	while(leaf)
-    {
-        if (leaf->right_child)
-        {
-            str[i] = leaf->right_child->token->str;
-            leaf = leaf->right_child;
-            i++;
-        }
-        else
-            break;
-    }
-	return str;
 }

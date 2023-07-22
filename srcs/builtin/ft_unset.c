@@ -6,26 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/21 21:42:05 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 13:27:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void env_clear(t_data *data)
-{
-    printf("env clear start!\n");
-	t_list *current = data->input->envs;
-	while (current != NULL)
-	{
-		t_list *next = current->next;
-		ft_lstdelone(current);
-		current = next;
-	}
-	data->input->envs = NULL;
-}
-
-void    ft_unset(t_data *data)
+t_bool    ft_unset(t_data *data, t_leaf *cur_root)
 {
     char    **cmd;
     int     arg_cnt;
@@ -49,4 +36,17 @@ void    ft_unset(t_data *data)
             ++i;
         }
     }
+}
+
+void env_clear(t_data *data)
+{
+    printf("env clear start!\n");
+	t_list *current = data->input->envs;
+	while (current != NULL)
+	{
+		t_list *next = current->next;
+		ft_lstdelone(current);
+		current = next;
+	}
+	data->input->envs = NULL;
 }

@@ -6,51 +6,25 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:39:57 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 11:57:28 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_bool	builtin(t_data *data)
+char	*(*get_builtin_func(char *name))(t_data *, t_leaf *)
 {
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "cd", 3) == 0)
-	{
-		// printf("cd check!");
-		ft_cd(data);
-		printf("data name : %s\n", data->input->root->left_child->right_child->right_child->token->str);
-		// printf("%s", env_search(data, "HOME")->env);
-		return (TRUE);
-	}
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "echo", 5) == 0)
-	{
-		// printf("echo check!");
-		ft_echo(data);
-		return (TRUE);
-	}
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "exit", 5) == 0)
-	{
-		// printf("exit check!");
-		ft_exit(data);
-		return (TRUE);
-	}
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "pwd", 4) == 0)
-	{
-		// printf("pwd check!");
-		ft_pwd();
-		return (TRUE);
-	}
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "unset", 6) == 0)
-	{
-		// printf("unset check!");
-		ft_unset(data);
-		return (TRUE);
-	}
-	if (ft_strncmp(data->input->root->left_child->right_child->token->str, "export", 7) == 0)
-	{
-		// printf("export check!");
-		ft_export(data);
-		return (TRUE);
-	}
-	return (FALSE);
+    if (!ft_strncmp(name, "cd", 3))
+		return (ft_cd);
+	if (!ft_strncmp(name, "echo", 5))
+		return (ft_echo);
+	if (!ft_strncmp(name, "exit", 5))
+		return (ft_exit);
+	if (!ft_strncmp(name, "pwd", 4))
+		return (ft_pwd);
+	if (!ft_strncmp(name, "unset", 6))
+		return (ft_unset);
+	if (!ft_strncmp(name, "export", 7))
+		return (ft_export);
+	return (NULL);
 }
