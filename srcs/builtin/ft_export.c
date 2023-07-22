@@ -6,11 +6,17 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 13:28:14 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:15:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+t_bool      ft_export(t_data *data, t_leaf *cur_root);
+static int  check_underbar(char ch);
+static int  check_name(char *str);
+static char **sort_bubble(char **str, int size);
+static void print_export_order(t_data *data);
 
 t_bool ft_export(t_data *data, t_leaf *cur_root)
 {
@@ -20,7 +26,7 @@ t_bool ft_export(t_data *data, t_leaf *cur_root)
     int i;
 
     i = 1;
-    cmd = join_cmd(data->input->root->left_child->right_child);
+    cmd = join_cmd(cur_root->left_child->right_child);
     arg_count = count_args(cmd);
 
     printf("arg_count : %d\n", arg_count);
@@ -47,50 +53,7 @@ t_bool ft_export(t_data *data, t_leaf *cur_root)
             ++i;
         }
     }
-}
-
-t_list *create_env_node(char *key, char *value)
-{
-    printf("\ncreate env_node start!\n");
-    t_list *new_node = (t_list *)malloc(sizeof(t_list));
-    char *key_equal;
-
-    if (!new_node)
-        return NULL;
-
-    new_node->pre = NULL;
-    new_node->next = NULL;
-    new_node->token = (t_token *)malloc(sizeof(t_token));
-    if (!new_node->token)
-    {
-        free(new_node);
-        return NULL;
-    }
-    new_node->token->type = T_CMD;      // 환경 변수는 T_CMD로 설정
-    new_node->token->redirect_type = 0; // 환경 변수의 리다이렉션 타입은 0으로 설정
-    new_node->token->str = key;         // key 값을 환경 변수 노드의 token의 str에 할당
-    key_equal = (char *)ft_calloc(sizeof(char), ft_strlen(key) + 2);
-    key_equal = ft_strdup(key);
-    key_equal[ft_strlen(key)] = '=';
-    key_equal[ft_strlen(key) + 1] = '\0';
-    printf("\n===========keyequl=======%s\n", key_equal);
-    new_node->env = ft_strjoin(key_equal, value);
-
-    return new_node;
-}
-
-void add_env_back(t_data *head, char *key, char *value)
-{
-    if (head->input->envs == NULL)
-    {
-        printf("\nenv dose not exit!\n");
-        head->input->envs = create_env_node(key, value);
-    }
-    else
-    {
-        printf("\nenv exit!\n");
-        ft_lstadd_back(&(head->input->envs), create_env_node(key, value));
-    }
+    return (TRUE);
 }
 
 int check_underbar(char ch)
@@ -149,7 +112,7 @@ int check_name(char *str)
 //     return (0);
 // }
 
-char **sort_bubble(char **str, int size)
+char    **sort_bubble(char **str, int size)
 {
     char **res = (char **)ft_calloc(sizeof(char *), (size + 1));
     int sorted = 0;

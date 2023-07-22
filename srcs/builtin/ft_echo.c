@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 13:21:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:09:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ static void	check_echo_flag(char **av, int *i, int *flag);
 
 t_bool	ft_echo(t_data *data, t_leaf *cur_root)
 {
+	(void)data;
+	
 	char **cmd;
 	int cnt;
 	int flag = 0;
 	// int i = 0;
 	int blank = 0;
-	cmd = join_cmd(data->input->root->left_child->right_child);
+	cmd = join_cmd(cur_root->left_child->right_child);
 	int k = 1;
 	check_echo_flag(cmd, &cnt, &flag);
 	blank = count_args(cmd);
@@ -37,6 +39,7 @@ t_bool	ft_echo(t_data *data, t_leaf *cur_root)
 	}
 	if(flag == 0)
 		printf("\n");
+	return (TRUE);
 }
 
 static void	check_echo_flag(char **av, int *i, int *flag)

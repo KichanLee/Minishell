@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 13:25:48 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 14:55:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ typedef struct s_cmd
 {
 	pid_t	pid;
 	int		fd[2];
-	char	**cmd_path;//명령어 +옵션 
-	char	*command;
-	char	**cmd_abs; // 절대경로 
+	char	*cmd_path; //명령어 경로
+	char	**cmd_list; //명령어 + 옵션
+	char	**cmd_abs; // 절대경로, 파이프마다 갱신해줘야 함
 	int		infile_fd;
 	int		outfile_fd;
 }	t_cmd;

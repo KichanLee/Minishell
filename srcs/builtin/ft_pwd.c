@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:24:31 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 13:26:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:12:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_bool    ft_pwd(t_data *data, t_leaf *cur_root);
 
 t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
 {
+    (void)data;
+    (void)cur_root;
     char    *buf;
     size_t  buf_size;
 
@@ -34,7 +36,7 @@ t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
         {
             printf("%s\n", buf);
             free(buf);
-            return ;
+            return (FALSE);
         }
         free(buf);
         if (errno != ERANGE)
@@ -44,4 +46,5 @@ t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
         }
         buf_size *= 2;
     }
+    return (TRUE);
 }

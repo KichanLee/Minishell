@@ -3,10 +3,11 @@
 void	set_pipe(t_data *data);
 void	link_pipe(t_data *data, t_cmd *cur_cmd, t_cmd *pre_cmd);
 void	close_pipe(t_data *data, t_cmd *cur_cmd, t_cmd *pre_cmd);
+void	recover_std(t_data *data);
 
 void	set_pipe(t_data *data)
 {
-	data->cmd = (t_cmd *)ft_calloc(data->input->pipe_num + 2, sizeof(t_cmd));// herdoc 때문에 하나를 여유롭게생성(ㅇㅗㅐ +2??)
+	data->cmd = (t_cmd *)ft_calloc(data->input->pipe_num + 1, sizeof(t_cmd));// heredoc 때문에 하나를 여유롭게생성
 	if(!data->cmd)
 		program_error_exit("bash");
 }

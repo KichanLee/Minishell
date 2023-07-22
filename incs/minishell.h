@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:05:33 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 08:27:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 14:49:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 # include <errno.h>
 # include <unistd.h>
 # include <signal.h>
+# include <termios.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "init.h"
 # include "exec.h"
 # include "pipe.h"
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "parse.h"
 # include "utils.h"
 # include "struct.h"

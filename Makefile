@@ -14,38 +14,34 @@ MAKE = make
 
 SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/init/init.c \
-	
 	$(SRCS_DIR)/lexer/lexer.c \
 	$(SRCS_DIR)/lexer/tokenizer.c \
 	$(SRCS_DIR)/lexer/quote.c \
 	$(SRCS_DIR)/lexer/expand.c \
-
 	$(SRCS_DIR)/parser/syntax.c \
 	$(SRCS_DIR)/parser/parser.c \
-
 	$(SRCS_DIR)/utils/env.c \
 	$(SRCS_DIR)/utils/list.c \
 	$(SRCS_DIR)/utils/list_clear.c \
 	$(SRCS_DIR)/utils/tree.c \
 	$(SRCS_DIR)/utils/utils.c \
 	$(SRCS_DIR)/utils/temp.c \
-
 	$(SRCS_DIR)/builtin/builtin.c \
+	$(SRCS_DIR)/builtin/builtin_utils.c \
 	$(SRCS_DIR)/builtin/ft_cd.c \
 	$(SRCS_DIR)/builtin/ft_echo.c \
 	$(SRCS_DIR)/builtin/ft_exit.c \
 	$(SRCS_DIR)/builtin/ft_pwd.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
-
-	$(SRCS_DIR)/exec/get_input.c \
-	$(SRCS_DIR)/exec/sig.c \
+	$(SRCS_DIR)/execute/sig.c \
 	$(SRCS_DIR)/execute/pipe.c \
 	$(SRCS_DIR)/execute/execute.c \
-	$(SRCS_DIR)/execute/heredoc.c \
-	$(SRCS_DIR)/execute/heredoc_utils.c \
-	$(SRCS_DIR)/execute/redirect.c \
-	$(SRCS_DIR)/execute/set_path.c \
+	$(SRCS_DIR)/execute/path.c \
+	$(SRCS_DIR)/execute/get_input.c \
+	$(SRCS_DIR)/redirect/heredoc.c \
+	$(SRCS_DIR)/redirect/heredoc_utils.c \
+	$(SRCS_DIR)/redirect/redirect.c \
 
 OBJS = $(SRCS:%.c=%.o)
 

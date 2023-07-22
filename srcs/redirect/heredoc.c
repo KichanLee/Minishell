@@ -1,14 +1,14 @@
 #include "../../incs/minishell.h"
 
 t_bool			heredoc(t_data *data, t_leaf *cur_root);
-static t_leaf	*find_heredoc(t_data *data, t_leaf *cur_leaf);
+static t_leaf	*find_heredoc(t_leaf *cur_leaf);
 static int		 fork_heredoc(t_data *data, t_leaf *heredoc);
 
 t_bool	heredoc(t_data *data, t_leaf *cur_root)
 {
 	t_leaf	*heredoc;
 
-	heredoc = find_heredoc(data, cur_root->left_child->left_child);
+	heredoc = find_heredoc(cur_root->left_child->left_child);
 	// data->cmd[i].heredoc_file = (char **)ft_calloc(data->input->pipe_num + 1, sizeof(char *));
 	// if (!data->cmd[i].heredoc_file)
 	// 	program_error_exit("bash");
@@ -25,7 +25,7 @@ t_bool	heredoc(t_data *data, t_leaf *cur_root)
 	return (TRUE);
 }
 
-static t_leaf	*find_heredoc(t_data *data, t_leaf *cur_leaf) 
+static t_leaf	*find_heredoc(t_leaf *cur_leaf) 
 {
 	t_leaf	*heredoc;
 
@@ -50,8 +50,7 @@ static int	fork_heredoc(t_data *data, t_leaf *heredoc)
 	{
 		data->parent = 1;
 		make_heredoc(data, heredoc);
-		execute_cmd(data, CHILD); // heredoc 실행후 다시 커맨드 확인해주러가기
-		exit (g_exit_status);// 전역변수 
+		// exit (g_exit_status);// 전역변수 
 	}
 	else
 	{

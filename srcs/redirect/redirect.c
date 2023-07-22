@@ -1,10 +1,8 @@
 #include "../../incs/minishell.h"
 
-void	redirect(t_data *data, t_leaf *cur_leaf)
-{
-	input_redirect(cur_leaf, data);
-	output_redirect(cur_leaf, data);
-}
+void		input_redirect(t_data *data, t_leaf *cur_leaf);
+void		output_redirect(t_data *data, t_leaf *cur_leaf);
+static void	check_file(t_data *data, int fd);
 
 void	input_redirect(t_data *data, t_leaf *cur_leaf)
 {
@@ -22,7 +20,7 @@ void	input_redirect(t_data *data, t_leaf *cur_leaf)
 		cur_leaf = cur_leaf->left_child;
 	}
 	data->cmd[data->cmd_idx].infile_fd = open(input->left_child->token->str, O_RDONLY);
-	check_file(data->cmd[data->cmd_idx].infile_fd, data);
+	check_file(data, data->cmd[data->cmd_idx].infile_fd);
 	dup2(data->cmd[data->cmd_idx].infile_fd, STDIN_FILENO);
 }
 
@@ -41,11 +39,11 @@ void	output_redirect(t_data *data, t_leaf *cur_leaf)
 		data->cmd[data->cmd_idx].outfile_fd = open (cur_leaf->left_child->token->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (cur_leaf->token->redirect_type == T_APPEND)
 		data->cmd[data->cmd_idx].outfile_fd = open (cur_leaf->left_child->token->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	check_file(data->cmd[data->cmd_idx].outfile_fd, data);
+	check_file(data, data->cmd[data->cmd_idx].outfile_fd);
 	dup2(data->cmd[data->cmd_idx].outfile_fd, STDOUT_FILENO);
 }
 
-void	check_file(int fd,t_data *data)
+static void	check_file(t_data *data, int fd)
 {
 	if (fd < 0)
 	{

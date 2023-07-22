@@ -6,95 +6,98 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 12:06:55 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 13:30:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:59:24 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+t_bool			execute(t_data *data);
+static t_bool	command(t_data *data, t_leaf *cur_root);
+static void		exec_cmd(t_data *data, t_leaf *cur_root);
+static void		exec_fork(t_data *data, t_leaf *cur_root, t_cmd *cmd);
+static void		wait_child_processes(t_data *data);
+
 t_bool	execute(t_data *data)
 {
 	t_leaf	*cur_root;
 
+	cur_root = data->input->root;
 	data->cmd_idx = 0;
 	while (cur_root)
 	{
 		if (cur_root->left_child->left_child)
 		{
 			heredoc(data, cur_root);
-			redirect(data, cur_root);
+			input_redirect(data, cur_root->left_child->left_child);
+			output_redirect(data, cur_root->left_child->left_child);
 		}
 		command(data, cur_root);
-		cur_root = data->input->root;
 		data->cmd_idx++;
+		cur_root = cur_root->right_child;
 	}
+	wait_child_processes(data);
+	return (TRUE);
 }
 
-t_bool	command(t_data *data, t_leaf *cur_root)
+static t_bool	command(t_data *data, t_leaf *cur_root)
 {
-	char	*(*func)(t_data *, t_leaf *);
+	t_bool (*func)(t_data *, t_leaf *);
 
 	if (!cur_root->left_child->right_child) //cmd 없을 때
 	{
 		// 다시 돌려놔줘야함 안그러면 redirect로 바꾼곳으로 계속출력됨
         recover_std(data);
-		return ;
+		return (FALSE);
 	}
-    func = get_builtin_func(cur_root->left_child->right_child);
+    func = get_builtin_func(cur_root->left_child->right_child->token->str);
     if (!func) // execve
-		exec_cmd(data);
+		exec_cmd(data, cur_root);
     if (func(data, cur_root) == FALSE)
         return (FALSE);
     return (TRUE);
 }
 
-// 부모에서 exit 하면 return  자식에서 하면 exit (??)
-void	exec_cmd(t_data *data, t_leaf *cur_root)
+static void	exec_cmd(t_data *data, t_leaf *cur_root)
 {
-	t_cmd	*cmd;
-	t_cmd	*pre;
+	t_cmd	*cur_cmd;
+	t_cmd	*pre_cmd;
 	
-	cmd = &data->cmd[data->cmd_idx]; //왜 &?
-	pre = &data->cmd[data->cmd_idx - 1];
+	cur_cmd = &data->cmd[data->cmd_idx]; //왜 &?
+	pre_cmd = &data->cmd[data->cmd_idx - 1];
 	signal(SIGQUIT, SIG_DFL);
-	if (pipe(cmd->fd) < 0)
+	if (pipe(cur_cmd->fd) < 0)
 		// exit(1); 에러처리
-	cmd->pid = fork();
+	cur_cmd->pid = fork();
 	// if (cmd->pid == -1) 에러처리
-	// 	return;
-	if (cmd->pid == CHILD)
+		// return;
+	if (cur_cmd->pid == CHILD)
 	{
 		// data->parent =1; 무슨 용도?
-		link_pipe(data, cmd, pre);
-		exec_fork(data, cur_root);
+		link_pipe(data, cur_cmd, pre_cmd);
+		exec_fork(data, cur_root, cur_cmd);
 	}
-	close_pipe(data, cur, pre);
+	printf("a\n");
+	close_pipe(data, cur_cmd, pre_cmd);
 	signal(SIGQUIT, SIG_IGN);
-	wait_child_processes(data);
-	
-	// free_cmd(base);
 }
 
-void exec_fork(t_data *data, t_leaf *cur_root) // 이제경로 찾고 하던 대로해주면됨 
+static void exec_fork(t_data *data, t_leaf *cur_root, t_cmd *cmd) // 이제경로 찾고 하던 대로해주면됨 
 {
-	t_cmd *base = data->cmd;
-	
-	if(!data->input->root->left_child->right_child)
-		return ;
-    data->input->env_array = env_to_array(data);
-    abs_path(data);
-	base->command = set_path(data ,data->input->root->left_child->right_child);
-	if (!base->command)
-		exit(1);
-	if (execve(base->command, base->cmd_path, data->input->env_array) == -1)
-		exit(1);
+    data->input->env_array = env_to_array(data->input);
+    abs_path(data, cmd);
+	set_path(cur_root, cmd);
+	// if (!cmd->cmd_path)
+		// exit(1);
+	execve(cmd->cmd_path, cmd->cmd_list, data->input->env_array);
+	// if (execve(cmd->cmd_path, cmd->cmd_list, data->input->env_array) == -1)
+		// exit(1);
 }
 
-// 정상 종료 확인해주고 수정;
-void	wait_child_processes(t_data *data)
+static void	wait_child_processes(t_data *data)
 {
-	int			i;
-	int			status;
+	int	i;
+	int	status;
 
 	i = 0;
 	while (i < data->input->pipe_num)

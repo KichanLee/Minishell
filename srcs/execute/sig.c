@@ -6,15 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 20:44:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 14:49:38 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-
-#include <stdio.h>
-#include <termios.h>
 
 // void set_terminal_print_off() {
 //     struct termios old_term, new_term;
@@ -35,7 +31,6 @@
 // 	term.c_lflag &= ~(ECHOCTL); // 시그널표식 출력이 true 라면 false로 변경
 // 	tcsetattr(1, 0, &term); // 변경한 term 설정을 현재 터미널에 적용
 // }
-
 
 void    handle_sigint(int sig)
 {

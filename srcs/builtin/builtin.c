@@ -6,13 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 11:57:28 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:05:53 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	*(*get_builtin_func(char *name))(t_data *, t_leaf *)
+t_bool	(*get_builtin_func(char *name))(t_data *, t_leaf *)
 {
     if (!ft_strncmp(name, "cd", 3))
 		return (ft_cd);

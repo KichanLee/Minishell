@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 13:18:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/22 15:08:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_bool    ft_cd(t_data *data, t_leaf *cur_root)
     char    pwd[1024];
     option = NULL;
     
-    if(!(data->input->root->left_child->right_child->right_child))
+    if(!(cur_root->left_child->right_child->right_child))
         change_directory(data, "~");
-    else if(change_directory(data,data->input->root->left_child->right_child->right_child->token->str) != 0)
+    else if(change_directory(data,cur_root->left_child->right_child->right_child->token->str) != 0)
     {
-        option = data->input->root->left_child->right_child->right_child->token->str;
+        option = cur_root->left_child->right_child->right_child->token->str;
         printf("bash: %s: No such file or directory\n", option);
     }
     else
@@ -35,6 +35,7 @@ t_bool    ft_cd(t_data *data, t_leaf *cur_root)
 		update_env(data, "OLDPWD", env_search(data->input, "PWD")->env);
 		update_env(data, "PWD", pwd);
     }
+    return (TRUE);
 }
 
 static int  change_directory(t_data *data, char *path)
