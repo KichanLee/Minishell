@@ -7,7 +7,7 @@ INCS_DIR = incs
 SRCS_DIR = srcs
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include 
+CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
 
 RM = rm -rf
 MAKE = make
@@ -34,27 +34,29 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/builtin/ft_pwd.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
-	$(SRCS_DIR)/execute/sig.c \
+	$(SRCS_DIR)/execute/checkbulitin.c \
+	$(SRCS_DIR)/execute/execve.c \
+	$(SRCS_DIR)/execute/freepipe.c \
 	$(SRCS_DIR)/execute/pipe.c \
-	$(SRCS_DIR)/execute/execute.c \
-	$(SRCS_DIR)/execute/path.c \
-	$(SRCS_DIR)/execute/get_input.c \
+	$(SRCS_DIR)/execute/pipeutils.c \
+	$(SRCS_DIR)/execute/setpath.c \
+	$(SRCS_DIR)/redirect/heredocutils.c \
 	$(SRCS_DIR)/redirect/heredoc.c \
-	$(SRCS_DIR)/redirect/heredoc_utils.c \
-	$(SRCS_DIR)/redirect/redirect.c \
+	$(SRCS_DIR)/redirect/redirection.c \
 
 OBJS = $(SRCS:%.c=%.o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR) 
+	$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
 
 all: $(NAME)
 
 $(NAME): $(L_NAME) $(OBJS)
-	$(CC) $^ -o $@ -I $(INCS_DIR)  -lreadline -L ~/.brew/opt/readline/lib
+	$(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib
+	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
 
 $(L_NAME):
-	$(MAKE) re -C $(L_DIR)
+	$(MAKE) -C $(L_DIR)
 	cp ./$(L_DIR)/$(L_NAME) .
 
 clean:

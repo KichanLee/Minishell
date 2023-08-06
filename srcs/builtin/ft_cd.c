@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:08:48 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:11:24 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool      ft_cd(t_data *data, t_leaf *cur_root);
+void      ft_cd(t_data *data, t_leaf *cur_root);
 static int  change_directory(t_data *data, char *path);
 
-t_bool    ft_cd(t_data *data, t_leaf *cur_root)
+void    ft_cd(t_data *data, t_leaf *cur_root)
 {
     char    *option;
     char    pwd[1024];
@@ -32,10 +32,10 @@ t_bool    ft_cd(t_data *data, t_leaf *cur_root)
     {
         getcwd(pwd, 1024);
         printf("current directory : %s\n",pwd);
-		update_env(data, "OLDPWD", env_search(data->input, "PWD")->env);
+		update_env(data, "OLDPWD", env_search(data, "PWD")->env);
 		update_env(data, "PWD", pwd);
     }
-    return (TRUE);
+    // return (TRUE);
 }
 
 static int  change_directory(t_data *data, char *path)
@@ -44,19 +44,16 @@ static int  change_directory(t_data *data, char *path)
 	int		res;
     char    pwd[1024];
     
-	printf("\npath : %s\n", path);
 	if (!ft_strncmp(path, "~", 1))
-		buf = ft_strdup(env_search(data->input, "HOME")->env + 5);
+		buf = ft_strdup(env_search(data, "HOME")->env + 5);
 	else if (!ft_strncmp(path, "-", 1))
-		buf = ft_strdup(env_search(data->input, "OLDPWD")->env + 7);
+		buf = ft_strdup(env_search(data, "OLDPWD")->env + 7);
 	else
 		buf = ft_strdup(path);
 	if (!buf)
 		exit(1);
-    printf("buf val : %s\n", buf);
 	res = chdir(buf);
     getcwd(pwd, 1024);
-    printf("current directory : %s\n",pwd);
     free(buf);
 	return (res);
 }

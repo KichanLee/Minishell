@@ -6,36 +6,32 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 20:54:53 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/21 09:06:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	tokenizer(t_input *input, t_token **token, int *i);
+void	tokenizer(t_data *data, t_token **token, int *i);
 t_token	*token_create(void);
-void	token_redirect(t_input *input, t_token *token, int *i);
+void	token_redirect(t_data *data, t_token *token, int *i);
 void	token_add_list(t_list **head, t_token **token, t_bool token_flag);
 
-void	tokenizer(t_input *input, t_token **token, int *i)
+void	tokenizer(t_data *data, t_token **token, int *i)
 {
-	if (input->line[*i] == '|')
-	{
+	if (data->input[*i] == '|')
 		(*token)->type = T_PIPE;
-		input->pipe_num++;
-		printf("%d\n", input->pipe_num);
-	}
-	else if (input->line[*i] == '\"')
-		double_quote(input->line, *token, i, input);
-	else if (input->line[*i] == '\'')
-		single_quote(input->line, *token, i);
-	else if (input->line[*i] == '<' || input->line[*i] == '>')
-		token_redirect(input, *token, i);
-	if ((input->line[*i] == '\'' || input->line[*i] == '\"') \
-		&& (input->line[*i + 1] != ' ' && input->line[*i + 1] != '\t') \
-		&& (input->line[*i + 1] != '\0'))
+	else if (data->input[*i] == '\"')
+		double_quote(data->input, *token, i, data);
+	else if (data->input[*i] == '\'')
+		single_quote(data->input, *token, i);
+	else if (data->input[*i] == '<' || data->input[*i] == '>')
+		token_redirect(data, *token, i);
+	if ((data->input[*i] == '\'' || data->input[*i] == '\"') \
+		&& (data->input[*i + 1] != ' ' && data->input[*i + 1] != '\t') \
+		&& (data->input[*i + 1] != '\0'))
 		return ;
-	token_add_list(&input->tokens, token, TRUE);
+	token_add_list(&data->tokens, token, TRUE);
 }
 
 t_token	*token_create(void)
@@ -52,12 +48,12 @@ t_token	*token_create(void)
 	return (token);
 }
 
-void	token_redirect(t_input *input, t_token *token, int *i)
+void	token_redirect(t_data *data, t_token *token, int *i)
 {
 	token->type = T_REDIRECT;
-	if (input->line[*i] == '<')
+	if (data->input[*i] == '<')
 	{
-		if (input->line[*i + 1] == '<')
+		if (data->input[*i + 1] == '<')
 		{
 			token->redirect_type = T_HEREDOC;
 			*i += 1;
@@ -67,7 +63,7 @@ void	token_redirect(t_input *input, t_token *token, int *i)
 	}
 	else
 	{
-		if (input->line[*i + 1] == '>')
+		if (data->input[*i + 1] == '>')
 		{
 			token->redirect_type = T_APPEND;
 			*i += 1;

@@ -3,23 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 16:45:52 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:12:05 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include <sys/types.h>
-
-# define CHILD 0
-# define P_READ 0
-# define P_WRITE 1
 # define BUF_SIZE 1024
-
 typedef enum e_bool
 {
 	FALSE,
@@ -65,37 +59,44 @@ typedef struct s_leaf
 	t_bool			exist;
 }t_leaf;
 
-typedef struct s_cmd
+typedef struct s_pid
 {
 	pid_t	pid;
 	int		fd[2];
-	char	*cmd_path; //명령어 경로
-	char	**cmd_list; //명령어 + 옵션
-	char	**cmd_abs; // 절대경로, 파이프마다 갱신해줘야 함
-	int		infile_fd;
-	int		outfile_fd;
-}	t_cmd;
+}				t_pid;
 
-typedef struct s_input
+typedef struct s_pipe
 {
-	char		*line;
+	t_pid	*com;
+	
+	char	**cmd_path;//명령어 +옵션 
+	char	*command;
+	char	**cmd_abs; // 절대경로 
+}	t_pipe;
+
+typedef struct s_info
+{
+	// 항상 기준은 파이프  한커맨드라는건 파이프 기준으로 <<a <<b <<c 로들어올수가있음
+	int			index; //이거는 heredocfile[index] open 할때 접근 할수 있어야함
+	int			heredoc_flag;// 히어독이있는지 판별해줘야함 -> 히어독은 포크로 진행되기때문에
+	char		**heredoc_file; // 한 커맨드에 여러개 리다이렉션이 들어올수 있다  
+	int			oristdin; // 이놈은 redirection이 나오면 fd 가변경 되는데 안돌려주면 계속 그 fd 를 사용 
+	int			oristdout; // 같은이유 
+	int 		pipe_num; // fork 를 해주기위해서 갯수가 필요함
+	int			parent;
+	int			pipe_index;
+}	t_info;
+
+typedef struct s_data
+{
+	char		*input;
 	t_list		*tokens;
 	t_list		*envs;
 	char		**env_array;
 	t_leaf		*root;
+	t_pipe		*pipe;
+	t_info		*info;
 	int			error_code;
-	int 		pipe_num; // fork 를 해주기위해서 갯수가 필요함
-}	t_input;
-
-typedef struct s_data
-{
-	// 항상 기준은 파이프  한커맨드라는건 파이프 기준으로 <<a <<b <<c 로들어올수가있음
-	t_cmd		*cmd;
-	int			cmd_idx;
-	int			oristdin; // 이놈은 redirection이 나오면 fd 가변경 되는데 안돌려주면 계속 그 fd 를 사용 
-	int			oristdout; // 같은이유 
-	int			parent; //signal에 필요
-	t_input		*input;
 }	t_data;
 
 #endif

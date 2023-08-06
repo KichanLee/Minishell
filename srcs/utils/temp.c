@@ -3,8 +3,8 @@
 #include "../incs/minishell.h"
 
 void	tree_print(t_leaf *leaf);
-void	print_token(t_input *input);
-void	env_array_print(t_input *input);
+void	print_token(t_data *data);
+void	env_array_print(t_data *data);
 void	check_leak();
 
 //트리 전위순회 출력
@@ -45,9 +45,9 @@ void	tree_print(t_leaf *leaf)
 }
 
 //토큰 리스트 출력용
-void	print_token(t_input *input)
+void	print_token(t_data *data)
 {
-	t_list *tmp = input->tokens;
+	t_list *tmp = data->tokens;
 	printf("\n\n--------------token list--------------\n");
 	while (tmp)
 	{
@@ -85,9 +85,9 @@ void	print_token(t_input *input)
 }
 
 //배열에 넣은 환경변수 출력용
-void	env_array_print(t_input *input)
+void	env_array_print(t_data *data)
 {
-	char **array = env_to_array(input);
+	char **array = env_to_array(data);
 
 	for(int i=0; array[i]; i++)
 		printf("%s\n", array[i]);

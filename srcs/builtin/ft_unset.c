@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:13:08 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:12:24 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool      ft_unset(t_data *data, t_leaf *cur_root);
+void      ft_unset(t_data *data, t_leaf *cur_root);
 static void env_clear(t_data *data);
 
-t_bool  ft_unset(t_data *data, t_leaf *cur_root)
+void  ft_unset(t_data *data, t_leaf *cur_root)
 {
     char    **cmd;
     int     arg_cnt;
@@ -35,22 +35,22 @@ t_bool  ft_unset(t_data *data, t_leaf *cur_root)
         printf("else start!");
         while (i < arg_cnt)
         {
-            env_remove(data->input, cmd[i]);
+            env_remove(data, cmd[i]);
             ++i;
         }
     }
-    return (TRUE);
+    // return (TRUE);
 }
 
 static void env_clear(t_data *data)
 {
     printf("env clear start!\n");
-	t_list *current = data->input->envs;
+	t_list *current = data->envs;
 	while (current != NULL)
 	{
 		t_list *next = current->next;
 		ft_lstdelone(current);
 		current = next;
 	}
-	data->input->envs = NULL;
+	data->envs = NULL;
 }

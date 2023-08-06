@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:15:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:12:35 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool      ft_export(t_data *data, t_leaf *cur_root);
+void      ft_export(t_data *data, t_leaf *cur_root);
 static int  check_underbar(char ch);
 static int  check_name(char *str);
 static char **sort_bubble(char **str, int size);
 static void print_export_order(t_data *data);
 
-t_bool ft_export(t_data *data, t_leaf *cur_root)
+void ft_export(t_data *data, t_leaf *cur_root)
 {
     char **cmd;
     char **tmp;
@@ -53,7 +53,7 @@ t_bool ft_export(t_data *data, t_leaf *cur_root)
             ++i;
         }
     }
-    return (TRUE);
+    // return (TRUE);
 }
 
 int check_underbar(char ch)
@@ -164,8 +164,8 @@ static void print_export_order(t_data *data)
     t_list *cur;
 
     i = 0;
-    lst_size = ft_lstsize(data->input->envs);
-    cur = data->input->envs;
+    lst_size = ft_lstsize(data->envs);
+    cur = data->envs;
     order_copy = (char **)ft_calloc(sizeof(char *), lst_size + 1);
     while (cur)
     {

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:24:31 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:12:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/29 20:52:11 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool    ft_pwd(t_data *data, t_leaf *cur_root);
+void    ft_pwd(t_data *data, t_leaf *cur_root);
 
-t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
+void    ft_pwd(t_data *data, t_leaf *cur_root)
 {
     (void)data;
     (void)cur_root;
+
     char    *buf;
     size_t  buf_size;
 
@@ -36,7 +37,7 @@ t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
         {
             printf("%s\n", buf);
             free(buf);
-            return (FALSE);
+            return ;
         }
         free(buf);
         if (errno != ERANGE)
@@ -46,5 +47,4 @@ t_bool    ft_pwd(t_data *data, t_leaf *cur_root)
         }
         buf_size *= 2;
     }
-    return (TRUE);
 }

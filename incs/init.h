@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 19:06:16 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:10:55 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/07/11 10:29:44 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/07/12 16:17:39 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "struct.h"
 
 void	init(t_data **data, char **envp);
-void	init_env(t_input *input, char **envp);
+void	env_init(t_data *data, char **envp);
 
 #endif

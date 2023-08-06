@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/22 15:40:14 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/06 14:35:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,38 @@
 
 int	count_args(char **args)
 {
-    int count = 0;
-
+    int count;
+    
+    count = 0;
     while (*args != NULL)
     {
         count++;
         args++;
     }
-
-    return count;
+    return (count);
 }
 
 char **join_cmd(t_leaf * com_leaf)
 {
-	int cnt =1;
-
-	t_leaf *temp = com_leaf;
-	t_leaf *leaf = com_leaf;
+    int     i;
+    char    **str;
+	t_leaf  *temp;
+	t_leaf  *leaf;
 	
+    i = 1;
+    temp = com_leaf;
+    leaf = com_leaf;
 	while(temp && temp->right_child)
 	{
-		temp= temp->right_child;
-		cnt++;
+		temp = temp->right_child;
+		i++;
 	}
-	char **str = (char **)ft_calloc(cnt + 1, sizeof(char *));
-	if(!str)
-		return NULL;
-	int i=1;
-	str[0]= leaf->token->str;
-	while(leaf)
+	str = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!str)
+		return (NULL);
+	str[0] = leaf->token->str;
+	i = 1;
+	while (leaf)
     {
         if (leaf->right_child)
         {
@@ -51,9 +54,9 @@ char **join_cmd(t_leaf * com_leaf)
             i++;
         }
         else
-            break;
+            break ;
     }
-	return str;
+	return (str);
 }
 
 t_list *create_env_node(char *key, char *value)
@@ -88,15 +91,15 @@ t_list *create_env_node(char *key, char *value)
 
 void add_env_back(t_data *head, char *key, char *value)
 {
-    if (head->input->envs == NULL)
+    if (head->envs == NULL)
     {
         printf("\nenv dose not exit!\n");
-        head->input->envs = create_env_node(key, value);
+        head->envs = create_env_node(key, value);
     }
     else
     {
         printf("\nenv exit!\n");
-        ft_lstadd_back(&(head->input->envs), create_env_node(key, value));
+        ft_lstadd_back(&(head->envs), create_env_node(key, value));
     }
 }
 
@@ -104,7 +107,7 @@ void update_env(t_data *data, char *key, char *value)
 {
     t_list *tmp;
     char *key_equal;
-    tmp = env_search(data->input, key);
+    tmp = env_search(data, key);
     if (!tmp)
         add_env_back(data, key, value);
     else

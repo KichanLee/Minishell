@@ -6,60 +6,70 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:09:33 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:21:16 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool		ft_echo(t_data *data, t_leaf *cur_root);
-static void	check_echo_flag(char **av, int *i, int *flag);
+void		ft_echo(t_leaf *cur_root);
+static void	check_flag(char **av, int *idx, int *flag);
+static void	print_line(char *line);
 
-t_bool	ft_echo(t_data *data, t_leaf *cur_root)
+void	ft_echo(t_leaf *cur_root)
 {
-	(void)data;
-	
+	int i;
+	int flag;
+	int blank;
 	char **cmd;
-	int cnt;
-	int flag = 0;
-	// int i = 0;
-	int blank = 0;
+
 	cmd = join_cmd(cur_root->left_child->right_child);
-	int k = 1;
-	check_echo_flag(cmd, &cnt, &flag);
 	blank = count_args(cmd);
-	if(flag == 1)
-		k = 2;
-	while (cmd[k])
+	i = 1;
+	flag = FALSE;
+	check_flag(cmd, &i, &flag);
+	while (cmd[i])
 	{
-		printf("%s", cmd[k]);
-		if(k < blank - 1)
+		print_line(cmd[i]);
+		if(i < blank - 1)
 			printf(" ");
-		++k;
+		i++;
 	}
-	if(flag == 0)
+	if (flag == FALSE)
 		printf("\n");
-	return (TRUE);
 }
 
-static void	check_echo_flag(char **av, int *i, int *flag)
+static void	check_flag(char **av, int *idx, int *flag)
 {
+	int	i;
 	int	j;
 
-	*i = 1;
-	if (av[1] && av[*i][0] == '-' && av[*i][1] == 'n')
+	i = 1;
+	while (av[i] && av[i][0] == '-' && av[i][1] == 'n')
 	{
-		while (av[*i][0] == '-' && av[*i][1] == 'n')
+		j = 1;
+		while (av[i][j] != '\0')
 		{
-			j = 1;
-			while (av[1][j] != '\0')
-			{
-				if (av[1][j] != 'n')
-					return ;
-				j++;
-			}
-			(*i)++;
+			if (av[i][j] != 'n')
+				return ;
+			j++;
 		}
-		*flag = 1;
+		i++;
+		*idx += 1;
+		*flag = TRUE;
+	}
+}
+
+static void	print_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$' && line[i + 1] != '\0')
+			break ;
+		printf("%c", line[i]);
+		i++;
 	}
 }

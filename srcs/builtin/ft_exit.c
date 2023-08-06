@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichan            #+#    #+#             */
-/*   Updated: 2023/07/22 15:11:22 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/29 20:38:37 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_num_str(char *str);
 static void	exit_not_num(t_data *data, t_leaf *cur_root);
 
-t_bool	ft_exit(t_data *data, t_leaf *cur_root)
+void	ft_exit(t_data *data, t_leaf *cur_root)
 {
 	int		status;
     char    **cmd;
@@ -45,7 +45,7 @@ t_bool	ft_exit(t_data *data, t_leaf *cur_root)
 		printf("bash: exit: too many arguments\n");
 		status = 1;
 	}
-	return (TRUE);
+	// return (TRUE);
 }
 
 static int	is_num_str(char *str)
