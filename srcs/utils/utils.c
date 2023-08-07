@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 08:45:57 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:32:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	program_error_exit(char *str);
 void	input_free(t_data *data);
 void	data_free(t_data *data);
 
-//input 관련 에러일 때 사용
+//syntax 관련 에러일 때 사용
 t_bool	error_back_readline(t_data *data, char *str, int error_code)
 {
 	printf("%s\n", str);
@@ -25,7 +25,7 @@ t_bool	error_back_readline(t_data *data, char *str, int error_code)
 	return (FALSE);
 }
 
-//system 관련 에러일 때
+//그 외 자식에서 종료해야되는 경우 모든 에러
 void	program_error_exit(char *str)
 {
 	perror(str);
