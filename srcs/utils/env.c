@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 08:49:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:27:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_bool	env_remove(t_data *data, char *key)
 	env = env_search(data, key);
 	if (!env)
 		return (FALSE);
-	if (env->pre)
+	if (!env->pre)
 		data->envs = env->next;
 	else
 		env->pre->next = env->next;

@@ -9,9 +9,9 @@ void	link_pipe(int i, t_pipe *base,t_data *data)
 	}
 	else if (i == 0)
 	{
-			close(base->com[i].fd[0]); 
-			dup2(base->com[i].fd[1], STDOUT_FILENO);
-			close(base->com[i].fd[1]);
+		close(base->com[i].fd[0]); 
+		dup2(base->com[i].fd[1], STDOUT_FILENO);
+		close(base->com[i].fd[1]);
 	}
 	else
 	{	

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/03 17:12:35 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:34:57 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void      ft_export(t_data *data, t_leaf *cur_root);
+void        ft_export(t_data *data, t_leaf *cur_root);
 static int  check_underbar(char ch);
 static int  check_name(char *str);
 static char **sort_bubble(char **str, int size);
@@ -22,19 +22,17 @@ void ft_export(t_data *data, t_leaf *cur_root)
 {
     char **cmd;
     char **tmp;
-    int arg_count;
+    int arg_cnt;
     int i;
 
     i = 1;
     cmd = join_cmd(cur_root->left_child->right_child);
-    arg_count = count_args(cmd);
-
-    printf("arg_count : %d\n", arg_count);
-    if (arg_count == 1)
+    arg_cnt = count_args(cmd);
+    if (arg_cnt == 1)
         print_export_order(data);
     else
     {
-        while (i < arg_count)
+        while (i < arg_cnt)
         {
             printf("\nft_export while loop start!\n");
             if (!ft_isalpha(cmd[1][0]) && !check_underbar(cmd[1][0]) && !check_name(cmd[i]))
@@ -53,7 +51,6 @@ void ft_export(t_data *data, t_leaf *cur_root)
             ++i;
         }
     }
-    // return (TRUE);
 }
 
 int check_underbar(char ch)

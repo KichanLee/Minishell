@@ -27,7 +27,7 @@ void	abs_path(t_data *data)
     char *temp;
 
 	i = 0;
-    data->env_array = env_to_array(data); // 환경 변수 array에 댐아주기 ! 1
+    data->env_array = env_to_array(data); // 환경 변수 array에 담아주기
     pipe->cmd_abs = get_path_envp(data->env_array); 
 	if (!pipe->cmd_abs)
 		exit(1);
