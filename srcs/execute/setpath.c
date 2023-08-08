@@ -30,7 +30,7 @@ void	abs_path(t_data *data)
     data->env_array = env_to_array(data); // 환경 변수 array에 담아주기
     pipe->cmd_abs = get_path_envp(data->env_array); 
 	if (!pipe->cmd_abs)
-		exit(1);
+		program_error_exit("bash");
 	while (pipe->cmd_abs[i])
 	{
 		temp = pipe->cmd_abs[i];

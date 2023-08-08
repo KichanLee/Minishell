@@ -18,13 +18,15 @@ void	get_input(t_data *data)
 {
 	data->input = readline("minishell$ ");
 	if (!data->input)
-		program_error_exit("bash");
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	add_history(data->input);
 	lexer(data);
 	syntax(data);
 	parser(data);
 }
-
-
 
 void	close_pipe(int i, t_pipe *base,t_data *data)
 {

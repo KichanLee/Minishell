@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/03 17:41:06 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:27:39 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote)
 {
 	if (data->input[*i] == '\"')
 	{
-
 		if (quote == TRUE)
 		{
 			token->str = ft_strncat(token->str, "$", 1);

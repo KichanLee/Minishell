@@ -3,25 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichan <kichan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 19:15:04 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/06 23:28:27 by kichan           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:46:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-void    ft_env(t_data *data, t_leaf *cur_root);
 
-char	*check_dollar_two(t_data *data, char *str)
-{
-	t_list *tmp;
-	tmp = env_search(data, str);
-	if(tmp == NULL)
-		return (NULL);
-	else
-		return (tmp->env);
-}
+void		ft_env(t_data *data, t_leaf *cur_root);
+static char	*check_keyval(t_data *data, char *str);
+
 /**
  *  1. cmd cnt 를 해주고 cmd가 1개 인경우는
  *      -> env_print 실행
@@ -37,27 +30,42 @@ char	*check_dollar_two(t_data *data, char *str)
  *      export $aaa 없는 거면 $aaaa
 */
 
-void    ft_env(t_data *data, t_leaf *cur_root)
+void	ft_env(t_data *data, t_leaf *cur_root)
 {
-    char    **cmd;
+	char	**cmd;
 
-    cmd = join_cmd(cur_root->left_child->right_child);
-    
-    if(!cmd[1])
-        env_print(data);
-    else
-    {
-        if(cmd[1][0] == '$')
-        {
-            if(ft_strlen(cmd[1]) == 1)
-                printf("env: %s: No such file or directory\n", cmd[1]);
-            else if(check_dollar_two(data, cmd[1]) == NULL)
-                env_print(data);
-            else
-                printf("%s", env_search(data, cmd[1])->env);
-        }
-        else
-            printf("env: %s: No such file or directory\n", cmd[1]);
-    }
-    // return (TRUE);
+	cmd = join_cmd(cur_root->left_child->right_child);
+	if (!cmd[1])
+		env_print(data);
+	else
+	{
+		if (cmd[1][0] == '$')
+		{
+			if (ft_strlen(cmd[1]) == 1)
+			{
+				printf("env: %s: No such file or directory\n", cmd[1]);
+				data->error_code = 127;
+			}
+			else if (check_keyval(data, cmd[1]) == NULL)
+				env_print(data);
+			else
+				printf("%s", env_search(data, cmd[1])->env);
+		}
+		else
+		{
+			printf("env: %s: No such file or directory\n", cmd[1]);
+			data->error_code = 127;
+		}
+	}
+}
+
+static char	*check_keyval(t_data *data, char *str)
+{
+	t_list	*tmp;
+
+	tmp = env_search(data, str);
+	if (tmp == NULL)
+		return (NULL);
+	else
+		return (tmp->env);
 }

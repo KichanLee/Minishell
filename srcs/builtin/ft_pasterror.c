@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_pasterror.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/07 17:17:15 by kichlee          ###   ########.fr       */
+/*   Created: 2023/08/07 19:28:47 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/07 19:29:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_pasterror(t_data *data)
 {
-	t_data	*data;
-
-	// atexit(check_leak);
-	
-	(void)argc;
-	(void)argv;
-	init(&data, envp);
-	init_base(argc);
-	while (TRUE)
-	{
-		sig();
-		get_input(data);
-		execute(data);
-		input_free(data);
-	}
-	// data_free(data);
-	return (0);
+	printf("bash : %d: command not found\n", data->error_code);
 }

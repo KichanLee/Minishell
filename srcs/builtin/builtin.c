@@ -6,13 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/06 14:43:55 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:13:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int check_bulitin_func(char *name)
+int	check_bulitin_func(char *name)
 {
 	if (!ft_strncmp(name, "cd", 3))
 		return (1);
@@ -26,11 +26,14 @@ int check_bulitin_func(char *name)
 		return (5);
 	if (!ft_strncmp(name, "export", 7))
 		return (6);
+	if (!ft_strncmp(name, "env", 4))
+		return (7);
 	return (0);
 }
-void exec_bulitin(int bulitnum,t_data *data , t_leaf *leaf)
+
+void	exec_bulitin(int bulitnum, t_data *data, t_leaf *leaf)
 {
-    if (bulitnum == 1)
+	if (bulitnum == 1)
 		ft_cd(data, leaf);
 	else if (bulitnum == 2)
 		ft_echo(leaf);
@@ -42,4 +45,6 @@ void exec_bulitin(int bulitnum,t_data *data , t_leaf *leaf)
 		ft_unset(data, leaf);
 	else if (bulitnum == 6)
 		ft_export(data, leaf);
+	else if (bulitnum == 7)
+		ft_env(data, leaf);
 }

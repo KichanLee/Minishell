@@ -9,7 +9,7 @@ void	do_cmd(t_data *data)
 	if (data->root->left_child->left_child != NULL)
 		check_redirect (data->root,data); // redirect가 있는거는 먼저실행 
 	if (data->root->left_child->right_child== NULL) //커맨드가 없을때  종료하기
-		exit(g_exit_status);
+		exit(0);
 	if (builtnum != 0)
 	{
 		exec_bulitin(builtnum,data,data->root);
@@ -50,7 +50,7 @@ void exec_fork(t_data *data) // 이제경로 찾고 하던 대로해주면됨
     abs_path(data);
 	base->command = set_path(data ,data->root->left_child->right_child);
 	if (!base->command)
-		exit(1);
+		program_error_exit("bash");
 	execve(base->command, base->cmd_path, data->env_array);
 	// if (execve(base->command, base->cmd_path, data->env_array) == -1)
 	// 	exit(1);
@@ -66,20 +66,21 @@ void	execute_cmd(t_data *data,int flag) // flag 는 자식이랑 부모 차이�
 
 	while (i < data->info->pipe_num + 1)
 	{
-		signal(SIGQUIT, SIG_DFL);
+		signal (SIGINT, SIG_IGN);
 		if (i < data->info->pipe_num)
 			if (pipe(base->com[i].fd) < 0)
-				exit(1);
+				error_back_readline(data,"bash",EPIPE,1);
 		base->com[i].pid = fork();
 		if (base->com[i].pid == -1)
 		{
 			if (flag)
-				exit(1); // 자식일때는 exit ;
+				program_error_exit("bash"); // 자식일때는 exit ;
 			else
-				return;
+				error_back_readline(data,"bash",ENOMEM ,1);
 		}
 		if (base->com[i].pid == 0)
 		{
+			signal (SIGINT, child_handler); 
 			data->info->parent =1;
 			if (data->info->pipe_num !=0)
 				link_pipe(i, base,data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/03 16:16:49 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:27:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ void	env_init(t_data *data, char **envp);
 //필요하신 초기화 내용 여기 넣어주시면 됩니당
 void	init(t_data **data, char **envp)
 {
-	t_pipe *pipe;
-	t_info *info;
-	
+	t_pipe	*pipe;
+	t_info	*info;
+
 	*data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!*data)
 		program_error_exit("bash");
 	pipe_init(&pipe);
 	info_init(&info);
-	(*data)->pipe= pipe;
-	(*data)->info= info;
+	(*data)->pipe = pipe;
+	(*data)->info = info;
 	env_init(*data, envp);
 }
 
@@ -49,22 +49,19 @@ void	env_init(t_data *data, char **envp)
 	}
 }
 
-
-void pipe_init(t_pipe **pipe)
+void	pipe_init(t_pipe **pipe)
 {
-	*pipe = (t_pipe *)malloc(sizeof(t_pipe));
+	*pipe = (t_pipe *)ft_calloc(sizeof(t_pipe));
 	if (!*pipe)
 		program_error_exit("bash");
 	(*pipe)->cmd_path = NULL;
 	(*pipe)->command = NULL;
 	(*pipe)->cmd_abs = NULL;
-	
 }
-
 
 void	info_init(t_info **info)
 {
-	*info = (t_info *)malloc(sizeof(t_info));
+	*info = (t_info *)ft_calloc(1, sizeof(t_info));
 	if (!*info)
 		program_error_exit("bash");
 	(*info)->index = 0;
@@ -74,5 +71,5 @@ void	info_init(t_info **info)
 	(*info)->oristdout = dup(STDOUT_FILENO);
 	(*info)->pipe_num = 0;
 	(*info)->pipe_index = 0;
-	(*info)->parent  =0;
+	(*info)->parent = 0;
 }

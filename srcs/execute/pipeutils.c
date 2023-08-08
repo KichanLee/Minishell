@@ -35,8 +35,10 @@ void	heredoc_flag(t_leaf *leaf,t_data *data)
 
 void recover_std(t_data *data)
 {
-    dup2(data->info->oristdin,STDIN_FILENO);
+    if (dup2(data->info->oristdin,STDIN_FILENO)== -1)
+		error_back_readline(data,"Bad file descriptor",EBADF,1);
     close(data->info->oristdin);
-    dup2(data->info->oristdout,STDOUT_FILENO);
+    if (dup2(data->info->oristdout,STDOUT_FILENO)== -1)
+		error_back_readline(data,"Bad file descriptor",EBADF,1);
     close(data->info->oristdin);
 }

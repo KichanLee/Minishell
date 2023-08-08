@@ -34,6 +34,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/builtin/ft_pwd.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
+	$(SRCS_DIR)/builtin/ft_env.c \
 	$(SRCS_DIR)/execute/checkbulitin.c \
 	$(SRCS_DIR)/execute/execve.c \
 	$(SRCS_DIR)/execute/freepipe.c \
@@ -43,6 +44,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/redirect/heredocutils.c \
 	$(SRCS_DIR)/redirect/heredoc.c \
 	$(SRCS_DIR)/redirect/redirection.c \
+	$(SRCS_DIR)/signal/signal.c \
 
 OBJS = $(SRCS:%.c=%.o)
 
