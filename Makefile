@@ -7,7 +7,7 @@ INCS_DIR = incs
 SRCS_DIR = srcs
 
 CC = cc -g3
-CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
 
 RM = rm -rf
 MAKE = make
@@ -35,6 +35,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
 	$(SRCS_DIR)/builtin/ft_env.c \
+	$(SRCS_DIR)/builtin/ft_atolong.c \
 	$(SRCS_DIR)/execute/checkbulitin.c \
 	$(SRCS_DIR)/execute/execve.c \
 	$(SRCS_DIR)/execute/freepipe.c \
@@ -55,7 +56,7 @@ all: $(NAME)
 
 $(NAME): $(L_NAME) $(OBJS)
 	$(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib -ltermcap
-	# $(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib -ltermcap -fsanitize=address
+	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
 
 $(L_NAME):
 	$(MAKE) -C $(L_DIR)

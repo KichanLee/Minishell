@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/08 12:42:41 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:57:11 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void init_base(int ac)
 		|| tgetent (NULL, "xterm-256color") == -1)
         exit(1);
 }
-
 
 void    handle_sigint(int sig)
 {

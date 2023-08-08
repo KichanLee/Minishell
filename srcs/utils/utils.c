@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 08:45:57 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:34:06 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,20 @@ void	program_error_exit(char *str)
 //input 한번 끝났을 때 사용
 void	input_free(t_data *data)
 {
+	int i;
+
 	ft_lstclear(&data->tokens);
 	data->tokens = NULL;
 	free(data->input);
 	data->input = NULL;
-	tree_clear(data->root);	
+	tree_clear(data->root);
 	data->root = NULL;
 	free(data->pipe);
+	free(data->pipe->com);
+	i = -1;
+	while(++i < data->info->heredoc_flag)
+		free(data->info->heredoc_file[i]);
+	free(data->info->heredoc_file);
 	free(data->info);
 }
 

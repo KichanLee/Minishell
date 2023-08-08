@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 16:26:27 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:43:50 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	env_print(t_data *data)
 t_list	*env_search(t_data *data, char *key)
 {
 	char	*tmp;
-	char	*temp;
+	char	*env;
 	t_list	*cur;
 
-	temp = ft_strdup(key);
-	tmp = ft_strncat(temp, "=", 1);
+	tmp = ft_strdup(key);
+	env = ft_strncat(tmp, "=", 1);
 	cur = data->envs;
 	while (cur)
 	{
-		if (!ft_strncmp(cur->env, tmp, ft_strlen(tmp)))
+		if (!ft_strncmp(cur->env, env, ft_strlen(env)))
 			return (cur);
 		cur = cur->next;
 	}

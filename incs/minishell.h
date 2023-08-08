@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:05:33 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/07 14:53:16 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/08 17:52:44 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include "struct.h"
 # include "init.h"
 # include "parse.h"
-# include "struct.h"
-# include "utils.h"
 # include "bulitin.h"
+# include "execute.h"
+# include "utils.h"
 # include "pipe.h"
 # include "message.h"
 # include "../Libft/libft.h"

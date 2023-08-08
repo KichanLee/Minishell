@@ -10,7 +10,7 @@ void	count_pipe(t_data*data)
 	}
 	if(data->info->pipe_num!=0)
 		data->info->pipe_num--; // 파이프가 1나일때 2개가됨 
-	data->pipe->com = (t_pid *)ft_calloc(data->info->pipe_num+1, sizeof(t_pid));// 하나를 여유롭게 생성하는이유는 herdoc 때문에 하나를 여유롭게생성
+	data->pipe->com = (t_pid *)ft_calloc(data->info->pipe_num+1,sizeof(t_pid));// 하나를 여유롭게 생성하는이유는 herdoc 때문에 하나를 여유롭게생성
 	if(!data->pipe->com)
 		program_error_exit("bash");
 }
@@ -30,8 +30,6 @@ void	heredoc_flag(t_leaf *leaf,t_data *data)
 	heredoc_flag(leaf->left_child,data);
 	heredoc_flag(leaf->right_child,data);
 }
-
-
 
 void recover_std(t_data *data)
 {

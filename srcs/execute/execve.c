@@ -23,7 +23,7 @@ void	execute(t_data *data)
 {
 	count_pipe(data);
 	heredoc_flag(data->root,data); //heredoc 이 있는 지판별해준다 
-	data->info->heredoc_file= (char **)ft_calloc(data->info->heredoc_flag+1, sizeof(char *));
+	data->info->heredoc_file= (char **)ft_calloc(data->info->heredoc_flag+1,sizeof(char *));
 	if (!data->info->heredoc_file) // 파이프 기준으로 <<a <<b | 여러개 생성할 수있음덮어씌우는개념
 		program_error_exit("bash");
 	if (!data->info->pipe_num && !data->info->heredoc_flag)//단일 커맨들일때 히어독도 x

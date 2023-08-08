@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/08 13:26:37 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:21:16 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_echo(t_leaf *cur_root)
 	i = 1;
 	flag = FALSE;
 	check_flag(cmd, &i, &flag);
-	printf("%p\n", cmd[i]);
 	while (cmd[i])
 	{
 		print_line(cmd[i]);

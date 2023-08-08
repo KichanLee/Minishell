@@ -1,44 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncat.c                                       :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 07:51:04 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 16:19:01 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/08 17:49:19 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/08 17:54:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-char	*ft_strncat(char *dest, char *src, int n)
-{
-	int		size;
-	char	*res;
-	int		i;
-	int		j;
+# include "struct.h"
 
-	size = ft_strlen(dest) + n;
-	res = (char *)ft_calloc(size + 1, sizeof(char));
-	i = 0;
-	if (dest)
-	{
-		while (dest[i])
-		{
-			res[i] = dest[i];
-			i++;
-		}
-		free(dest);
-	}
-	j = 0;
-	if (src)
-	{
-		while (j < n)
-		{
-			res[i + j] = src[j];
-			j++;
-		}
-	}
-	return (res);
-}
+t_bool	get_input(t_data *data);
+
+#endif

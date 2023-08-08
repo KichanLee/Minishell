@@ -1,41 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   freepipe.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 17:49:42 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/08 18:36:43 by eunwolee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
-
-// void	free_cmd(t_pipe *base)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (base->cmd_abs[i])
-// 	{
-// 		free(base->cmd_abs[i]);
-// 		i++;
-// 	}
-// 	free(base->cmd_path);
-// 	free(base->com);
-// }
-
-void	get_input(t_data *data)
-{
-	t_pipe *pipe;
-	t_info *info;
-	
-	data->input = readline("minishell$ ");
-	if (!data->input)
-	{
-		printf("exit\n");
-		free(data->input);
-		free(data);
-		exit(0);
-	}
-	add_history(data->input);
-	lexer(data);
-	syntax(data);
-	parser(data);
-	pipe_init(&pipe);
-	info_init(&info);
-	data->pipe= pipe;
-	data->info= info;
-}
 
 void	close_pipe(int i, t_pipe *base,t_data *data)
 {
@@ -55,8 +30,8 @@ void	check_file(int fd,t_data *data)
 	if (fd < 0)
 	{
 		close(fd);
-		g_exit_status = 1;
+		data->error_code = 1;
 		if (data->info->parent ==0) // 자식에서 종료 or 부모에서 종료 확인해주기 
-			exit(1);
+			program_error_exit("bash");
 	}
 }

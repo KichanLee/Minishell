@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/08 15:06:24 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:38:53 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int check_name(char *str)
 
 char    **sort_bubble(char **str, int size)
 {
-    char **res = (char **)ft_calloc((size + 1), sizeof(char *));
+    char **res = (char **)ft_calloc(sizeof(char *), (size + 1));
     int sorted = 0;
     int i = 0;
     char *tmp;
@@ -135,7 +135,7 @@ static void print_export_order(t_data *data)
     i = 0;
     lst_size = ft_lstsize(data->envs);
     cur = data->envs;
-    order_copy = (char **)ft_calloc(lst_size + 1, sizeof(char *));
+    order_copy = (char **)ft_calloc(sizeof(char *), lst_size + 1);
     while (cur)
     {
         order_copy[i] = ft_strdup(cur->env);

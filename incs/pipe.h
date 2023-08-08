@@ -26,6 +26,5 @@ void    close_pipe(int i, t_pipe *base,t_data *data);
 void	wait_child_processes(t_data *data);
 char	*search_path(t_pipe *base);
 void	execute(t_data *data);
-void	get_input(t_data *data);
 
 #endif

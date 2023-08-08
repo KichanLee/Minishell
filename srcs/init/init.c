@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donghong < donghong@student.42seoul.kr>    +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/03 16:16:49 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:54:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,30 @@ void pipe_init(t_pipe **pipe)
 	
 }
 
+t_bool	get_input(t_data *data)
+{
+	t_pipe *pipe;
+	t_info *info;
+	
+	data->input = readline("minishell$ ");
+	if (!data->input)
+	{
+		printf("exit\n");
+		free(data->input);
+		free(data);
+		exit(0);
+	}
+	add_history(data->input);
+	lexer(data);
+	if (syntax(data) == FALSE)
+		return (FALSE);
+	parser(data);
+	pipe_init(&pipe);
+	info_init(&info);
+	data->pipe= pipe;
+	data->info= info;
+	return (TRUE);
+}
 
 void	info_init(t_info **info)
 {

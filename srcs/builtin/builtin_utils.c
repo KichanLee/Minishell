@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 15:06:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/06 14:35:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_list *create_env_node(char *key, char *value)
     new_node->token->type = T_CMD;      // 환경 변수는 T_CMD로 설정
     new_node->token->redirect_type = 0; // 환경 변수의 리다이렉션 타입은 0으로 설정
     new_node->token->str = key;         // key 값을 환경 변수 노드의 token의 str에 할당
-    key_equal = (char *)ft_calloc(ft_strlen(key) + 2, sizeof(char));
+    key_equal = (char *)ft_calloc(sizeof(char), ft_strlen(key) + 2);
     key_equal = ft_strdup(key);
     key_equal[ft_strlen(key)] = '=';
     key_equal[ft_strlen(key) + 1] = '\0';
@@ -113,7 +113,7 @@ void update_env(t_data *data, char *key, char *value)
     else
     {
         free(tmp->env);
-        key_equal = (char *)ft_calloc(ft_strlen(key) + 2, sizeof(char));
+        key_equal = (char *)ft_calloc(sizeof(char), ft_strlen(key) + 2);
         key_equal = ft_strdup(key);
         key_equal[ft_strlen(key)] = '=';
         key_equal[ft_strlen(key) + 1] = '\0';
