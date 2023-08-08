@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 22:24:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 11:31:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/07/17 06:40:42 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_bool	syntax_none(t_data *data, t_list *cur)
 	if (cur->token->type == T_WORD)
 		cur->token->type = T_CMD;
 	else if (cur->token->type == T_PIPE)
-		return (error_back_readline(data, E_SYNTAX_PIPE, 258, 0));
+		return (error_back_readline(data, E_SYNTAX_PIPE, 258,0));
 	return (TRUE);
 }
 
@@ -72,26 +72,26 @@ static t_bool	syntax_redirect(t_data *data, t_list *cur)
 	if (cur->pre->token->type == T_REDIRECT)
 	{
 		if (cur->token->redirect_type == T_INPUT)
-			return (error_back_readline(data, E_SYNTAX_INPUT, 258, 0));
+			return (error_back_readline(data, E_SYNTAX_INPUT, 258,0));
 		if (cur->token->redirect_type == T_OUTPUT)
-			return (error_back_readline(data, E_SYNTAX_OUTPUT, 258, 0));
+			return (error_back_readline(data, E_SYNTAX_OUTPUT, 258,0));
 		if (cur->token->redirect_type == T_HEREDOC)
-			return (error_back_readline(data, E_SYNTAX_HEREDOC, 258, 0));
+			return (error_back_readline(data, E_SYNTAX_HEREDOC, 258,0));
 		if (cur->token->redirect_type == T_APPEND)
-			return (error_back_readline(data, E_SYNTAX_APPEND, 258, 0));
+			return (error_back_readline(data, E_SYNTAX_APPEND, 258,0));
 	}
 	if (!cur->next)
-		return (error_back_readline(data, E_SYNTAX_NEWLINE, 258, 0));
+		return (error_back_readline(data, E_SYNTAX_NEWLINE, 258,0));
 	return (TRUE);
 }
 
 static t_bool	syntax_pipe(t_data *data, t_list *cur)
 {
 	if (cur->pre->token->type == T_PIPE)
-		return (error_back_readline(data, E_SYNTAX_PIPE, 258, 0));
+		return (error_back_readline(data, E_SYNTAX_PIPE, 258,0));
 	if (cur->pre->token->type == T_REDIRECT)
-		return (error_back_readline(data, E_SYNTAX_PIPE, 258, 0));
+		return (error_back_readline(data, E_SYNTAX_PIPE, 258,0));
 	if (!cur->next)
-		return (error_back_readline(data, E_SYNTAX_NEWLINE, 258, 0));
+		return (error_back_readline(data, E_SYNTAX_NEWLINE, 258,0));
 	return (TRUE);
 }

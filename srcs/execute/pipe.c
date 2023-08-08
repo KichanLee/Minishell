@@ -29,7 +29,6 @@ void wait_child_processes(t_data *data)
 	while (i < data->info->pipe_num + 1)
 	{
 		waitpid(-1, &status, 0);
-
 		i++;
 	}
 	if (WIFSIGNALED(status)) // signal 에 의해 종료가 되었는지 아닌지 확인
@@ -37,4 +36,5 @@ void wait_child_processes(t_data *data)
 		data->error_code = WTERMSIG(status); // 시그널로 종료시 시그널 번호를 저장 예 ctrl +c경우 2 번
 		ft_putendl_fd("", STDERR_FILENO);	 // 빈문자열 출력을 위한 ctrl+c 이런거 눌렀을때 바로 새줄
 	}
+
 }

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:51:04 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 16:19:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:19:58 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strncat(char *dest, char *src, int n)
 			res[i] = dest[i];
 			i++;
 		}
-		// free(dest);
+		free(dest);
 	}
 	j = 0;
 	if (src)

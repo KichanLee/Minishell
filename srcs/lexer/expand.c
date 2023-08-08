@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 11:27:39 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:25:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	expand(t_data *data, t_token *token, int *i, t_bool quote)
 	char	*name;
 
 	*i += 1;
-	name = NULL;
+	name = ft_strdup("");
 	if (check_heredoc(data, token, i) == TRUE)
 		return (TRUE);
 	if (check_blank(data, token, i, quote) == TRUE)
@@ -88,6 +88,7 @@ static t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote)
 {
 	if (data->input[*i] == '\"')
 	{
+
 		if (quote == TRUE)
 		{
 			token->str = ft_strncat(token->str, "$", 1);
@@ -122,25 +123,31 @@ static void	replace(t_data *data, t_token *token, char *name)
 	int		j;
 	t_list	*tmp;
 
+	printf("name_j: %p, name_j: %s\n", name, name);
 	tmp = env_search(data, name);
-	if (!tmp)
-	{
-		token->str = ft_strncat(token->str, "$", 1);
-		if (!token->str)
-			program_error_exit("bash");
-		token->str = ft_strncat(token->str, name, ft_strlen(name));
-		if (!token->str)
-			program_error_exit("bash");
-	}
-	else
-	{
+	// if (!tmp)
+	// {
+	// 	token->str = ft_strncat(token->str, "$", 1);
+	// 	if (!token->str)
+	// 		program_error_exit("bash");
+	// 	token->str = ft_strncat(token->str, name, ft_strlen(name));
+	// 	if (!token->str)
+	// 		program_error_exit("bash");
+	// }
+	// else
+	// {
 		j = 0;
 		while (tmp->env[j] != '=')
 			j++;
+		printf("token->str_ptr: %p, token->str: %s\n", token->str, token->str);
+		printf("name_j: %p, name_j: %s\n", name, name);
 		token->str = ft_strncat(token->str, \
 			&tmp->env[j + 1], ft_strlen(&tmp->env[j + 1]));
+		printf("token->str_ptr: %p, token->str: %s\n", token->str, token->str);
 		if (!token->str)
 			program_error_exit("bash");
-	}
+	// }
+	printf("name_ptr: %p, name: %s\n", name, name);
 	free(name);
+	printf("token_ptr: %p", token);
 }

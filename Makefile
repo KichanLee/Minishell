@@ -6,8 +6,8 @@ L_NAME = libft.a
 INCS_DIR = incs
 SRCS_DIR = srcs
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
+CC = cc -g3
+CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include
 
 RM = rm -rf
 MAKE = make
@@ -54,8 +54,8 @@ OBJS = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(L_NAME) $(OBJS)
-	$(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib
-	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
+	$(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib -ltermcap
+	# $(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib -ltermcap -fsanitize=address
 
 $(L_NAME):
 	$(MAKE) -C $(L_DIR)

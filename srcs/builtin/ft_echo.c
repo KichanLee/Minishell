@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/07 19:51:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:26:37 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,21 @@ static void	print_line(char *line);
 
 void	ft_echo(t_leaf *cur_root)
 {
-	int		i;
-	int		flag;
-	int		blank;
-	char	**cmd;
+	int i;
+	int flag;
+	int blank;
+	char **cmd;
 
 	cmd = join_cmd(cur_root->left_child->right_child);
 	blank = count_args(cmd);
 	i = 1;
 	flag = FALSE;
 	check_flag(cmd, &i, &flag);
+	printf("%p\n", cmd[i]);
 	while (cmd[i])
 	{
 		print_line(cmd[i]);
-		if (i < blank - 1)
+		if(i < blank - 1)
 			printf(" ");
 		i++;
 	}

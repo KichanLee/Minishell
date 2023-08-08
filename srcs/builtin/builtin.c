@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/07 19:13:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:50:39 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	check_bulitin_func(char *name)
+int check_bulitin_func(char *name)
 {
 	if (!ft_strncmp(name, "cd", 3))
 		return (1);
@@ -30,10 +30,9 @@ int	check_bulitin_func(char *name)
 		return (7);
 	return (0);
 }
-
-void	exec_bulitin(int bulitnum, t_data *data, t_leaf *leaf)
+void exec_bulitin(int bulitnum,t_data *data , t_leaf *leaf)
 {
-	if (bulitnum == 1)
+    if (bulitnum == 1)
 		ft_cd(data, leaf);
 	else if (bulitnum == 2)
 		ft_echo(leaf);

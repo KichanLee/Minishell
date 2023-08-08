@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/07 18:06:52 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:42:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void init_base(int ac)
     if(tcgetattr(STDIN_FILENO,&termi)== -1)
         exit(1);
     termi.c_lflag &= ~(ECHOCTL); 
-    if (tcsetattr(STDIN_FILENO,TCSANOW, &termi)  == -1) 
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &termi) == (-1)
+		|| tgetent (NULL, "xterm-256color") == -1)
         exit(1);
 }
 
@@ -31,7 +32,7 @@ void    handle_sigint(int sig)
     // printf("handle function !");
     printf("\n");
     rl_on_new_line();
-    rl_replace_line("", 0);
+    // rl_replace_line("", 0);
     rl_redisplay();
     // printf("after sig\n");
     (void) sig;

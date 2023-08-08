@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/06 22:27:25 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:26:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	env_print(t_data *data)
 t_list	*env_search(t_data *data, char *key)
 {
 	char	*tmp;
+	char	*temp;
 	t_list	*cur;
 
-	tmp = ft_strncat(key, "=", 1);
+	temp = ft_strdup(key);
+	tmp = ft_strncat(temp, "=", 1);
 	cur = data->envs;
 	while (cur)
 	{

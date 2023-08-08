@@ -16,16 +16,25 @@
 
 void	get_input(t_data *data)
 {
+	t_pipe *pipe;
+	t_info *info;
+	
 	data->input = readline("minishell$ ");
 	if (!data->input)
 	{
 		printf("exit\n");
+		free(data->input);
+		free(data);
 		exit(0);
 	}
 	add_history(data->input);
 	lexer(data);
 	syntax(data);
 	parser(data);
+	pipe_init(&pipe);
+	info_init(&info);
+	data->pipe= pipe;
+	data->info= info;
 }
 
 void	close_pipe(int i, t_pipe *base,t_data *data)

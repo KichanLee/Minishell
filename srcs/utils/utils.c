@@ -44,6 +44,8 @@ void	input_free(t_data *data)
 	data->input = NULL;
 	tree_clear(data->root);	
 	data->root = NULL;
+	free(data->pipe);
+	free(data->info);
 }
 
 //정상종료 시 사용

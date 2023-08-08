@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/07 19:41:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:36:52 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 static int	is_num_str(char *str);
-static void	exit_not_num(t_leaf *cur_root);
+static void	exit_not_num(t_data *data, t_leaf *cur_root);
 
 void	ft_exit(t_data *data, t_leaf *cur_root)
 {
 	int		status;
-	char	**cmd;
+    char    **cmd;
 	int		count;
-
-	cmd = join_cmd(cur_root->left_child->right_child);
-	count = count_args(cmd);
+	
+    cmd = join_cmd(cur_root->left_child->right_child);
+    count = count_args(cmd);
 	status = 0;
 	if (count == 1)
 	{
@@ -38,7 +38,7 @@ void	ft_exit(t_data *data, t_leaf *cur_root)
 			exit(status);
 		}
 		else
-			exit_not_num(cur_root);
+			exit_not_num(data, cur_root);
 	}
 	else
 	{
@@ -63,10 +63,11 @@ static int	is_num_str(char *str)
 	return (1);
 }
 
-static void	exit_not_num(t_leaf *cur_root)
+static void	exit_not_num(t_data *data, t_leaf *cur_root)
 {
+	(void)data;
+	
 	printf("exit\n");
-	printf("bash: exit: %s: numeric argument required\n", \
-		cur_root->left_child->right_child->token->str);
+	printf("bash: exit: %s: numeric argument required\n", cur_root->left_child->right_child->token->str);
 	exit(255);
 }
