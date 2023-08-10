@@ -3,41 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/07 17:17:15 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/11 06:36:58 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_data	*data;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	init(&data, envp);
-// 	init_base(argc);
-	
-
-
-// 	char *str = get_next_line(0);
-// 	data->input = ft_substr(str, 0, ft_strlen(str) - 1); //-1 개행 떼기
-
-// 	sig();
-// 	get_input(data);
-// 	system("leaks minishell");
-// 	execute(data);
-// 	input_free(data);
-	
-// 	// data_free(data);
-// 	// atexit(check_leak);
-// 	return (0);
-// }
-
-
+char	*abs_home;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -48,14 +23,20 @@ int	main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	init_base(argc);
 	
+	abs_home = ft_strdup(env_search(data, "HOME")->env + 5);
+
+	sig();
 	while (TRUE)
 	{
-		sig();
+		// abs_init(data);
 		// system("leaks minishell");
-		get_input(data);
+		// printf("abs home : %s\n", data->abs_home);
+		if (get_input(data) == FALSE)
+			continue ;
 		execute(data);
 		input_free(data);
 	}
+	// free(data->abs_home);
 	// system("leaks minishell");
 	data_free(data);
 	// atexit(check_leak);

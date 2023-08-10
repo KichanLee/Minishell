@@ -5,34 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 16:41:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/08 18:49:11 by kichlee          ###   ########.fr       */
+/*   Created: 2023/08/10 20:31:59 by kichlee           #+#    #+#             */
+/*   Updated: 2023/08/10 20:38:53 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// long long ft_atolong(const char *str, int *flag)
-// {
-//     unsigned long long res;
-//     int sign;
-    
-//     res = 0;
-//     sign = 1;
-//     while ((*str >= 9 && *str <= 13) || *str == 32)
-// 		str++;
-//     if (*str == '+' || *str == '-')
-// 	{
-// 		if (*str == '-')
-// 			sign *= -1;
-// 		str++;
-// 	}
+#include "../../incs/minishell.h"
 
-//     while (*str >= '0' && *str <= '9')
-// 	{
-// 		res = (res * 10) + (*str++ - '0');
+char	*pass_blank_sign(char *str, int *sign)
+{
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		++str;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			*sign *= -1;
+		str++;
+	}
+	return (str);
+}
 
-// 		if (((res > 9223372036854775807ULL) && (sign == 1))
-// 		|| ((res > 9223372036854775808ULL) && (sign == -1)))
-// 		*flag = 0;
-// 	}
-// 	return (res * sign);
-// }
+int	check_overflow(long long result, char ch)
+{
+	if (result > LLONG_MAX / 10 || \
+	(result == LLONG_MAX / 10 && (ch - '0') > LLONG_MAX % 10))
+		return (1);
+	return (0);
+}
+
+int	check_underflow(long long result, char ch)
+{
+	if (result > -(LLONG_MIN / 10) || \
+		(result == -(LLONG_MIN / 10) && (ch - '0') > -(LLONG_MIN % 10)))
+		return (1);
+	return (0);
+}
+
+long long	char_to_long_long(char *str, int *flag)
+{
+	long long	result;
+	int			sign;
+	int			i;
+
+	result = 0;
+	sign = 1;
+	i = -1;
+	str = pass_blank_sign(str, &sign);
+	while (ft_isdigit(str[++i]))
+	{
+		if (check_overflow(result, str[i]))
+		{
+			if ((sign == 1 && check_overflow(result, str[i])) || \
+			(sign == -1 && check_underflow(result, str[i])))
+			{
+				*flag = 0;
+				return (0);
+			}
+		}
+		result = result * 10 + (str[i] - '0');
+	}
+	*flag = 1;
+	return (result * sign);
+}

@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_exit_two.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 22:51:02 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/09 19:29:16 by kichlee          ###   ########.fr       */
+/*   Created: 2023/08/10 21:28:16 by kichlee           #+#    #+#             */
+/*   Updated: 2023/08/10 21:34:56 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	ft_unset(t_data *data, t_leaf *cur_root);
-
-void	ft_unset(t_data *data, t_leaf *cur_root)
+int	is_num_str(char *str)
 {
-	char	**cmd;
-	int		arg_cnt;
-	int		i;
+	int	i;
 
-	cmd = join_cmd(cur_root->left_child->right_child);
-	arg_cnt = count_args(cmd);
-	i = 1;
-	while (i < arg_cnt)
+	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	while (str[i])
 	{
-		env_remove(data, cmd[i]);
-		++i;
+		if (!('0' <= str[i] && str[i] <= '9'))
+			return (0);
+		i++;
 	}
+	return (1);
+}
+
+void	exit_not_num(t_data *data, char *str)
+{
+	(void)data;
+	printf("exit\n");
+	printf("bash: exit: %s: numeric argument required\n", str);
+	data->error_code = 255;
+	exit(255);
 }

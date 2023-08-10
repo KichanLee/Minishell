@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 17:54:36 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 06:32:40 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,21 @@ t_bool	get_input(t_data *data)
 	
 	data->input = readline("minishell$ ");
 	if (!data->input)
+		program_error_exit("bash");
+	if (!data->input[0])
 	{
-		printf("exit\n");
 		free(data->input);
-		free(data);
-		exit(0);
+		return (FALSE);
 	}
 	add_history(data->input);
 	lexer(data);
 	if (syntax(data) == FALSE)
+	{
+		tree_clear(data->root);
+		ft_lstclear(&data->tokens);
+		free(data->input);
 		return (FALSE);
+	}
 	parser(data);
 	pipe_init(&pipe);
 	info_init(&info);

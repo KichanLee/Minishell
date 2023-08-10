@@ -22,6 +22,7 @@ void	do_cmd(t_data *data)
 void	execute(t_data *data)
 {
 	count_pipe(data);
+	data->env_array = env_to_array(data);
 	heredoc_flag(data->root,data); //heredoc 이 있는 지판별해준다 
 	data->info->heredoc_file= (char **)ft_calloc(data->info->heredoc_flag+1,sizeof(char *));
 	if (!data->info->heredoc_file) // 파이프 기준으로 <<a <<b | 여러개 생성할 수있음덮어씌우는개념
@@ -46,7 +47,6 @@ void exec_fork(t_data *data) // 이제경로 찾고 하던 대로해주면됨
 	t_pipe *base = data->pipe;
 	if(!data->root->left_child->right_child)
 		return ;
-    data->env_array = env_to_array(data);
     abs_path(data);
 	base->command = set_path(data ,data->root->left_child->right_child);
 	if (!base->command)
@@ -63,7 +63,7 @@ void	execute_cmd(t_data *data,int flag) // flag 는 자식이랑 부모 차이�
 	i = data->info->pipe_index;
     t_pipe *base = data->pipe;
     t_leaf *head = data->root;
-
+	
 	while (i < data->info->pipe_num + 1)
 	{
 		signal (SIGINT, SIG_IGN);

@@ -31,9 +31,11 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/builtin/ft_cd.c \
 	$(SRCS_DIR)/builtin/ft_echo.c \
 	$(SRCS_DIR)/builtin/ft_exit.c \
+	$(SRCS_DIR)/builtin/ft_exit_two.c \
 	$(SRCS_DIR)/builtin/ft_pwd.c \
 	$(SRCS_DIR)/builtin/ft_unset.c \
 	$(SRCS_DIR)/builtin/ft_export.c \
+	$(SRCS_DIR)/builtin/ft_export_two.c \
 	$(SRCS_DIR)/builtin/ft_env.c \
 	$(SRCS_DIR)/builtin/ft_atolong.c \
 	$(SRCS_DIR)/execute/checkbulitin.c \

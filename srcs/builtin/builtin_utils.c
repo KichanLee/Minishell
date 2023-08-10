@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/06 14:35:21 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:59:09 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,15 @@ t_list *create_env_node(char *key, char *value)
     return new_node;
 }
 
-void add_env_back(t_data *head, char *key, char *value)
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!lst || !new)
+		return ;
+	new -> next = *lst;
+	*lst = new;
+}
+
+void add_env_front(t_data *head, char *key, char *value)
 {
     if (head->envs == NULL)
     {
@@ -99,7 +107,7 @@ void add_env_back(t_data *head, char *key, char *value)
     else
     {
         printf("\nenv exit!\n");
-        ft_lstadd_back(&(head->envs), create_env_node(key, value));
+        ft_lstadd_front(&(head->envs), create_env_node(key, value));
     }
 }
 
@@ -109,7 +117,7 @@ void update_env(t_data *data, char *key, char *value)
     char *key_equal;
     tmp = env_search(data, key);
     if (!tmp)
-        add_env_back(data, key, value);
+        add_env_front(data, key, value);
     else
     {
         free(tmp->env);
