@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/09 14:26:54 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/11 10:43:45 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_token
 	int		type;
 	int		redirect_type;
 	char	*str;
+	t_bool	print; //환경변수 출력 여부 (싱글쿼트 사이에 있거나 더블쿼트 사이에 $+공백+문자열 형태로 있을 때)
+	t_bool	blank;
 }	t_token;
 
 //tokens와 envs에서 통용되는 리스트 구조체

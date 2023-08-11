@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/10 21:22:19 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/11 07:54:45 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ int	check_bulitin_func(char *name)
 	return (0);
 }
 
-void	exec_bulitin(int bulitnum, t_data *data, t_leaf *leaf)
+void	exec_bulitin(int bulitnum, t_data *data)
 {
 	if (bulitnum == 1)
-		ft_cd(data, leaf);
+		ft_cd(data, data->root);
 	else if (bulitnum == 2)
-		ft_echo(leaf);
+		ft_echo(data->root->left_child->right_child);
 	else if (bulitnum == 3)
-		ft_exit(data, leaf);
+		ft_exit(data, data->root);
 	else if (bulitnum == 4)
-		ft_pwd(data, leaf);
+		ft_pwd(data, data->root);
 	else if (bulitnum == 5)
-		ft_unset(data, leaf);
+		ft_unset(data, data->root);
 	else if (bulitnum == 6)
-		ft_export(data, leaf);
+		ft_export(data, data->root);
 	else if (bulitnum == 7)
-		ft_env(data, leaf);
+		ft_env(data, data->root);
 }

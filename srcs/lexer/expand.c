@@ -6,30 +6,38 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/03 17:41:06 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 10:48:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_bool			expand(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool			expand(t_data *data, t_token **token, int *i, t_bool quote);
 static t_bool	check_heredoc(t_data *data, t_token *token, int *i);
 static t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote);
 static t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote);
 static void		replace(t_data *data, t_token *token, char *name);
 
-t_bool	expand(t_data *data, t_token *token, int *i, t_bool quote)
+t_bool	expand(t_data *data, t_token **token, int *i, t_bool quote)
 {
 	char	*name;
 
 	*i += 1;
-	name = NULL;
-	if (check_heredoc(data, token, i) == TRUE)
+	name = ft_strdup("");
+	if (check_heredoc(data, *token, i) == TRUE)
 		return (TRUE);
-	if (check_blank(data, token, i, quote) == TRUE)
+	if (check_blank(data, *token, i, quote) == TRUE)
 		return (TRUE);
-	if (check_other(data, token, i, quote) == TRUE)
+	if (check_other(data, *token, i, quote) == TRUE)
 		return (TRUE);
+	while (!ft_isalnum(data->input[*i]))
+	{
+		(*token)->print = TRUE;
+		name = ft_strncat(name, &data->input[*i], 1);
+		if (!name)
+			program_error_exit("bash");
+		*i += 1;
+	}
 	while (data->input[*i] != '\'' && data->input[*i] != '\"' \
 		&& data->input[*i] != ' ' && data->input[*i] != '\t' \
 		&& data->input[*i] != '\0' && ft_isalnum(data->input[*i]))
@@ -39,11 +47,22 @@ t_bool	expand(t_data *data, t_token *token, int *i, t_bool quote)
 			program_error_exit("bash");
 		*i += 1;
 	}
-	replace(data, token, name);
-	if (quote == FALSE)
-		*i -= 1;
-	else if (quote == TRUE && data->input[*i] == '\"')
-		return (TRUE);
+	replace(data, (*token), name);
+	if (quote == TRUE && data->input[*i] == '\"')
+	{
+		if (data->input[*i + 1] == '\0')
+			return (TRUE);
+		token_add_list(&data->tokens, token, TRUE);
+		*i += 1;
+	}
+	else if (quote == FALSE \
+		|| (quote == TRUE && !ft_isalnum(data->input[*i])))
+	{
+		if (quote == FALSE)
+			*i -= 1;
+		(*token)->blank = FALSE;
+		token_add_list(&data->tokens, token, TRUE);
+	}
 	return (FALSE);
 }
 
@@ -81,6 +100,8 @@ static t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote)
 		if (quote == TRUE)
 			return (TRUE);
 	}
+	if (quote == TRUE && data->input[*i] == ' ')
+		token->print = TRUE;
 	return (FALSE);
 }
 
@@ -138,6 +159,7 @@ static void	replace(t_data *data, t_token *token, char *name)
 		j = 0;
 		while (tmp->env[j] != '=')
 			j++;
+		token->print = TRUE;
 		token->str = ft_strncat(token->str, \
 			&tmp->env[j + 1], ft_strlen(&tmp->env[j + 1]));
 		if (!token->str)

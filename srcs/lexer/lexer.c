@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 16:14:38 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 09:58:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,14 @@ static void	check_char(t_data *data, t_token **token, int *i)
 		tokenizer(data, token, i);
 	}
 	else if (data->input[*i] == '\'' || data->input[*i] == '\"')
-	{
 		tokenizer(data, token, i);
-	}
 	else if (data->input[*i] == ' ' || data->input[*i] == '\t')
 	{
 		if (*(*token)->str)
 			token_add_list(&data->tokens, token, TRUE);
 	}
 	else if (data->input[*i] == '$')
-		expand(data, *token, i, FALSE);
+		expand(data, token, i, FALSE);
 	else
 	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);

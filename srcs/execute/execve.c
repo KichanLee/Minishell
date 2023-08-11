@@ -12,7 +12,7 @@ void	do_cmd(t_data *data)
 		exit(0);
 	if (builtnum != 0)
 	{
-		exec_bulitin(builtnum,data,data->root);
+		exec_bulitin(builtnum, data);
 		exit(0); // 실행 후 종료돼야함
 	}
 	else

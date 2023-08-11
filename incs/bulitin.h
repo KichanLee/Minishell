@@ -12,10 +12,10 @@ void    init_base(int ac);
 void child_handler(int signum);
 
 /*builtin*/
-void    exec_bulitin(int bulitnum,t_data *data , t_leaf *leaf);
+void    exec_bulitin(int bulitnum,t_data *data);
 int     check_bulitin_func(char *name);
 void	ft_cd(t_data *data, t_leaf *cur_root);
-void	ft_echo(t_leaf *cur_root);
+void	ft_echo(t_leaf *cmd);
 void	ft_exit(t_data *data, t_leaf *cur_root);
 void	ft_pwd(t_data *data, t_leaf *cur_root);
 void	ft_unset(t_data *data, t_leaf *cur_root);

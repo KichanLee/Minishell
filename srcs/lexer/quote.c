@@ -6,14 +6,14 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/16 20:16:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 10:36:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 void			single_quote(char *input, t_token *token, int *i);
-void			double_quote(char *input, t_token *token, int *i, t_data *data);
+void			double_quote(char *input, t_token **token, int *i, t_data *data);
 static t_bool	find_next_quote(char *input, t_token *token, int i, char quote);
 static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quote);
 static t_bool	d_check_char(char *input, t_token *token, int *i, t_bool next_quote);
@@ -34,21 +34,28 @@ void	single_quote(char *input, t_token *token, int *i)
 		*i -= 1;
 }
 
-void	double_quote(char *input, t_token *token, int *i, t_data *data)
+void	double_quote(char *input, t_token **token, int *i, t_data *data)
 {
 	t_bool	next_quote;
 
 	*i += 1;
-	next_quote = find_next_quote(input, token, *i, '\"');
+	next_quote = find_next_quote(input, *token, *i, '\"');
 	while (input[*i] != '\"' && input[*i] != '\0')
 	{
-		if (input[*i] == '$')
+		if (input[*i] == '$' && input[*i + 1] == '\"')
+		{
+			(*token)->str = ft_strncat((*token)->str, &input[*i], 1);
+			token_add_list(&data->tokens, token, TRUE);
+			*i += 1;
+			return ;
+		}
+		while (input[*i] == '$')
 		{
 			if (input[*i + 1] != '\'' && next_quote == TRUE)
 				if (expand(data, token, i, TRUE) == TRUE)
 					return ;
 		}
-		if (d_check_char(input, token, i, next_quote) == TRUE)
+		if (d_check_char(input, *token, i, next_quote) == TRUE)
 			return ;
 		*i += 1;
 	}
@@ -88,6 +95,8 @@ static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quot
 	}
 	else
 		token->str = ft_strncat(token->str, &input[*i], 1);
+	if (input[*i] == '$')
+		token->print = TRUE;
 	if (!token->str)
 		program_error_exit("bash");
 	return (FALSE);

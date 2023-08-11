@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/21 09:06:12 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 10:46:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	tokenizer(t_data *data, t_token **token, int *i);
 t_token	*token_create(void);
 void	token_redirect(t_data *data, t_token *token, int *i);
-void	token_add_list(t_list **head, t_token **token, t_bool token_flag);
+void	token_add_list(t_list **head, t_token **token, t_bool create_flag);
 
 void	tokenizer(t_data *data, t_token **token, int *i)
 {
 	if (data->input[*i] == '|')
 		(*token)->type = T_PIPE;
 	else if (data->input[*i] == '\"')
-		double_quote(data->input, *token, i, data);
+		double_quote(data->input, token, i, data);
 	else if (data->input[*i] == '\'')
 		single_quote(data->input, *token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
@@ -41,6 +41,7 @@ t_token	*token_create(void)
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!token)
 		program_error_exit("bash");
+	token->blank = TRUE;
 	token->type = T_WORD;
 	token->str = ft_strdup("");
 	if (!token->str)
@@ -73,7 +74,7 @@ void	token_redirect(t_data *data, t_token *token, int *i)
 	}
 }
 
-void	token_add_list(t_list **head, t_token **token, t_bool token_flag)
+void	token_add_list(t_list **head, t_token **token, t_bool create_flag)
 {
 	t_list	*new;
 
@@ -82,7 +83,7 @@ void	token_add_list(t_list **head, t_token **token, t_bool token_flag)
 		program_error_exit("bash");
 	new->token = *token;
 	ft_lstadd_back(head, new);
-	if (token_flag == TRUE)
+	if (create_flag == TRUE)
 	{
 		*token = token_create();
 		if (!*token)

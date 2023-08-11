@@ -15,7 +15,7 @@ int check_bulitin(t_data * data)
     if(bulit != 0)
     {
         check_redirect(data->root,data);
-        exec_bulitin(bulit,data,data->root);// flag 에 따라 return  부모 프로세스 or exit 자식  쿠
+        exec_bulitin(bulit,data);// flag 에 따라 return  부모 프로세스 or exit 자식  쿠
         recover_std(data); // 커맨드가 하나이기 때문에 바로 종료 
         // free(data);
         return (TRUE);

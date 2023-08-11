@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 06:32:40 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 07:12:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_bool	get_input(t_data *data)
 	}
 	add_history(data->input);
 	lexer(data);
+	print_token(data);
 	if (syntax(data) == FALSE)
 	{
 		tree_clear(data->root);
