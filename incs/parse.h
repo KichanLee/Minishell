@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 10:14:22 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:25:44 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_token	*token_create(void);
 void	token_add_list(t_list **head, t_token **token, t_bool create_flag);
 void	token_redirect(t_data *data, t_token *token, int *i);
 
-void	single_quote(char *input, t_token *token, int *i);
-void	double_quote(char *input, t_token **token, int *i, t_data *data);
+void	single_quote(t_data *data, char *input, t_token **token, int *i);
+void	double_quote(t_data *data, char *input, t_token **token, int *i);
 
 void	lexer(t_data *data);
 

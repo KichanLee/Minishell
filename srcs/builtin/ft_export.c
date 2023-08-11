@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:25:07 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/10 21:46:40 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/11 18:02:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ static void	check_env(t_data *data, char **cmd, int arg_cnt)
 	{
 		if (!ft_isalpha(cmd[1][0]) && \
 		!check_underbar(cmd[1][0]) && !check_name(cmd[i]))
-		{
-			printf("bash: export: `%s': not a valid identifier\n", cmd[i]);
 			data->error_code = 1;
-		}
 		else if (!ft_strchr(cmd[i], '='))
 		{
 			++i;

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 10:46:33 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:25:03 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ void	tokenizer(t_data *data, t_token **token, int *i)
 	if (data->input[*i] == '|')
 		(*token)->type = T_PIPE;
 	else if (data->input[*i] == '\"')
-		double_quote(data->input, token, i, data);
+		double_quote(data, data->input, token, i);
 	else if (data->input[*i] == '\'')
-		single_quote(data->input, *token, i);
+		single_quote(data, data->input, token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
 		token_redirect(data, *token, i);
 	if ((data->input[*i] == '\'' || data->input[*i] == '\"') \
 		&& (data->input[*i + 1] != ' ' && data->input[*i + 1] != '\t') \
 		&& (data->input[*i + 1] != '\0'))
 		return ;
-	token_add_list(&data->tokens, token, TRUE);
+	if (!((*token)->type == T_WORD && !(*token)->str[0]))
+		token_add_list(&data->tokens, token, TRUE);
 }
 
 t_token	*token_create(void)
