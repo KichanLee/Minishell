@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 06:58:06 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 21:18:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		// printf("abs home : %s\n", data->abs_home);
 		if (get_input(data) == FALSE)
 			continue ;
+		print_token(data);
 		execute(data);
 		input_free(data);
 	}

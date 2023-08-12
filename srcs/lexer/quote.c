@@ -6,28 +6,25 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 18:26:53 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:59:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void			single_quote(t_data *data, char *input, t_token **token, int *i);
+void			single_quote(char *input, t_token **token, int *i);
 void			double_quote(t_data *data, char *input, t_token **token, int *i);
 static t_bool	find_next_quote(char *input, t_token *token, int i, char quote);
 static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quote);
 static t_bool	d_check_char(char *input, t_token *token, int *i, t_bool next_quote);
 
-void	single_quote(t_data *data, char *input, t_token **token, int *i)
+void	single_quote(char *input, t_token **token, int *i)
 {
 	t_bool	next_quote;
 
 	*i += 1;
 	if (input[*i] == '\'')
-	{
 		(*token)->blank = FALSE;
-		return ;
-	}
 	next_quote = find_next_quote(input, (*token), *i, '\'');
 	while (input[*i] != '\'' && input[*i] != '\0')
 	{
@@ -35,10 +32,8 @@ void	single_quote(t_data *data, char *input, t_token **token, int *i)
 			return ;
 		*i += 1;
 	}
-	if (input[*i + 1] != '\0' && input[*i + 1] != '\t' && input[*i + 1] != ' ')
+	if (check_end(input[*i + 1]) == FALSE)
 		(*token)->blank = FALSE;
-	if ((*token)->str[0])
-		token_add_list(&data->tokens, token, TRUE);
 	if (input[*i] == '\0')
 		*i -= 1;
 }
@@ -48,30 +43,29 @@ void	double_quote(t_data *data, char *input, t_token **token, int *i)
 	t_bool	next_quote;
 
 	*i += 1;
+	if (input[*i] == '\"')
+		(*token)->blank = FALSE;
 	next_quote = find_next_quote(input, *token, *i, '\"');
 	while (input[*i] != '\"' && input[*i] != '\0')
 	{
 		if (input[*i] == '$' && input[*i + 1] == '\"')
 		{
 			(*token)->str = ft_strncat((*token)->str, &input[*i], 1);
-			token_add_list(&data->tokens, token, TRUE);
 			*i += 1;
-			return ;
+			continue ;
 		}
-		while (input[*i] == '$')
+		while (input[*i] == '$' && input[*i + 1] != '\'')
 		{
-			if (input[*i + 1] != '\'' && next_quote == TRUE)
+			if (next_quote == TRUE)
 				if (expand(data, token, i, TRUE) == TRUE)
-					return ;
+					break ;
 		}
 		if (d_check_char(input, *token, i, next_quote) == TRUE)
-			return ;
+			break ;
 		*i += 1;
 	}
-	if (input[*i + 1] != '\0' && input[*i + 1] != '\t' && input[*i + 1] != ' ')
+	if (check_end(input[*i + 1]) == FALSE)
 		(*token)->blank = FALSE;
-	if ((*token)->str[0])
-		token_add_list(&data->tokens, token, TRUE);
 	if (input[*i] == '\0')
 		*i -= 1;
 }
@@ -100,8 +94,6 @@ static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quot
 	}
 	else
 		token->str = ft_strncat(token->str, &input[*i], 1);
-	if (input[*i] == '$')
-		token->print = TRUE;
 	if (!token->str)
 		program_error_exit("bash");
 	return (FALSE);
@@ -109,6 +101,8 @@ static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quot
 
 static t_bool	d_check_char(char *input, t_token *token, int *i, t_bool next_quote)
 {
+	if (next_quote == TRUE && input[*i] == '\"')
+		return (TRUE);
 	if (next_quote == FALSE \
 		&& (input[*i] != ' ' || input[*i] != '\t'))
 	{

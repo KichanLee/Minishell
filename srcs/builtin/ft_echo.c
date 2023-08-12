@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/11 13:59:11 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 21:30:31 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_echo(t_leaf *cmd)
 	while (cmd)
 	{
 		print_line(cmd);
-		if (cmd->token->blank == TRUE)
+		if (cmd->token->blank == TRUE && cmd->right_child)
 			printf(" ");
 		cmd = cmd->right_child;
 	}
@@ -124,10 +124,6 @@ static void	print_line(t_leaf *cmd)
 	i = 0;
 	while (cmd->token->str[i])
 	{
-		if (cmd->token->str[i] == '$' \
-			&& cmd->token->print == FALSE \
-			&& cmd->token->str[i + 1] != '\0')
-			break ;
 		printf("%c", cmd->token->str[i]);
 		i++;
 	}

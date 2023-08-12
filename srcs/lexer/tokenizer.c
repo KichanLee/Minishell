@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/11 18:25:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:41:45 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ void	tokenizer(t_data *data, t_token **token, int *i)
 	else if (data->input[*i] == '\"')
 		double_quote(data, data->input, token, i);
 	else if (data->input[*i] == '\'')
-		single_quote(data, data->input, token, i);
+		single_quote(data->input, token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
 		token_redirect(data, *token, i);
 	if ((data->input[*i] == '\'' || data->input[*i] == '\"') \
 		&& (data->input[*i + 1] != ' ' && data->input[*i + 1] != '\t') \
 		&& (data->input[*i + 1] != '\0'))
 		return ;
-	if (!((*token)->type == T_WORD && !(*token)->str[0]))
-		token_add_list(&data->tokens, token, TRUE);
 }
 
 t_token	*token_create(void)
@@ -73,12 +71,15 @@ void	token_redirect(t_data *data, t_token *token, int *i)
 		else
 			token->redirect_type = T_OUTPUT;
 	}
+	
 }
 
 void	token_add_list(t_list **head, t_token **token, t_bool create_flag)
 {
 	t_list	*new;
 
+	if ((*token)->type == T_WORD && !(*token)->str[0])
+		return ;
 	new = ft_lstnew();
 	if (!new)
 		program_error_exit("bash");

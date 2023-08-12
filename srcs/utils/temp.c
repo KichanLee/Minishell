@@ -52,34 +52,35 @@ void	print_token(t_data *data)
 	while (tmp)
 	{
 		if (tmp->token->type == T_PIPE)
-			printf("token: pipe\n");
+			printf("token: pipe");
 		else if (tmp->token->type == T_REDIRECT)
 		{
 			printf("token: redirect, ");
 			if (tmp->token->redirect_type == T_INPUT)
-				printf("type: <\n");
+				printf("type: <");
 			else if (tmp->token->redirect_type == T_OUTPUT)
-				printf("type: >\n");
+				printf("type: >");
 			else if (tmp->token->redirect_type == T_HEREDOC)
-				printf("type: <<\n");
+				printf("type: <<");
 			else if (tmp->token->redirect_type == T_APPEND)
-				printf("type: >>\n");
+				printf("type: >>");
 		}
 		else if (tmp->token->type == T_WORD)
 		{
 			printf("token: word, ");
-			printf("str: %s\n", tmp->token->str);
+			printf("str: %s", tmp->token->str);
 		}
 		else if (tmp->token->type == T_CMD)
 		{
 			printf("token: cmd, ");
-			printf("str: %s\n", tmp->token->str);
+			printf("str: %s", tmp->token->str);
 		}
 		else if (tmp->token->type == T_ARG)
 		{
 			printf("token: arg, ");
-			printf("str: %s\n", tmp->token->str);
+			printf("str: %s", tmp->token->str);
 		}
+		printf(" blank: %d\n", tmp->token->blank);
 		tmp = tmp->next;
 	}
 }
