@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 14:07:59 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:02:14 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,19 @@ void	lexer(t_data *data);
 /*lexer_uitls*/
 t_bool	check_end(char c);
 t_bool	check_last_blank(char *str, int i);
+void	quote_utils(char *input, t_token **token, int *i);
 
 t_bool	syntax(t_data *data);
 
 void	parser(t_data *data);
 
 t_bool	expand(t_data *data, t_token **token, int *i, t_bool quote);
+
+/*expand_check*/
+t_bool	check_heredoc(t_data *data, t_token *token, int *i);
+t_bool	check_question(t_data *data, t_token *token, int *i);
+t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool	check_special(t_data *data, t_token *token, int *i);
 
 #endif

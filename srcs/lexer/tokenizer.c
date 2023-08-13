@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 18:41:45 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:03:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void	tokenizer(t_data *data, t_token **token, int *i)
 		single_quote(data->input, token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
 		token_redirect(data, *token, i);
-	if ((data->input[*i] == '\'' || data->input[*i] == '\"') \
-		&& (data->input[*i + 1] != ' ' && data->input[*i + 1] != '\t') \
-		&& (data->input[*i + 1] != '\0'))
-		return ;
+	token_add_list(&data->tokens, token, TRUE);
 }
 
 t_token	*token_create(void)
@@ -71,7 +68,6 @@ void	token_redirect(t_data *data, t_token *token, int *i)
 		else
 			token->redirect_type = T_OUTPUT;
 	}
-	
 }
 
 void	token_add_list(t_list **head, t_token **token, t_bool create_flag)

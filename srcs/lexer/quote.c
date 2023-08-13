@@ -6,17 +6,20 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 13:39:07 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:02:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 void			single_quote(char *input, t_token **token, int *i);
-void			double_quote(t_data *data, char *input, t_token **token, int *i);
+void			double_quote(t_data *data, \
+					char *input, t_token **token, int *i);
 static t_bool	find_next_quote(char *input, t_token *token, int i, char quote);
-static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quote);
-static t_bool	d_check_char(char *input, t_token *token, int *i, t_bool next_quote);
+static t_bool	s_check_char(char *input, \
+					t_token *token, int *i, t_bool next_quote);
+static t_bool	d_check_char(char *input, \
+					t_token *token, int *i, t_bool next_quote);
 
 void	single_quote(char *input, t_token **token, int *i)
 {
@@ -32,11 +35,7 @@ void	single_quote(char *input, t_token **token, int *i)
 			return ;
 		*i += 1;
 	}
-	if (check_end(input[*i + 1]) == FALSE \
-		|| check_last_blank(input, *i + 1) == TRUE)
-		(*token)->blank = FALSE;
-	if (input[*i] == '\0')
-		*i -= 1;
+	quote_utils(input, token, i);
 }
 
 void	double_quote(t_data *data, char *input, t_token **token, int *i)
@@ -65,11 +64,7 @@ void	double_quote(t_data *data, char *input, t_token **token, int *i)
 			break ;
 		*i += 1;
 	}
-	if (check_end(input[*i + 1]) == FALSE \
-		|| check_last_blank(input, *i + 1) == TRUE)
-		(*token)->blank = FALSE;
-	if (input[*i] == '\0')
-		*i -= 1;
+	quote_utils(input, token, i);
 }
 
 static t_bool	find_next_quote(char *input, t_token *token, int i, char quote)
@@ -86,7 +81,8 @@ static t_bool	find_next_quote(char *input, t_token *token, int i, char quote)
 	return (TRUE);
 }
 
-static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quote)
+static t_bool	s_check_char(char *input, \
+					t_token *token, int *i, t_bool next_quote)
 {
 	if (next_quote == FALSE \
 		&& (input[*i] != ' ' || input[*i] != '\t'))
@@ -101,7 +97,8 @@ static t_bool	s_check_char(char *input, t_token *token, int *i, t_bool next_quot
 	return (FALSE);
 }
 
-static t_bool	d_check_char(char *input, t_token *token, int *i, t_bool next_quote)
+static t_bool	d_check_char(char *input, \
+					t_token *token, int *i, t_bool next_quote)
 {
 	if (next_quote == TRUE && input[*i] == '\"')
 		return (TRUE);

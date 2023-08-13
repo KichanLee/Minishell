@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/10 17:26:25 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/13 16:49:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ t_list	*env_search(t_data *data, char *key)
 	t_list	*cur;
 
 	tmp = ft_strdup(key);
+	if (!tmp)
+		program_error_exit("bash");
 	env = ft_strncat(tmp, "=", 1);
+	if (!env)
+		program_error_exit("bash");
 	cur = data->envs;
 	while (cur)
 	{
@@ -63,7 +67,6 @@ t_bool	env_remove(t_data *data, char *key)
 	return (TRUE);
 }
 
-//리턴값 더블포인터를 data->env_array에 담아서 사용하시고, 쓰고 나서 더블포인터만 free해주면 됩니다
 char	**env_to_array(t_data *data)
 {
 	t_list	*cur;

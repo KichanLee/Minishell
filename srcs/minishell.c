@@ -6,13 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 14:09:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:12:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-char	*abs_home;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,23 +20,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init(&data, envp);
 	init_base(argc);
-	
-	abs_home = ft_strdup(env_search(data, "HOME")->env + 5);
-
-	sig();
+	data->env_array = env_to_array(data);
+	if (!data->env_array)
+		program_error_exit("bash");
 	while (TRUE)
 	{
-		// abs_init(data);
-		// system("leaks minishell");
-		// printf("abs home : %s\n", data->abs_home);
+		sig();
 		if (get_input(data) == FALSE)
 			continue ;
 		execute(data);
 		input_free(data);
 	}
-	// free(data->abs_home);
-	// system("leaks minishell");
 	data_free(data);
-	// atexit(check_leak);
 	return (0);
 }

@@ -1,61 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/13 16:16:07 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/13 16:16:13 by eunwolee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-void	do_input_redirect(t_leaf *leaf,t_data *data)
+void	do_input_redirect(t_leaf *leaf, t_data *data)
 {
 	int		fd;
+	t_leaf	*temp;
 
-	t_leaf *temp;
 	fd = 0;
-	temp =leaf;
-	
-	if (temp->token->redirect_type == T_HEREDOC) // heredoc 일경우 전에만들어 준 heredoc 으로 접근해줘야함
+	temp = leaf;
+	if (temp->token->redirect_type == T_HEREDOC)
 	{
-		fd = open (data->info->heredoc_file[data->info->index-1], O_RDONLY);// 만들어지면 바로 ++을해줘서 인덱스 -1 로 접근을해야 전에 만들어진 heredoc으로 접근 
+		fd = open (data->info->heredoc_file[data->info->index - 1], \
+		O_RDONLY);
 		dup2 (fd, STDIN_FILENO);
 		return ;
 	}
-	else if (temp->token->redirect_type == T_INPUT) // 그냥 인풋
-	{
+	else if (temp->token->redirect_type == T_INPUT)
 		fd = open (temp->left_child->token->str, O_RDONLY);
-	}
-		check_file (fd,data);
-		dup2 (fd, STDIN_FILENO);
-		close (fd);
+	check_file (fd, data);
+	dup2 (fd, STDIN_FILENO);
+	close (fd);
 }
 
-void	do_output_redirect(t_leaf *leaf,t_data *data)
+void	do_output_redirect(t_leaf *leaf, t_data *data)
 {
-	int	fd;
-	t_leaf *temp =leaf;
-	fd = 0;
+	int		fd;
+	t_leaf	*temp;
 
+	fd = 0;
+	temp = leaf;
 	if (temp->token->redirect_type == T_APPEND)
-		fd = open (temp->left_child->token->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	{
+		fd = open (temp->left_child->token->str, \
+		O_WRONLY | O_APPEND | O_CREAT, 0644);
+	}
 	else if (temp->token->redirect_type == T_OUTPUT)
 	{
-		fd = open (temp->left_child->token->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		fd = open (temp->left_child->token->str, \
+		O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
-	check_file (fd,data);
+	check_file (fd, data);
 	dup2 (fd, STDOUT_FILENO);
 	close (fd);
 }
 
-
-
-
-void	check_redirect(t_leaf *leaf,t_data *data)
+void	check_redirect(t_leaf *leaf, t_data *data)
 {
-	
-	t_leaf *temp = leaf->left_child->left_child;
+	t_leaf	*temp;
 
-	while(temp)
+	temp = leaf->left_child->left_child;
+	while (temp)
 	{
-		if(temp->token->redirect_type == T_INPUT ||temp->token->redirect_type == T_HEREDOC)
-		{
-			do_input_redirect(temp,data); // input or heredoc
-		}
-		else if (temp->token->redirect_type == T_OUTPUT ||temp->token->redirect_type == T_APPEND)
-			do_output_redirect(temp,data); // output or append
-		temp=temp->left_child;
+		if (temp->token->redirect_type == T_INPUT \
+		||temp->token->redirect_type == T_HEREDOC)
+			do_input_redirect(temp, data);
+		else if (temp->token->redirect_type == T_OUTPUT \
+		||temp->token->redirect_type == T_APPEND)
+			do_output_redirect(temp, data);
+		temp = temp->left_child;
 	}
 }

@@ -18,6 +18,7 @@ SRCS = $(SRCS_DIR)/minishell.c \
 	$(SRCS_DIR)/lexer/tokenizer.c \
 	$(SRCS_DIR)/lexer/quote.c \
 	$(SRCS_DIR)/lexer/expand.c \
+	$(SRCS_DIR)/lexer/expand_check.c \
 	$(SRCS_DIR)/lexer/lexer_utils.c \
 	$(SRCS_DIR)/parser/syntax.c \
 	$(SRCS_DIR)/parser/parser.c \

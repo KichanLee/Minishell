@@ -1,31 +1,117 @@
-#include "../../incs/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/13 16:21:48 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/13 16:22:09 by eunwolee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../incs/minishell.h"
 
 int	fork_heredoc(t_data *data)
 {
 	int		status;
+	pid_t	pid;
 
-	data->pipe->com[data->info->pipe_index].pid =fork(); //인덱스 부여해주기 pid 갚곂치지않게 가장 마지막 인덱스 주기
-	if (data->pipe->com[data->info->pipe_index].pid == 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		signal (SIGINT, child_handler); 
+		signal (SIGINT, child_handler);
 		mk_heredoc_pipe(data);
-		execute_cmd(data,1); // heredoc 실행후 다시 커맨드 확인해주러가기
-		exit(0);
+		execute_cmd(data, 1);
+		exit(data->error_code);
 	}
 	else
 	{
 		signal (SIGINT, SIG_IGN);
-		data->info->pipe_index++;
-		waitpid(data->pipe->com[data->info->pipe_index].pid,&status,0);
-		if (WIFSIGNALED(status)) // signal 에 의해 종료가 되었는지 아닌지 확인
+		waitpid(-1, &status, 0);
+		if (WIFSIGNALED(status))
 		{
-			data->error_code= WTERMSIG (status);//시그널로 종료시 시그널 번호를 저장 예 ctrl +c경우 2 번 
-			ft_putendl_fd("", STDERR_FILENO); // 빈문자열 출력을 위한 ctrl+c 이런거 눌렀을때 바로 새줄 
+			data->error_code = WTERMSIG (status);
+			ft_putendl_fd("", STDERR_FILENO);
 			return (1);
 		}
 		else
-			data->error_code= (status);
+			data->error_code = (status);
 	}
 	return (1);
+}
+
+void	mk_num(char *str, int num)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	while (i < 3)
+	{
+		if (i == 0)
+		{
+			str[13 + i++] = num / 100 + '0';
+			num %= 100;
+		}
+		str[13 + i++] = num / (100 / (j * 10)) + '0';
+		num %= (100 / (j * 10));
+		j *= 10;
+	}
+}
+
+char	*mk_filename(void)
+{
+	char	*str;
+	int		exist;
+	int		i;
+
+	str = ft_strdup("/tmp/here_doc000");
+	i = 0;
+	exist = 0;
+	while (exist == 0)
+	{
+		mk_num(str, i++);
+		exist = access(str, F_OK);
+		if (exist != 0)
+			unlink(str);
+	}
+	return (str);
+}
+
+void	do_heredoc(t_leaf *leaf, t_data *data)
+{
+	int			fd;
+	t_leaf		*temp;
+
+	temp = leaf;
+	while (temp)
+	{
+		if (temp->token->redirect_type == T_HEREDOC)
+		{
+			fd = open(data->info->heredoc_file[data->info->index], \
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			write_str(temp->left_child->token->str, fd, data);
+		}
+		temp = temp ->left_child;
+	}
+}
+
+void	mk_heredoc_pipe(t_data *data)
+{
+	t_leaf	*pipe;
+
+	pipe = data->root;
+	while (pipe)
+	{
+		data->info->heredoc_file[data->info->index] = mk_filename();
+		if (pipe->left_child->left_child \
+		&& pipe->left_child->left_child->token->redirect_type == T_HEREDOC)
+		{
+			do_heredoc(pipe->left_child->left_child, data);
+			data->info->index++;
+		}
+		pipe = pipe->right_child;
+	}
 }

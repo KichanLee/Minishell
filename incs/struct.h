@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 15:57:40 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:03:30 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 # define BUF_SIZE 1024
+
 typedef enum e_bool
 {
 	FALSE,
@@ -41,7 +42,6 @@ typedef struct s_token
 	t_bool	blank;
 }	t_token;
 
-//tokens와 envs에서 통용되는 리스트 구조체
 typedef struct s_list
 {
 	struct s_list	*pre;
@@ -69,21 +69,19 @@ typedef struct s_pid
 typedef struct s_pipe
 {
 	t_pid	*com;
-	
-	char	**cmd_path;//명령어 +옵션 
+	char	**cmd_path;
 	char	*command;
-	char	**cmd_abs; // 절대경로 
+	char	**cmd_abs;
 }	t_pipe;
 
 typedef struct s_info
 {
-	// 항상 기준은 파이프  한커맨드라는건 파이프 기준으로 <<a <<b <<c 로들어올수가있음
-	int			index; //이거는 heredocfile[index] open 할때 접근 할수 있어야함
-	int			heredoc_flag;// 히어독이있는지 판별해줘야함 -> 히어독은 포크로 진행되기때문에
-	char		**heredoc_file; // 한 커맨드에 여러개 리다이렉션이 들어올수 있다  
-	int			oristdin; // 이놈은 redirection이 나오면 fd 가변경 되는데 안돌려주면 계속 그 fd 를 사용 
-	int			oristdout; // 같은이유 
-	int 		pipe_num; // fork 를 해주기위해서 갯수가 필요함
+	int			index;
+	int			heredoc_flag;
+	char		**heredoc_file;
+	int			oristdin;
+	int			oristdout;
+	int			pipe_num;
 	int			parent;
 	int			pipe_index;
 }	t_info;
@@ -100,6 +98,5 @@ typedef struct s_data
 	int			error_code;
 	char		*abs_home;
 }	t_data;
-
 
 #endif

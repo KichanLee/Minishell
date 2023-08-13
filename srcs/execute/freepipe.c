@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-void	close_pipe(int i, t_pipe *base,t_data *data)
+void	close_pipe(int i, t_pipe *base, t_data *data)
 {
 	if (i == data->info->pipe_num)
 		close(base->com[i - 1].fd[0]);
@@ -25,13 +25,13 @@ void	close_pipe(int i, t_pipe *base,t_data *data)
 	}
 }
 
-void	check_file(int fd,t_data *data)
+void	check_file(int fd, t_data *data)
 {
 	if (fd < 0)
 	{
 		close(fd);
 		data->error_code = 1;
-		if (data->info->parent ==1) // 자식에서 종료 or 부모에서 종료 확인해주기 
+		if (data->info->parent == 1)
 			program_error_exit("bash");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 21:57:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:07:19 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	env_init(t_data *data, char **envp)
 	}
 }
 
-
-void pipe_init(t_pipe **pipe)
+void	pipe_init(t_pipe **pipe)
 {
 	*pipe = (t_pipe *)malloc(sizeof(t_pipe));
 	if (!*pipe)
@@ -51,14 +50,10 @@ void pipe_init(t_pipe **pipe)
 	(*pipe)->cmd_path = NULL;
 	(*pipe)->command = NULL;
 	(*pipe)->cmd_abs = NULL;
-	
 }
 
 t_bool	get_input(t_data *data)
 {
-	t_pipe *pipe;
-	t_info *info;
-	
 	data->input = readline("minishell$ ");
 	if (!data->input)
 		program_error_exit("bash");
@@ -77,10 +72,8 @@ t_bool	get_input(t_data *data)
 		return (FALSE);
 	}
 	parser(data);
-	pipe_init(&pipe);
-	info_init(&info);
-	data->pipe= pipe;
-	data->info= info;
+	pipe_init(&data->pipe);
+	info_init(&data->info);
 	return (TRUE);
 }
 
@@ -96,5 +89,5 @@ void	info_init(t_info **info)
 	(*info)->oristdout = dup(STDOUT_FILENO);
 	(*info)->pipe_num = 0;
 	(*info)->pipe_index = 0;
-	(*info)->parent  =0;
+	(*info)->parent = 0;
 }
