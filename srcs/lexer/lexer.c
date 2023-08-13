@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 20:05:37 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:19:09 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,20 @@ static void	check_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe)
 	}
 	else
 	{
+		(*token)->blank = FALSE;
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
 		if (!(*token)->str)
 			program_error_exit("bash");
-		if (check_end(data->input[*i + 1]) == FALSE)
-			(*token)->blank = FALSE;
+		if (check_end(data->input[*i + 1]) == TRUE \
+			&& check_last_blank(&data->input[*i], *i) == FALSE)
+			(*token)->blank = TRUE;
 		if (data->input[*i + 1] == '|' \
-		|| data->input[*i + 1] == '<' \
-		|| data->input[*i + 1] == '>' \
-		|| data->input[*i + 1] == '\'' \
-		|| data->input[*i + 1] == '\"' \
-		|| data->input[*i + 1] == '$' \
-		|| data->input[*i + 1] == '\0')
+			|| data->input[*i + 1] == '<' \
+			|| data->input[*i + 1] == '>' \
+			|| data->input[*i + 1] == '\'' \
+			|| data->input[*i + 1] == '\"' \
+			|| data->input[*i + 1] == '$' \
+			|| data->input[*i + 1] == '\0')
 			token_add_list(&data->tokens, token, TRUE);
 	}
 }

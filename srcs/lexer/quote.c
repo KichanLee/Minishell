@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 20:59:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:30:13 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void	single_quote(char *input, t_token **token, int *i)
 	while (input[*i] != '\'' && input[*i] != '\0')
 	{
 		if (s_check_char(input, *token, i, next_quote) == TRUE)
-			return ;
+			break ;
 		*i += 1;
 	}
-	if (check_end(input[*i + 1]) == FALSE)
+	// if (check_end(input[*i + 1]) == FALSE \
+	// 	|| check_last_blank(input, *i) == TRUE)
 		(*token)->blank = FALSE;
 	if (input[*i] == '\0')
 		*i -= 1;
@@ -64,7 +65,8 @@ void	double_quote(t_data *data, char *input, t_token **token, int *i)
 			break ;
 		*i += 1;
 	}
-	if (check_end(input[*i + 1]) == FALSE)
+	// if (check_end(input[*i + 1]) == FALSE \
+	// 	|| check_last_blank(input, *i) == TRUE)
 		(*token)->blank = FALSE;
 	if (input[*i] == '\0')
 		*i -= 1;

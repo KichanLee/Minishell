@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/12 16:24:00 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:19:32 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	lexer(t_data *data);
 
 /*lexer_uitls*/
 t_bool	check_end(char c);
+t_bool	check_last_blank(char *str, int i);
 
 t_bool	syntax(t_data *data);
 
