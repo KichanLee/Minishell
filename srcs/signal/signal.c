@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/13 21:08:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:15:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	handle_sigint(int sig)
 void	child_handler(int signum)
 {
 	printf("\n");
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
+	ft_putendl_fd("", STDERR_FILENO);
 	(void)signum;
 }
 

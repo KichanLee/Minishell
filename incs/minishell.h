@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:05:33 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:03:55 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:06:14 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@
 # include "utils.h"
 # include "pipe.h"
 # include "message.h"
-# include "../Libft/libft.h"
+# include "../Libft/incs/libft.h"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/10 21:12:29 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/13 22:18:04 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_cd(t_data *data, t_leaf *cur_root)
 	{
 		getcwd(pwd, 1024);
 		printf("current directory : %s\n", pwd);
-		update_env(data, "OLDPWD", env_search(data, "PWD")->env);
+		update_env(data, "OLDPWD", env_search(data, "PWD", TRUE)->env);
 		update_env(data, "PWD", pwd);
 	}
 }
@@ -54,10 +54,10 @@ int	change_directory(t_data *data, char *path)
 
 	if (!ft_strncmp(path, "HOME", 5))
 	{
-		if (env_search(data, "HOME") == NULL)
+		if (env_search(data, "HOME", TRUE) == NULL)
 			return (change_home(data, path));
 		else
-			buf = ft_strdup(env_search(data, "HOME")->env + 5);
+			buf = ft_strdup(env_search(data, "HOME",TRUE)->env + 5);
 	}
 	else
 		buf = ft_strdup(path);

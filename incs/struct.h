@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:03:30 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:08:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_list
 	struct s_list	*next;
 	t_token			*token;
 	char			*env;
+	int				equal_flag;
 }t_list;
 
 typedef struct s_leaf

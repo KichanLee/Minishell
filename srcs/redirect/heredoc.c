@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:21:48 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:22:09 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:23:42 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ int	fork_heredoc(t_data *data)
 	{
 		signal (SIGINT, SIG_IGN);
 		waitpid(-1, &status, 0);
+		data->error_code = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
 		{
 			data->error_code = WTERMSIG (status);
 			ft_putendl_fd("", STDERR_FILENO);
 			return (1);
 		}
-		else
-			data->error_code = (status);
+		// else 필요 없는건가?
+		// 	data->error_code = (status);
 	}
 	return (1);
 }

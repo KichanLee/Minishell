@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:07:56 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:08:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:32:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	do_cmd(t_data *data)
 	int		builtnum;
 	t_leaf	*temp;
 
+	if (data->info->pipe_num >= 300)
+	{
+		printf("%s\n", E_SYNTAX_PIPE);
+		exit(258);
+	}
 	temp = data->root->left_child->right_child;
 	if (temp != NULL)
 		builtnum = check_bulitin_func(temp->token->str);
@@ -62,12 +67,7 @@ void	exec_fork(t_data *data)
 	abs_path(data);
 	base->command = set_path(data, data->root->left_child->right_child);
 	if (!base->command)
-	{
-		printf("bash: %s: command not found\n", \
-		data->root->left_child->right_child->token->str);
-		data->error_code = 127;
-		exit(data->error_code);
-	}
+		exit(127);
 	execve(base->command, base->cmd_path, data->env_array);
 }
 
@@ -90,7 +90,8 @@ void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag)
 		signal(SIGQUIT, child_handler);
 		data->info->parent = 1;
 		if (data->info->pipe_num != 0)
-			link_pipe(i, base, data);
+			if (link_pipe(i, base, data) == TRUE)
+				exit(1);
 		do_cmd(data);
 	}
 	else

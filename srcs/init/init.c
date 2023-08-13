@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:07:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:27:28 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	init(t_data **data, char **envp);
 void	env_init(t_data *data, char **envp);
 
-//필요하신 초기화 내용 여기 넣어주시면 됩니당
 void	init(t_data **data, char **envp)
 {
 	*data = (t_data *)ft_calloc(1, sizeof(t_data));
@@ -56,7 +55,10 @@ t_bool	get_input(t_data *data)
 {
 	data->input = readline("minishell$ ");
 	if (!data->input)
-		program_error_exit("bash");
+	// {
+	// 	printf("exit\n");
+	// 	exit(1);
+	// }
 	if (!data->input[0])
 	{
 		free(data->input);

@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 19:33:40 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/10 22:01:54 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/13 21:25:30 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,37 @@ int	check_underbar(char ch)
 int	check_name(char *str)
 {
 	int	i;
+	int	plus;
+	int j;
 
+	j = 0;
 	i = 0;
-	while (str[i] && str[i] != '=')
+	plus = 0;
+	if(str[0] != '_' && ft_isalpha(str[0]) != 1)
+		return (0);
+	while (str[j] && str[j] != '+')
+		++j;
+	if(str[j] == '+')
 	{
-		if (str[i] != '_' && ft_isalnum(str[i]))
+		printf("plus : %d\n", plus);
+		printf("str[j - 1] : %c\n", str[j - 1]);
+		printf("str[j] : %c\n", str[j]);
+		if(str[j + 1] != '=')
+		{
+			printf("plus condition\n");
+			return (0);
+		}
+	}
+	plus = 0;
+ 	while (str[i] && str[i] != '=')
+	{
+		if(str[i] == '+')
+			++plus;
+		if (str[i] != '+' && str[i] != '_' && !ft_isalnum(str[i]))
+		{
+			return (0);
+		}
+		if(plus > 1)
 			return (0);
 		++i;
 	}

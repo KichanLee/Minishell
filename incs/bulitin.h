@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:06:06 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:12:07 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:06:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "struct.h"
 
 # define LLONG_MAX 9223372036854775807
+// # define LLONG_MIN -9223372036854775808ULL
 # define LLONG_MIN (-LLONG_MAX - 1)
 
 /*signal*/
@@ -25,6 +26,7 @@ void		init_base(int ac);
 void		child_handler(int signum);
 
 /*builtin*/
+int			check_equal(char *str);
 void		exec_bulitin(int bulitnum, t_data *data);
 int			check_bulitin_func(char *name);
 void		ft_cd(t_data *data, t_leaf *cur_root);
@@ -38,10 +40,10 @@ char		*check_keyval(t_data *data, char *str);
 char		**sort_bubble(char **str, int size);
 int			check_name(char *str);
 int			check_underbar(char ch);
-char		**sort_bubble(char **str, int size);
 long long	char_to_long_long(char *str, int *flag);
 int			is_num_str(char *str);
 void		exit_not_num(t_data *data, char *str);
+void		update_env_export(t_data *data);
 
 /*builtin utils*/
 char		**join_cmd(t_leaf *com_leaf);

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:20 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:21:41 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:24:30 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	heredoc_replace(t_data *data, char **tmp, char *name)
 	int		j;
 	t_list	*env;
 
-	env = env_search(data, name);
+	env = env_search(data, name, TRUE);
 	if (!env)
 	{
 		*tmp = ft_strncat(*tmp, "$", 1);

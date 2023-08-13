@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:09:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:09:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:35:19 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ char	*search_path(t_pipe *base, t_data *data)
 	k = 0;
 	if (!base->cmd_abs)
 	{
-		printf("bash: %s: No such file or directory\n", \
-		data->root->left_child->right_child->token->str);
 		data->error_code = 127;
 		exit(data->error_code);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atolong.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 20:31:59 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/13 16:10:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 05:08:08 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	check_overflow(long long result, char ch)
 
 int	check_underflow(long long result, char ch)
 {
-	if (result > -(LLONG_MIN / 10) || \
-		(result == -(LLONG_MIN / 10) && (ch - '0') > -(LLONG_MIN % 10)))
+	if (result > (long long)(-(LLONG_MIN / 10)) || \
+		(result == (long long)(-(LLONG_MIN / 10)) && (long long)(ch - '0') > (long long)(-(LLONG_MIN / 10))))
 		return (1);
 	return (0);
 }

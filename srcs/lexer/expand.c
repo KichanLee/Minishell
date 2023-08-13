@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:48:09 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:25:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	replace(t_data *data, t_token *token, char *name)
 	int		j;
 	t_list	*tmp;
 
-	tmp = env_search(data, name);
+	tmp = env_search(data, name, TRUE);
 	if (tmp)
 	{
 		j = 0;

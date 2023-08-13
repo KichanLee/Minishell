@@ -6,11 +6,9 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:03:25 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 08:27:11 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//환경변수, 자료구조 및 기타 함수
 
 #ifndef UTILS_H
 # define UTILS_H
@@ -18,7 +16,7 @@
 # include "struct.h"
 
 void	env_print(t_data *data);
-t_list	*env_search(t_data *data, char *key);
+t_list	*env_search(t_data *data, char *key, t_bool flag);
 t_bool	env_remove(t_data *data, char *key);
 char	**env_to_array(t_data *data);
 
@@ -39,6 +37,7 @@ void	program_error_exit(char *str);
 void	input_free(t_data *data);
 void	data_free(t_data *data);
 void	init_base(int ac);
+
 /*temp.c 임시 함수*/
 void	tree_print(t_leaf *leaf);
 void	print_token(t_data *data);

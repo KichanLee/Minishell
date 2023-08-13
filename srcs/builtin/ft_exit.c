@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/11 06:30:45 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 05:43:18 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	arg_over_one(t_data *data, int count, char **cmd, int flag)
 
 	if (count == 2)
 	{
+		if(!ft_strncmp("-9223372036854775808", cmd[1], 20))
+		{
+			printf("exit\n");
+			data->error_code = 0;
+			exit(0);
+		}
 		status = char_to_long_long(cmd[1], &flag);
 		if (flag && is_num_str(cmd[1]) && ft_strlen(cmd[1]) <= 20)
 		{
@@ -47,7 +53,6 @@ void	arg_over_one(t_data *data, int count, char **cmd, int flag)
 			data->error_code = status % 256;
 			exit(status % 256);
 		}
-		else
 			exit_not_num(data, cmd[1]);
 	}
 	else
@@ -72,4 +77,5 @@ void	ft_exit(t_data *data, t_leaf *cur_root)
 	}
 	else
 		arg_over_one(data, count, cmd, flag);
+	// free(cmd);
 }
