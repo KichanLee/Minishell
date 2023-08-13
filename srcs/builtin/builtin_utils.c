@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:15:16 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:08:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ t_list	*create_env_node(char *key, char *value)
 	t_list	*new_node;
 	char	*key_equal;
 
-	new_node = (t_list *)ft_calloc(sizeof(t_list));
+	new_node = (t_list *)ft_calloc(1, sizeof(t_list));
 	if (!new_node)
 		return (NULL);
-	new_node->token = (t_token *)ft_calloc(sizeof(t_token));
+	new_node->token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new_node->token)
 	{
 		free(new_node);
