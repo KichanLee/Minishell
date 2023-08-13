@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:54:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:18:58 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	lexer(t_data *data)
 	i = -1;
 	while (data->input[++i])
 		check_char(data, &token, &i, &pre_pipe);
+	free(token->str);
+	free(token);
 }
 
 static void	check_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe)
