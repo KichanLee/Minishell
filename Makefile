@@ -5,79 +5,100 @@ L_NAME = libft.a
 
 INCS_DIR = incs
 SRCS_DIR = srcs
+OBJS_DIR = objs
 
-CC = cc -g3
+CC = cc
+# CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
+RLFLAGS = -lreadline -ltermcap
 
 RM = rm -rf
 MAKE = make
 
-SRCS = $(SRCS_DIR)/minishell.c \
-	$(SRCS_DIR)/init/init.c \
-	$(SRCS_DIR)/lexer/lexer.c \
-	$(SRCS_DIR)/lexer/tokenizer.c \
-	$(SRCS_DIR)/lexer/quote.c \
-	$(SRCS_DIR)/lexer/expand.c \
-	$(SRCS_DIR)/lexer/expand_check.c \
-	$(SRCS_DIR)/lexer/lexer_utils.c \
-	$(SRCS_DIR)/parser/syntax.c \
-	$(SRCS_DIR)/parser/parser.c \
-	$(SRCS_DIR)/utils/env.c \
-	$(SRCS_DIR)/utils/list.c \
-	$(SRCS_DIR)/utils/list_clear.c \
-	$(SRCS_DIR)/utils/tree.c \
-	$(SRCS_DIR)/utils/utils.c \
-	$(SRCS_DIR)/utils/temp.c \
-	$(SRCS_DIR)/builtin/builtin.c \
-	$(SRCS_DIR)/builtin/builtin_utils.c \
-	$(SRCS_DIR)/builtin/ft_cd.c \
-	$(SRCS_DIR)/builtin/ft_echo.c \
-	$(SRCS_DIR)/builtin/ft_exit.c \
-	$(SRCS_DIR)/builtin/ft_exit_two.c \
-	$(SRCS_DIR)/builtin/ft_pwd.c \
-	$(SRCS_DIR)/builtin/ft_unset.c \
-	$(SRCS_DIR)/builtin/ft_export.c \
-	$(SRCS_DIR)/builtin/ft_export_two.c \
-	$(SRCS_DIR)/builtin/ft_env.c \
-	$(SRCS_DIR)/builtin/ft_atolong.c \
-	$(SRCS_DIR)/execute/checkbulitin.c \
-	$(SRCS_DIR)/execute/execve.c \
-	$(SRCS_DIR)/execute/freepipe.c \
-	$(SRCS_DIR)/execute/pipe.c \
-	$(SRCS_DIR)/execute/pipeutils.c \
-	$(SRCS_DIR)/execute/setpath.c \
-	$(SRCS_DIR)/redirect/heredocutils.c \
-	$(SRCS_DIR)/redirect/heredoc.c \
-	$(SRCS_DIR)/redirect/redirection.c \
-	$(SRCS_DIR)/signal/signal.c \
+SRCS =	minishell.c \
+		init/init.c \
+		lexer/lexer.c \
+		lexer/tokenizer.c \
+		lexer/quote.c \
+		lexer/expand.c \
+		lexer/expand_check.c \
+		lexer/lexer_utils.c \
+		parser/syntax.c \
+		parser/parser.c \
+		utils/env.c \
+		utils/list.c \
+		utils/list_clear.c \
+		utils/tree.c \
+		utils/utils.c \
+		utils/temp.c \
+		builtin/builtin.c \
+		builtin/builtin_utils.c \
+		builtin/ft_cd.c \
+		builtin/ft_echo.c \
+		builtin/ft_exit.c \
+		builtin/ft_exit_two.c \
+		builtin/ft_pwd.c \
+		builtin/ft_unset.c \
+		builtin/ft_export.c \
+		builtin/ft_export_two.c \
+		builtin/ft_env.c \
+		builtin/ft_atolong.c \
+		execute/checkbulitin.c \
+		execute/execve.c \
+		execute/freepipe.c \
+		execute/pipe.c \
+		execute/pipeutils.c \
+		execute/setpath.c \
+		redirect/heredocutils.c \
+		redirect/heredoc.c \
+		redirect/redirection.c \
+		signal/signal.c
 
-OBJS = $(SRCS:%.c=%.o)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
+SRCS_WITH_PATH = $(addprefix $(SRCS_DIR)/, $(SRCS))
+OBJS = $(SRCS_WITH_PATH:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 all: $(NAME)
 
+${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
+	@$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
+
+${OBJS_DIR}:
+	@echo "MINISHELL BUILD"
+	@mkdir ${OBJS_DIR}
+	@mkdir ${OBJS_DIR}/init
+	@mkdir ${OBJS_DIR}/lexer
+	@mkdir ${OBJS_DIR}/parser
+	@mkdir ${OBJS_DIR}/utils
+	@mkdir ${OBJS_DIR}/builtin
+	@mkdir ${OBJS_DIR}/execute
+	@mkdir ${OBJS_DIR}/redirect
+	@mkdir ${OBJS_DIR}/signal
+
 $(NAME): $(L_NAME) $(OBJS)
-	$(CC) $^ -o $@ -I $(INCS_DIR) -lreadline -L ~/.brew/opt/readline/lib -ltermcap
+	@echo "MINISHELL DONE"
+	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib
 	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
 
 $(L_NAME):
-	$(MAKE) -C $(L_DIR)
-	cp ./$(L_DIR)/$(L_NAME) .
+	@echo "LIBFT BUILD"
+	@$(MAKE) -C $(L_DIR)
+	@cp ./$(L_DIR)/$(L_NAME) .
 
 clean:
-	$(MAKE) fclean -C $(L_DIR)
-	$(RM) $(OBJS)
-	$(RM) $(SRCS_DIR_M)/*.o $(SRCS_DIR_B)/*.o $(L_NAME)
+	@echo "MINISHELL CLEAN"
+	@$(MAKE) fclean -C $(L_DIR)
+	@$(RM) $(OBJS_DIR)
+	@$(RM) $(L_NAME)
 
 fclean:
-	$(MAKE) fclean -C $(L_DIR)
-	$(MAKE) clean
-	$(RM) $(NAME)
+	@$(MAKE) fclean -C $(L_DIR)
+	@$(MAKE) clean
+	@echo "MINISHELL FCLEAN"
+	@$(RM) $(NAME)
 
 re:
-	$(MAKE) fclean
-	$(MAKE) all
+	@echo "RE_BUILD"
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 .PHONY: all clean fclean re
