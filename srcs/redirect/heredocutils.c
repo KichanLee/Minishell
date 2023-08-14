@@ -6,13 +6,14 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:20 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 08:24:30 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:36:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
 static void	heredoc_parser(t_data *data, int fd, char *str);
+static char	*heredoc_question(t_data *data, char *tmp, int *i);
 static char	*heredoc_expand(t_data *data, char *str, char *tmp, int *i);
 static void	heredoc_replace(t_data *data, char **tmp, char *name);
 
@@ -46,13 +47,30 @@ static void	heredoc_parser(t_data *data, int fd, char *str)
 	while (str[++i])
 	{
 		if (str[i] == '$')
-			tmp = heredoc_expand(data, str, tmp, &i);
+		{
+			if (str[i + 1] == '?')
+				tmp = heredoc_question(data, tmp, &i);
+			else
+				tmp = heredoc_expand(data, str, tmp, &i);
+		}
 		else
 			tmp = ft_strncat(tmp, &str[i], 1);
 	}
 	write (fd, tmp, ft_strlen(tmp));
 	write (fd, "\n", 1);
 	free (str);
+}
+
+static char	*heredoc_question(t_data *data, char *tmp, int *i)
+{
+	char	*temp;
+
+	temp = ft_itoa(data->error_code);
+	tmp = ft_strncat(tmp, temp, ft_strlen(temp));
+	if (!tmp)
+		program_error_exit("bash");
+	*i += 1;
+	return (tmp);
 }
 
 static char	*heredoc_expand(t_data *data, char *str, char *tmp, int *i)

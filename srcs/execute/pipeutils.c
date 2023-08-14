@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipeutils.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/13 17:08:32 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:09:02 by eunwolee         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../incs/minishell.h"
 
-void	count_pipe(t_data *data)
+void	count_pipe(t_data*data)
 {
 	t_leaf	*temp;
 
@@ -25,7 +13,7 @@ void	count_pipe(t_data *data)
 	if (data->info->pipe_num != 0)
 		data->info->pipe_num--;
 	data->pipe->com = (t_pid *)ft_calloc(data->info->pipe_num + 1, \
-		sizeof(t_pid));
+	sizeof(t_pid));
 	if (!data->pipe->com)
 		program_error_exit("bash");
 }

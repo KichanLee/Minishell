@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:21:48 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 08:23:42 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:22:09 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	fork_heredoc(t_data *data)
 			ft_putendl_fd("", STDERR_FILENO);
 			return (1);
 		}
-		// else 필요 없는건가?
-		// 	data->error_code = (status);
 	}
 	return (1);
 }

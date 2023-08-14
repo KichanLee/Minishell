@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:12:52 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 04:28:00 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../incs/minishell.h"
 
@@ -25,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		program_error_exit("bash");
 	while (TRUE)
 	{
+		// print_token(data);
 		sig();
 		if (get_input(data) == FALSE)
 			continue ;

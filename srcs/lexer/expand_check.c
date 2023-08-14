@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:23:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:30:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:34:28 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_bool	check_question(t_data *data, t_token *token, int *i)
 	{
 		tmp = ft_itoa(data->error_code);
 		token->str = ft_strncat(token->str, tmp, ft_strlen(tmp));
+		if (!token->str)
+			program_error_exit("bash");
 		if (check_end(data->input[*i + 1]) == FALSE)
 			token->blank = FALSE;
 		*i += 1;
@@ -92,6 +94,8 @@ t_bool	check_special(t_data *data, t_token *token, int *i)
 	if (!ft_isalpha(data->input[*i]) && data->input[*i] != '_')
 	{
 		token->str = ft_strncat(token->str, "$", 1);
+		if (!token->str)
+			program_error_exit("bash");
 		while (!ft_isalpha(data->input[*i]) \
 			&& data->input[*i] != '$' \
 			&& check_end(data->input[*i]) == FALSE)

@@ -80,7 +80,6 @@ $(NAME): $(L_NAME) $(OBJS)
 	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
 
 $(L_NAME):
-	@echo "LIBFT BUILD"
 	@$(MAKE) -C $(L_DIR)
 	@cp ./$(L_DIR)/$(L_NAME) .
 

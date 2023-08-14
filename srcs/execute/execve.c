@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/13 17:07:56 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 08:32:27 by eunwolee         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../incs/minishell.h"
 
 void	do_cmd(t_data *data)
@@ -17,12 +5,12 @@ void	do_cmd(t_data *data)
 	int		builtnum;
 	t_leaf	*temp;
 
+	temp = data->root->left_child->right_child;
 	if (data->info->pipe_num >= 300)
 	{
 		printf("%s\n", E_SYNTAX_PIPE);
 		exit(258);
 	}
-	temp = data->root->left_child->right_child;
 	if (temp != NULL)
 		builtnum = check_bulitin_func(temp->token->str);
 	if (data->root->left_child->left_child != NULL)
@@ -67,7 +55,10 @@ void	exec_fork(t_data *data)
 	abs_path(data);
 	base->command = set_path(data, data->root->left_child->right_child);
 	if (!base->command)
-		exit(127);
+	{
+		data->error_code = 127;
+		exit(data->error_code);
+	}
 	execve(base->command, base->cmd_path, data->env_array);
 }
 
@@ -90,7 +81,7 @@ void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag)
 		signal(SIGQUIT, child_handler);
 		data->info->parent = 1;
 		if (data->info->pipe_num != 0)
-			if (link_pipe(i, base, data) == TRUE)
+			if (link_pipe(i, base, data) > 0)
 				exit(1);
 		do_cmd(data);
 	}

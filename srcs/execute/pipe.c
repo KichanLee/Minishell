@@ -1,40 +1,28 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/13 17:08:11 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 08:34:15 by eunwolee         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../incs/minishell.h"
 
-t_bool	link_pipe(int i, t_pipe *base, t_data *data)
+int	link_pipe(int i, t_pipe *base, t_data *data)
 {
 	if (i == data->info->pipe_num)
 	{
 		if (dup2(base->com[i - 1].fd[0], STDIN_FILENO) == -1 \
 		|| close(base->com[i - 1].fd[0]) == -1)
-			return (TRUE);
+			return (1);
 	}
 	else if (i == 0)
 	{
 		if (close(base->com[i].fd[0]) == -1 \
 		|| dup2(base->com[i].fd[1], STDOUT_FILENO) == -1 \
 		|| close(base->com[i].fd[1]) == -1)
-			return (TRUE);
+			return (1);
 	}
 	else
 	{
 		if (close(base->com[i].fd[0]) == -1 \
 		|| dup2(base->com[i - 1].fd[0], STDIN_FILENO) == -1 \
 		|| dup2(base->com[i].fd[1], STDOUT_FILENO) == -1)
-			return (TRUE);
+			return (1);
 	}
-	return (FALSE);
+	return (0);
 }
 
 void	wait_child_processes(t_data *data)
@@ -61,6 +49,8 @@ void	wait_child_processes(t_data *data)
 		ft_putendl_fd("Quit: 3", STDOUT_FILENO);
 	close_file(data);
 }
+
+
 
 void	error_check(int num, t_data *data)
 {
