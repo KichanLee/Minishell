@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:24:31 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/12 18:42:29 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/14 20:22:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	ft_pwd(t_data *data, t_leaf *cur_root)
+void	ft_pwd(void);
+
+void	ft_pwd(void)
 {
 	char	*buf;
 	size_t	buf_size;
 
-	(void)data;
-	(void)cur_root;
 	buf = NULL;
 	buf_size = BUF_SIZE;
 	while (1)

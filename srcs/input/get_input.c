@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:17:28 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/14 18:27:16 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 20:17:02 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+t_bool	get_input(t_data *data)
 {
-	t_data	*data;
-
-	(void)argc;
-	(void)argv;
-	init(&data, envp);
-	init_base(argc);
-	data->env_array = env_to_array(data);
-	if (!data->env_array)
-		program_error_exit("bash");
-	while (TRUE)
+	data->input = readline("minishell$ ");
+	if (!data->input)
 	{
-		sig();
-		if (get_input(data) == FALSE)
-			continue ;
-		execute(data);
-		input_free(data);
+		printf("exit\n");
+		exit(1);
 	}
-	data_free(data);
-	return (0);
+	if (!data->input[0])
+	{
+		free(data->input);
+		return (FALSE);
+	}
+	add_history(data->input);
+	lexer(data);
+	if (syntax(data) == FALSE)
+	{
+		tree_clear(data->root);
+		ft_lstclear(&data->tokens);
+		free(data->input);
+		return (FALSE);
+	}
+	parser(data);
+	pipe_init(&data->pipe);
+	info_init(&data->info);
+	return (TRUE);
 }

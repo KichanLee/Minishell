@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freepipe.c                                         :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 17:49:42 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/08 23:07:39 by kichlee          ###   ########.fr       */
+/*   Created: 2023/08/14 18:53:28 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 18:53:45 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	close_pipe(int i, t_pipe *base, t_data *data)
-{
-	if (i == data->info->pipe_num)
-		close(base->com[i - 1].fd[0]);
-	else if (i == 0)
-		close(base->com[i].fd[1]);
-	else
-	{
-		close(base->com[i - 1].fd[0]);
-		close(base->com[i].fd[1]);
-	}
-}
+void	check_file(int fd, t_data *data);
+void	close_file(t_data *data);
 
 void	check_file(int fd, t_data *data)
 {
@@ -34,4 +24,13 @@ void	check_file(int fd, t_data *data)
 		if (data->info->parent == 1)
 			exit(1);
 	}
+}
+
+void	close_file(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->info->index)
+		unlink(data->info->heredoc_file[i]);
 }

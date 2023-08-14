@@ -17,6 +17,7 @@ MAKE = make
 
 SRCS =	minishell.c \
 		init/init.c \
+		input/get_input.c \
 		lexer/lexer.c \
 		lexer/tokenizer.c \
 		lexer/quote.c \
@@ -32,27 +33,29 @@ SRCS =	minishell.c \
 		utils/utils.c \
 		utils/temp.c \
 		builtin/builtin.c \
-		builtin/builtin_utils.c \
+		builtin/ft_join_cmd.c \
+		builtin/ft_count_args.c \
+		builtin/ft_add_env_front.c \
 		builtin/ft_cd.c \
 		builtin/ft_echo.c \
 		builtin/ft_exit.c \
-		builtin/ft_exit_two.c \
 		builtin/ft_pwd.c \
 		builtin/ft_unset.c \
 		builtin/ft_export.c \
-		builtin/ft_export_two.c \
-		builtin/ft_export_three.c \
+		builtin/ft_export_print.c \
+		builtin/ft_export_check.c \
 		builtin/ft_env.c \
 		builtin/ft_atolong.c \
-		execute/checkbulitin.c \
 		execute/execve.c \
-		execute/freepipe.c \
+		execute/execve_utils.c \
+		execute/child.c \
+		execute/parent.c \
 		execute/pipe.c \
-		execute/pipeutils.c \
-		execute/setpath.c \
-		redirect/heredocutils.c \
+		execute/path.c \
+		execute/file.c \
+		redirect/heredoc_parser.c \
 		redirect/heredoc.c \
-		redirect/redirection.c \
+		redirect/redirect.c \
 		signal/signal.c
 
 SRCS_WITH_PATH = $(addprefix $(SRCS_DIR)/, $(SRCS))
@@ -67,6 +70,7 @@ ${OBJS_DIR}:
 	@echo "MINISHELL BUILD"
 	@mkdir ${OBJS_DIR}
 	@mkdir ${OBJS_DIR}/init
+	@mkdir ${OBJS_DIR}/input
 	@mkdir ${OBJS_DIR}/lexer
 	@mkdir ${OBJS_DIR}/parser
 	@mkdir ${OBJS_DIR}/utils

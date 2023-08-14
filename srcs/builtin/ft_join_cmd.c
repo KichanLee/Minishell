@@ -1,41 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*   ft_join_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 15:38:16 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/14 22:15:42 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 22:15:46 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/minishell.h"
+#include "../incs/minishell.h"
 
-char	**input_leaf(t_leaf *com_leaf, char **input)
-{
-	t_leaf	*leaf;
-	int		i;
-	char	**str;
+char		**ft_join_cmd(t_leaf *com_leaf);
+static char	**input_leaf(t_leaf *com_leaf, char **input);
 
-	i = 1;
-	leaf = com_leaf;
-	str = input;
-	while (leaf)
-	{
-		if (leaf->right_child)
-		{
-			str[i] = leaf->right_child->token->str;
-			leaf = leaf->right_child;
-			i++;
-		}
-		else
-			break ;
-	}
-	return (str);
-}
-
-char	**join_cmd(t_leaf *com_leaf)
+char	**ft_join_cmd(t_leaf *com_leaf)
 {
 	int		i;
 	char	**str;
@@ -58,18 +38,25 @@ char	**join_cmd(t_leaf *com_leaf)
 	return (str);
 }
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+static char	**input_leaf(t_leaf *com_leaf, char **input)
 {
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
-}
+	t_leaf	*leaf;
+	int		i;
+	char	**str;
 
-void	add_env_front(t_data *head, char *key, char *value)
-{
-	if (head->envs == NULL)
-		head->envs = create_env_node(key, value);
-	else
-		ft_lstadd_front(&(head->envs), create_env_node(key, value));
+	i = 1;
+	leaf = com_leaf;
+	str = input;
+	while (leaf)
+	{
+		if (leaf->right_child)
+		{
+			str[i] = leaf->right_child->token->str;
+			leaf = leaf->right_child;
+			i++;
+		}
+		else
+			break ;
+	}
+	return (str);
 }

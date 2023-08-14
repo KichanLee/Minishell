@@ -6,11 +6,16 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 09:26:05 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 20:17:17 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+void	init_base(int ac);
+void	handle_sigint(int sig);
+void	child_handler(int signum);
+void	sig(void);
 
 void	init_base(int ac)
 {

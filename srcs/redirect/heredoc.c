@@ -6,11 +6,17 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:21:48 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:22:09 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:22:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int			fork_heredoc(t_data *data);
+static void	mk_heredoc_pipe(t_data *data);
+static char	*mk_filename(void);
+static void	mk_num(char *str, int num);
+static void	do_heredoc(t_leaf *leaf, t_data *data);
 
 int	fork_heredoc(t_data *data)
 {
@@ -40,7 +46,44 @@ int	fork_heredoc(t_data *data)
 	return (1);
 }
 
-void	mk_num(char *str, int num)
+static void	mk_heredoc_pipe(t_data *data)
+{
+	t_leaf	*pipe;
+
+	pipe = data->root;
+	while (pipe)
+	{
+		data->info->heredoc_file[data->info->index] = mk_filename();
+		if (pipe->left_child->left_child \
+		&& pipe->left_child->left_child->token->redirect_type == T_HEREDOC)
+		{
+			do_heredoc(pipe->left_child->left_child, data);
+			data->info->index++;
+		}
+		pipe = pipe->right_child;
+	}
+}
+
+static char	*mk_filename(void)
+{
+	char	*str;
+	int		exist;
+	int		i;
+
+	str = ft_strdup("/tmp/here_doc000");
+	i = 0;
+	exist = 0;
+	while (exist == 0)
+	{
+		mk_num(str, i++);
+		exist = access(str, F_OK);
+		if (exist != 0)
+			unlink(str);
+	}
+	return (str);
+}
+
+static void	mk_num(char *str, int num)
 {
 	int	i;
 	int	j;
@@ -60,26 +103,7 @@ void	mk_num(char *str, int num)
 	}
 }
 
-char	*mk_filename(void)
-{
-	char	*str;
-	int		exist;
-	int		i;
-
-	str = ft_strdup("/tmp/here_doc000");
-	i = 0;
-	exist = 0;
-	while (exist == 0)
-	{
-		mk_num(str, i++);
-		exist = access(str, F_OK);
-		if (exist != 0)
-			unlink(str);
-	}
-	return (str);
-}
-
-void	do_heredoc(t_leaf *leaf, t_data *data)
+static void	do_heredoc(t_leaf *leaf, t_data *data)
 {
 	int			fd;
 	t_leaf		*temp;
@@ -91,26 +115,8 @@ void	do_heredoc(t_leaf *leaf, t_data *data)
 		{
 			fd = open(data->info->heredoc_file[data->info->index], \
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			write_str(temp->left_child->token->str, fd, data);
+			write_str(data, temp->left_child->token->str, fd);
 		}
 		temp = temp ->left_child;
-	}
-}
-
-void	mk_heredoc_pipe(t_data *data)
-{
-	t_leaf	*pipe;
-
-	pipe = data->root;
-	while (pipe)
-	{
-		data->info->heredoc_file[data->info->index] = mk_filename();
-		if (pipe->left_child->left_child \
-		&& pipe->left_child->left_child->token->redirect_type == T_HEREDOC)
-		{
-			do_heredoc(pipe->left_child->left_child, data);
-			data->info->index++;
-		}
-		pipe = pipe->right_child;
 	}
 }

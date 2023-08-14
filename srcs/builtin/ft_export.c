@@ -6,56 +6,14 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:50:55 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 17:47:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 22:13:38 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-static void	check_env(t_data *data, char *key, char *value);
-
-int	check_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (1);
-		++i;
-	}
-	return (0);
-}
-
-int	plus_flag(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '+')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	shiftstringleft(char *str)
-{
-	int	length;
-	int	i;
-
-	i = 0;
-	length = (int) ft_strlen(str);
-	while (i < length - 1)
-	{
-		str[i] = str[i + 1];
-		i++;
-	}
-	str[length - 1] = '\0';
-}
+void	ft_export(t_data *data);
+void	update_env_export(t_data *data, char *key, char *value);
 
 void	ft_export(t_data *data)
 {
@@ -111,31 +69,78 @@ void	ft_export(t_data *data)
 	
 }
 
-int	ft_isalpha_str(char *str)
+// int	ft_isalpha_str(char *str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (!((ft_isalnum(str[i]) || check_underbar(str[i]))))
+// 			return (0);
+// 		++i;
+// 	}
+// 	return (1);
+// }
+
+void	update_env_export(t_data *data, char *key, char *value)
 {
-	int	i;
+	int		plus;
+	char	*tmp;
+	t_list	*search_list;
 
-	i = 0;
-	while (str[i])
+	plus = check_plus(key);
+	if (plus == TRUE)
 	{
-		if (!((ft_isalnum(str[i]) || check_underbar(str[i]))))
-			return (0);
-		++i;
+		int i = 0;
+		while (key[i] != '+')
+			i++;
+		tmp = ft_strdup("");
+		tmp = ft_strncat(tmp, key, i);
+		search_list = env_search(data, tmp, FALSE);
 	}
-	return (1);
-}
-
-static void	check_env(t_data *data, char *key, char *value)
-{
-	int	i;
-
-	i = 1;
-	printf("check %s %s\n", key, value);
-	if (!check_name(key))
+	else if(check_equal(key) == TRUE)
 	{
-		printf("bash: export: '%s': not a valid identifier\n", key);
-		data->error_code = 1;
-		return ;
+		tmp = ft_strdup("");
+		tmp = ft_strncat(tmp, key, ft_strlen(key) - 1);
+		search_list = env_search(data, tmp, FALSE);
 	}
-	update_env_export(data, key, value);
+	else
+	{
+		tmp = ft_strdup(key);
+		search_list = env_search(data, tmp, FALSE);
+	}
+	if(plus == FALSE)
+	{
+		if(check_equal(key) == FALSE)
+		{
+			if (search_list)
+				return ;
+			ft_add_env_front(data, key, value);
+		}
+		else
+		{
+			if (search_list)
+			{
+				free(search_list->env);
+				if (value)
+					search_list->env = ft_strjoin(key, value);
+				else
+					search_list->env = ft_strdup(key);
+			}
+			else
+				ft_add_env_front(data, key, value);
+		}
+	}
+	else
+	{
+		if(search_list)
+			search_list->env = ft_strjoin(search_list->env, value);
+		else
+		{
+			tmp = ft_strncat(tmp, "=", 1);
+			ft_add_env_front(data, tmp, value);
+		}
+	}
+	free(tmp);
 }

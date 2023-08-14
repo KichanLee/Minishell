@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 18:39:07 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 20:16:30 by eunwolee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../incs/minishell.h"
+
+int		check_bulitin(t_data *data);
+void	recover_std(t_data *data);
+void	heredoc_flag(t_leaf *leaf, t_data *data);
+
+int	check_bulitin(t_data *data)
+{
+	int		bulit;
+	t_leaf	*temp;
+
+	temp = data->root->left_child->right_child;
+	if (temp != NULL)
+		bulit = check_bulitin_func(temp->token->str);
+	if (temp == NULL)
+	{
+		check_redirect(data->root, data);
+		recover_std(data);
+		return (TRUE);
+	}
+	if (bulit != 0)
+	{
+		check_redirect(data->root, data);
+		exec_bulitin(bulit, data);
+		recover_std(data);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+void	recover_std(t_data *data)
+{
+	if (dup2(data->info->oristdin, STDIN_FILENO) == -1)
+		error_back_readline(data, "Bad file descriptor", EBADF, 1);
+	close(data->info->oristdin);
+	if (dup2(data->info->oristdout, STDOUT_FILENO) == -1)
+		error_back_readline(data, "Bad file descriptor", EBADF, 1);
+	close(data->info->oristdin);
+}
+
+void	heredoc_flag(t_leaf *leaf, t_data *data)
+{
+	if (!leaf)
+		return ;
+	if (leaf->token)
+	{
+		if (leaf->token->type == T_REDIRECT)
+		{
+			if (leaf->token->redirect_type == T_HEREDOC)
+			{
+				if (leaf->left_child == NULL)
+					return ;
+				data->info->heredoc_flag++;
+			}
+		}
+	}
+	heredoc_flag(leaf->left_child, data);
+	heredoc_flag(leaf->right_child, data);
+}

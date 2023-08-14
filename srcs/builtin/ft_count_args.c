@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   ft_count_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 10:29:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:30:13 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/07/22 13:20:41 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 20:49:20 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../incs/minishell.h"
 
-# include "struct.h"
+int	ft_count_args(char **args);
 
-/*init*/
-void	init(t_data **data, char **envp);
-void	env_init(t_data *data, char **envp);
-void	pipe_init(t_pipe **pipe);
-void	info_init(t_info **info);
+int	ft_count_args(char **args)
+{
+	int	count;
 
-#endif
+	count = 0;
+	while (*args != NULL)
+	{
+		count++;
+		args++;
+	}
+	return (count);
+}

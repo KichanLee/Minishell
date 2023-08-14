@@ -12,7 +12,56 @@
 
 #include "../incs/minishell.h"
 
-char	**check_sort(char **res, int sorted)
+void		print_export_order(t_data *data);
+static char	**sort_bubble(char **str, int size);
+static char	**check_sort(char **res, int sorted);
+static void	print_export_quote(char **order_set);
+
+void	print_export_order(t_data *data)
+{
+	int		i;
+	int		lst_size;
+	char	**order_set;
+	char	**order_copy;
+	t_list	*cur;
+
+	i = 0;
+	lst_size = ft_lstsize(data->envs);
+	cur = data->envs;
+	order_copy = (char **)ft_calloc(lst_size + 1, sizeof(char *));
+	while (cur)
+	{
+		order_copy[i] = ft_strdup(cur->env);
+		cur = cur->next;
+		++i;
+	}
+	order_set = sort_bubble(order_copy, lst_size);
+	print_export_quote(order_set);
+}
+
+static char	**sort_bubble(char **str, int size)
+{
+	char	**res;
+	int		sorted;
+	int		i;
+
+	sorted = 0;
+	i = -1;
+	res = (char **)ft_calloc(sizeof(char *), (size + 1));
+	if (!res)
+		program_error_exit("Memory allocation error!");
+	while (str[++i])
+	{
+		res[i] = ft_strdup(str[i]);
+		if (!res[i])
+			program_error_exit("Memory allocation error!");
+	}
+	res[i] = NULL;
+	res = check_sort(res, sorted);
+	return (res);
+}
+
+static char	**check_sort(char **res, int sorted)
 {
 	int		i;
 	char	*tmp;
@@ -36,29 +85,7 @@ char	**check_sort(char **res, int sorted)
 	return (res);
 }
 
-char	**sort_bubble(char **str, int size)
-{
-	char	**res;
-	int		sorted;
-	int		i;
-
-	sorted = 0;
-	i = -1;
-	res = (char **)ft_calloc(sizeof(char *), (size + 1));
-	if (!res)
-		program_error_exit("Memory allocation error!");
-	while (str[++i])
-	{
-		res[i] = ft_strdup(str[i]);
-		if (!res[i])
-			program_error_exit("Memory allocation error!");
-	}
-	res[i] = NULL;
-	res = check_sort(res, sorted);
-	return (res);
-}
-
-static	void	print_export_quote(char **order_set)
+static void	print_export_quote(char **order_set)
 {
 	int		i;
 	char	**res_split;
@@ -82,24 +109,3 @@ static	void	print_export_quote(char **order_set)
 	}
 }
 
-void	print_export_order(t_data *data)
-{
-	int		i;
-	int		lst_size;
-	char	**order_set;
-	char	**order_copy;
-	t_list	*cur;
-
-	i = 0;
-	lst_size = ft_lstsize(data->envs);
-	cur = data->envs;
-	order_copy = (char **)ft_calloc(lst_size + 1, sizeof(char *));
-	while (cur)
-	{
-		order_copy[i] = ft_strdup(cur->env);
-		cur = cur->next;
-		++i;
-	}
-	order_set = sort_bubble(order_copy, lst_size);
-	print_export_quote(order_set);
-}

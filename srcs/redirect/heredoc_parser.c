@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredocutils.c                                     :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:20 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 09:36:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:17:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+void		write_str(t_data *data, char *content, int fd);
 static void	heredoc_parser(t_data *data, int fd, char *str);
 static char	*heredoc_question(t_data *data, char *tmp, int *i);
 static char	*heredoc_expand(t_data *data, char *str, char *tmp, int *i);
 static void	heredoc_replace(t_data *data, char **tmp, char *name);
 
-void	write_str(char *content, int fd, t_data *data)
+void	write_str(t_data *data, char *content, int fd)
 {
 	char	*str;
 
-	(void)data;
 	while (1)
 	{
 		str = readline ("> ");

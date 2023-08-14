@@ -1,30 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 18:31:21 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/14 18:52:10 by eunwolee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-void	do_cmd(t_data *data)
-{
-	int		builtnum;
-	t_leaf	*temp;
-
-	temp = data->root->left_child->right_child;
-	if (data->info->pipe_num >= 300)
-	{
-		printf("%s\n", E_SYNTAX_PIPE);
-		exit(258);
-	}
-	if (temp != NULL)
-		builtnum = check_bulitin_func(temp->token->str);
-	if (data->root->left_child->left_child != NULL)
-		check_redirect (data->root, data);
-	if (temp == NULL)
-		exit(0);
-	if (builtnum != 0)
-	{
-		exec_bulitin(builtnum, data);
-		exit(0);
-	}
-	else
-		exec_fork(data);
-}
+void		execute(t_data *data);
+void		execute_cmd(t_data *data, int flag);
+static void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag);
 
 void	execute(t_data *data)
 {
@@ -45,24 +35,25 @@ void	execute(t_data *data)
 	execute_cmd(data, 0);
 }
 
-void	exec_fork(t_data *data)
+void	execute_cmd(t_data *data, int flag)
 {
+	int		i;
 	t_pipe	*base;
+	t_leaf	*head;
 
+	i = 0;
 	base = data->pipe;
-	if (!data->root->left_child->right_child)
-		return ;
-	abs_path(data);
-	base->command = set_path(data, data->root->left_child->right_child);
-	if (!base->command)
+	head = data->root;
+	while (i < data->info->pipe_num + 1)
 	{
-		data->error_code = 127;
-		exit(data->error_code);
+		execute_single_cmd(data, base, i, flag);
+		i++;
 	}
-	execve(base->command, base->cmd_path, data->env_array);
+	data->root = head;
+	wait_child_processes(data);
 }
 
-void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag)
+static void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag)
 {
 	if (i < data->info->pipe_num)
 		if (pipe(base->com[i].fd) < 0)
@@ -89,22 +80,4 @@ void	execute_single_cmd(t_data *data, t_pipe *base, int i, int flag)
 		data->root = data->root->right_child;
 	if (data->info->pipe_num)
 		close_pipe(i, base, data);
-}
-
-void	execute_cmd(t_data *data, int flag)
-{
-	int		i;
-	t_pipe	*base;
-	t_leaf	*head;
-
-	i = 0;
-	base = data->pipe;
-	head = data->root;
-	while (i < data->info->pipe_num + 1)
-	{
-		execute_single_cmd(data, base, i, flag);
-		i++;
-	}
-	data->root = head;
-	wait_child_processes(data);
 }

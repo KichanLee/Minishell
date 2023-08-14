@@ -6,13 +6,34 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:07 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:16:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:25:06 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	do_input_redirect(t_leaf *leaf, t_data *data)
+void		check_redirect(t_leaf *leaf, t_data *data);
+static void	do_input_redirect(t_leaf *leaf, t_data *data);
+static void	do_output_redirect(t_leaf *leaf, t_data *data);
+
+void	check_redirect(t_leaf *leaf, t_data *data)
+{
+	t_leaf	*temp;
+
+	temp = leaf->left_child->left_child;
+	while (temp)
+	{
+		if (temp->token->redirect_type == T_INPUT \
+		||temp->token->redirect_type == T_HEREDOC)
+			do_input_redirect(temp, data);
+		else if (temp->token->redirect_type == T_OUTPUT \
+		||temp->token->redirect_type == T_APPEND)
+			do_output_redirect(temp, data);
+		temp = temp->left_child;
+	}
+}
+
+static void	do_input_redirect(t_leaf *leaf, t_data *data)
 {
 	int		fd;
 	t_leaf	*temp;
@@ -33,7 +54,7 @@ void	do_input_redirect(t_leaf *leaf, t_data *data)
 	close (fd);
 }
 
-void	do_output_redirect(t_leaf *leaf, t_data *data)
+static void	do_output_redirect(t_leaf *leaf, t_data *data)
 {
 	int		fd;
 	t_leaf	*temp;
@@ -53,21 +74,4 @@ void	do_output_redirect(t_leaf *leaf, t_data *data)
 	check_file (fd, data);
 	dup2 (fd, STDOUT_FILENO);
 	close (fd);
-}
-
-void	check_redirect(t_leaf *leaf, t_data *data)
-{
-	t_leaf	*temp;
-
-	temp = leaf->left_child->left_child;
-	while (temp)
-	{
-		if (temp->token->redirect_type == T_INPUT \
-		||temp->token->redirect_type == T_HEREDOC)
-			do_input_redirect(temp, data);
-		else if (temp->token->redirect_type == T_OUTPUT \
-		||temp->token->redirect_type == T_APPEND)
-			do_output_redirect(temp, data);
-		temp = temp->left_child;
-	}
 }
