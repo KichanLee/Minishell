@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:49:27 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:51:42 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	env_print(t_data *data)
 	}
 }
 
-//환경변수 이름에 해당하는 노드를 반환하는 함수입니다
 t_list	*env_search(t_data *data, char *key, t_bool flag)
 {
 	char	*tmp;
 	char	*env;
 	t_list	*cur;
+	int		len;
 
 	tmp = ft_strdup(key);
 	if (flag == TRUE)
@@ -44,8 +44,10 @@ t_list	*env_search(t_data *data, char *key, t_bool flag)
 	cur = data->envs;
 	while (cur)
 	{
-		if (!ft_strncmp(cur->env, env, ft_strlen(env)))
-			return (cur);
+		len = ft_strlen(env);
+		if (!ft_strncmp(cur->env, env, len))
+			if (cur->env[len] == '\0' || cur->env[len] == '=')
+				return (cur);
 		cur = cur->next;
 	}
 	return (NULL);

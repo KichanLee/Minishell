@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:30:59 by kichan            #+#    #+#             */
-/*   Updated: 2023/08/12 21:30:31 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:44:02 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ static void	print_line(t_leaf *cmd);
 
 void	ft_echo(t_leaf *cmd)
 {
-	int cnt;
-	int flag;
+	int	cnt;
+	int	flag;
 
 	cnt = 0;
 	flag = FALSE;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_two.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 19:33:40 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/13 21:25:30 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/14 17:50:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,48 +59,76 @@ int	check_name(char *str)
 	return (1);
 }
 
-char	**check_sort(char **res, int sorted)
+void	update_env_export(t_data *data, char *key, char *value)
 {
-	int		i;
+	int		flag;
 	char	*tmp;
+	t_list	*search_list;
 
-	i = 0;
-	while (!sorted)
+	printf("key val : %s\n", key);
+	flag = plus_flag(key);
+	printf("flag %d\n", flag);
+	if (flag == TRUE)
 	{
-		sorted = 1;
-		i = -1;
-		while (res[++i + 1])
+		int i = 0;
+		while (key[i] != '+')
+			i++;
+		tmp = ft_strdup("");
+		tmp = ft_strncat(tmp, key, i);
+		printf("tmp  first : %s\n", tmp);
+		search_list = env_search(data, tmp, FALSE);
+	}
+	else if(check_equal(key) == TRUE)
+	{
+		tmp = ft_strdup("");
+		tmp = ft_strncat(tmp, key, ft_strlen(key) - 1);
+		search_list = env_search(data, tmp, FALSE);
+	}
+	else
+	{
+		tmp = ft_strdup(key);
+		printf("tmp %s\n", tmp);
+		search_list = env_search(data, tmp, FALSE);
+	}
+	if(flag == FALSE)
+	{
+		if(check_equal(key) == FALSE)
 		{
-			if (ft_strncmp(res[i], res[i + 1], ft_strlen(res[i])) > 0)
+			if (search_list)
 			{
-				tmp = res[i];
-				res[i] = res[i + 1];
-				res[i + 1] = tmp;
-				sorted = 0;
+				printf("----------------------\n");
+				return ;
 			}
+			printf("+ 가 없고 = 도 없는데, 기존에 환경변수가 없는 지점\n");
+			add_env_front(data, key, value);
+		}
+		else
+		{
+			printf("+ 가 없고 = 는 있는 지점\n");
+			if (search_list)
+			{
+				printf("search_list %s\n", search_list->env);
+				free(search_list->env);
+				if (value)
+					search_list->env = ft_strjoin(key, value);
+				else
+					search_list->env = ft_strdup(key);
+			}
+			else
+				add_env_front(data, key, value);
 		}
 	}
-	return (res);
-}
-
-char	**sort_bubble(char **str, int size)
-{
-	char	**res;
-	int		sorted;
-	int		i;
-
-	sorted = 0;
-	i = -1;
-	res = (char **)ft_calloc(sizeof(char *), (size + 1));
-	if (!res)
-		program_error_exit("Memory allocation error!");
-	while (str[++i])
+	else
 	{
-		res[i] = ft_strdup(str[i]);
-		if (!res[i])
-			program_error_exit("Memory allocation error!");
+		if(search_list)
+			search_list->env = ft_strjoin(search_list->env, value);
+		else
+		{
+			tmp = ft_strncat(tmp, "=", 1);
+			add_env_front(data, tmp, value);
+		}
 	}
-	res[i] = NULL;
-	res = check_sort(res, sorted);
-	return (res);
+	free(tmp);
 }
+
+//a -> a=b

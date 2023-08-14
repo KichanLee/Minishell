@@ -41,6 +41,7 @@ SRCS =	minishell.c \
 		builtin/ft_unset.c \
 		builtin/ft_export.c \
 		builtin/ft_export_two.c \
+		builtin/ft_export_three.c \
 		builtin/ft_env.c \
 		builtin/ft_atolong.c \
 		execute/checkbulitin.c \

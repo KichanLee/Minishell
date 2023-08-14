@@ -3,9 +3,8 @@
 
 # include "struct.h"
 
-#define LLONG_MAX 9223372036854775807
-#define LLONG_MIN -9223372036854775808ULL
-// #define LLONG_MIN (-LLONG_MAX - 1)
+# define LLONG_MAX 9223372036854775807
+# define LLONG_MIN -9223372036854775808ULL
 
  /*signal*/
 void		sig(void);
@@ -22,9 +21,9 @@ void		ft_cd(t_data *data, t_leaf *cur_root);
 void		ft_exit(t_data *data, t_leaf *cur_root);
 void		ft_pwd(t_data *data, t_leaf *cur_root);
 void		ft_unset(t_data *data, t_leaf *cur_root);
-void		update_env_export(t_data *data);
+void		update_env_export(t_data *data, char *key, char *value);
 void		update_env(t_data *data, char *key, char *value);
-void		ft_export(t_data *data, t_leaf *cur_root);
+void		ft_export(t_data *data);
 void		ft_env(t_data *data, t_leaf *cur_root);
 char		*check_keyval(t_data *data, char *str);
 char		**sort_bubble(char **str, int size);
@@ -34,6 +33,9 @@ char		**sort_bubble(char **str, int size);
 long long	char_to_long_long(char *str, int *flag);
 int			is_num_str(char *str);
 void		exit_not_num(t_data *data, char *str);
+void        print_export_order(t_data *data);
+int         plus_flag(char *str);
+void        shiftstringleft(char *str);
 
 /*builtin utils*/
 char		**join_cmd(t_leaf * com_leaf);

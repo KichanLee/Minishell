@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/12 18:40:43 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:44:24 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_unset(t_data *data, t_leaf *cur_root)
 	char	**cmd;
 	int		arg_cnt;
 	int		i;
-	
+
 	cmd = join_cmd(cur_root->left_child->right_child);
 	arg_cnt = count_args(cmd);
 	i = 1;

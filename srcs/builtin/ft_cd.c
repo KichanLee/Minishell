@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/13 22:18:04 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:43:18 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	change_directory(t_data *data, char *path)
 		if (env_search(data, "HOME", TRUE) == NULL)
 			return (change_home(data, path));
 		else
-			buf = ft_strdup(env_search(data, "HOME",TRUE)->env + 5);
+			buf = ft_strdup(env_search(data, "HOME", TRUE)->env + 5);
 	}
 	else
 		buf = ft_strdup(path);
