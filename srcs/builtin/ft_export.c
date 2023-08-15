@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:50:55 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 22:43:47 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:01:22 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ t_bool	ft_export(t_data *data)
 	while (args--)
 		if (start_export(data, &cur) == FALSE)
 			return (FALSE);
-	data->env_array = env_to_array(data);
-	if (!data->env_array)
-		program_error_exit("bash");
+	update_env_double_char(data);
 	return (TRUE);
 }
 

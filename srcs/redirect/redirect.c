@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:07 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 22:34:38 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:55:06 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,47 +31,43 @@ void	check_redirect(t_leaf *leaf, t_data *data)
 			do_output_redirect(temp, data);
 		temp = temp->left_child;
 	}
+	if (leaf->left_child->left_child != NULL)
+	{
+		check_file (data->info->fd, data);
+		dup2 (data->info->fd, STDIN_FILENO);
+		close (data->info->fd);
+	}
 }
 
 static void	do_input_redirect(t_leaf *leaf, t_data *data)
 {
-	int		fd;
 	t_leaf	*temp;
 
-	fd = 0;
 	temp = leaf;
 	if (temp->token->redirect_type == T_HEREDOC)
 	{
-		fd = open (data->info->heredoc_file[data->info->index - 1], \
+		data->info->fd = open (data->info->heredoc_file[data->info->index - 1], \
 		O_RDONLY);
-		dup2 (fd, STDIN_FILENO);
+		dup2 (data->info->fd, STDIN_FILENO);
 		return ;
 	}
 	else if (temp->token->redirect_type == T_INPUT)
-		fd = open (temp->left_child->token->str, O_RDONLY);
-	check_file (fd, data);
-	dup2 (fd, STDIN_FILENO);
-	close (fd);
+		data->info->fd = open (temp->left_child->token->str, O_RDONLY);
 }
 
 static void	do_output_redirect(t_leaf *leaf, t_data *data)
 {
-	int		fd;
 	t_leaf	*temp;
 
-	fd = 0;
 	temp = leaf;
 	if (temp->token->redirect_type == T_APPEND)
 	{
-		fd = open (temp->left_child->token->str, \
+		data->info->fd = open (temp->left_child->token->str, \
 		O_WRONLY | O_APPEND | O_CREAT, 0644);
 	}
 	else if (temp->token->redirect_type == T_OUTPUT)
 	{
-		fd = open (temp->left_child->token->str, \
+		data->info->fd = open (temp->left_child->token->str, \
 		O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
-	check_file (fd, data);
-	dup2 (fd, STDOUT_FILENO);
-	close (fd);
 }

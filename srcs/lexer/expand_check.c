@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:23:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 09:34:28 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:49:08 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_bool	check_question(t_data *data, t_token *token, int *i)
 		if (check_end(data->input[*i + 1]) == FALSE)
 			token->blank = FALSE;
 		*i += 1;
+		free(tmp);
 		return (TRUE);
 	}
 	return (FALSE);

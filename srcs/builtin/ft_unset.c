@@ -6,13 +6,14 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 18:22:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:01:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void	ft_unset(t_data *data, t_leaf *cur_root);
+void	update_env_double_char(t_data *data);
 
 void	ft_unset(t_data *data, t_leaf *cur_root)
 {
@@ -29,6 +30,12 @@ void	ft_unset(t_data *data, t_leaf *cur_root)
 		++i;
 	}
 	free(cmd);
+	update_env_double_char(data);
+}
+
+void	update_env_double_char(t_data *data)
+{
+	free(data->env_array);
 	data->env_array = env_to_array(data);
 	if (!data->env_array)
 		program_error_exit("bash");

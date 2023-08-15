@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:53:28 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:53:45 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:50:59 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	check_file(int fd, t_data *data)
 	if (fd < 0)
 	{
 		close(fd);
+		data->error_code = 1;
 		error_print(str, 0, 1);
 		if (data->info->parent == 1)
 			exit(1);
