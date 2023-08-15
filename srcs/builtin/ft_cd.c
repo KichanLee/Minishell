@@ -6,15 +6,17 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 22:39:21 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:19:44 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-t_bool		ft_cd(t_data *data);
-static int	change_directory(t_data *data, char *path);
-static int	change_home(void);
+t_bool			ft_cd(t_data *data);
+static int		change_directory(t_data *data, char *path);
+static int		change_home(void);
+static t_bool	is_failuer(t_data *data, char *pwd, char *option);
+static void		is_success(t_data *data, char *pwd);
 
 t_bool	ft_cd(t_data *data)
 {
@@ -31,20 +33,10 @@ t_bool	ft_cd(t_data *data)
 		free(pwd);
 	}
 	else if (change_directory(data, \
-			data->root->left_child->right_child->right_child->token->str) != 0)
-	{
-		option = data->root->left_child->right_child->right_child->token->str;
-		printf("bash: %s: No such file or directory\n", option);
-		free(pwd);
-		return (FALSE);
-	}
+		data->root->left_child->right_child->right_child->token->str) != 0)
+		return (is_failuer(data, pwd, option));
 	else
-	{
-		getcwd(pwd, 1024);
-		ft_update_env_cd(data, ft_strdup("OLDPWD"), \
-							ft_strdup(env_search(data, "PWD", TRUE)->env + 4));
-		ft_update_env_cd(data, ft_strdup("PWD"), pwd);
-	}
+		is_success(data, pwd);
 	return (TRUE);
 }
 
@@ -75,4 +67,20 @@ static int	change_home(void)
 {
 	printf("bash: cd: HOME not set\n");
 	return (-1);
+}
+
+static t_bool	is_failuer(t_data *data, char *pwd, char *option)
+{
+	option = data->root->left_child->right_child->right_child->token->str;
+	printf("bash: %s: No such file or directory\n", option);
+	free(pwd);
+	return (FALSE);
+}
+
+static void	is_success(t_data *data, char *pwd)
+{
+	getcwd(pwd, 1024);
+	ft_update_env_cd(data, ft_strdup("OLDPWD"), \
+						ft_strdup(env_search(data, "PWD", TRUE)->env + 4));
+	ft_update_env_cd(data, ft_strdup("PWD"), pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:36:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 17:00:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:02:57 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	exec_fork(t_data *data)
 	}
 	execve(base->command, base->cmd_path, data->env_array);
 }
-
-
 
 char	*ft_strjoinstr(char *s1, char *s2)
 {

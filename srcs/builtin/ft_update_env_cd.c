@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_update_env_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 23:02:24 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/15 23:24:39 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/15 23:25:02 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	*data;
+void	ft_update_env_cd(t_data *data, char *key, char *value);
 
-	(void)argv;
-	init(&data, envp);
-	init_base(argc);
-	data->env_array = env_to_array(data);
-	if (!data->env_array)
+void	ft_update_env_cd(t_data *data, char *key, char *value)
+{
+	t_list	*tmp;
+
+	if (!key || !value)
 		program_error_exit("bash");
-	while (TRUE)
+	tmp = env_search(data, key, TRUE);
+	if (!tmp)
+		ft_add_env_front(data, key, value);
+	else
 	{
-		sig();
-		if (get_input(data) == FALSE)
-			continue ;
-		execute(data);
-		input_free(data);
-		check_leak();
+		free(tmp->env);
+		tmp->env = ft_strdup(key);
+		tmp->env = ft_strncat(tmp->env, "=", 1);
+		tmp->env = ft_strncat(tmp->env, value, ft_strlen(value));
+		free(key);
+		free(value);
 	}
-	data_free(data);
-	return (0);
 }
