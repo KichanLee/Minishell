@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_update_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 00:37:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 13:54:37 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 21:44:03 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 void		ft_update_env_cd(t_data *data, char *key, char *value);
 void		ft_update_env_export(t_data *data, char *key, char *value);
-static char	*get_tmp_key(t_data *data, char *key, t_bool plus, t_list **search_list);
-static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_list);
+static char	*get_tmp_key(char *key, t_bool plus);
+static void	is_not_plus(t_data *data, \
+							char *key, char *value, t_list *search_list);
 static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list);
 
 void	ft_update_env_cd(t_data *data, char *key, char *value)
 {
 	t_list	*tmp;
-	char	*key_equal;
 
-	tmp = env_search(data, key,TRUE);
+	if (!key || !value)
+		program_error_exit("bash");
+	tmp = env_search(data, key, TRUE);
 	if (!tmp)
 		ft_add_env_front(data, key, value);
 	else
 	{
 		free(tmp->env);
-		key_equal = ft_strdup(key);
-		key_equal = ft_strncat(key_equal, "=", 1);
-		tmp->env = ft_strjoin(key_equal, value);
+		tmp->env = ft_strdup(key);
+		tmp->env = ft_strncat(tmp->env, "=", 1);
+		tmp->env = ft_strncat(tmp->env, value, ft_strlen(value));
+		free(key);
+		free(value);
 	}
 }
 
@@ -42,19 +46,25 @@ void	ft_update_env_export(t_data *data, char *key, char *value)
 	t_list	*search_list;
 
 	plus = check_plus(key);
-	tmp = get_tmp_key(data, key, plus, &search_list);
-	if(plus == FALSE)
+	tmp = get_tmp_key(key, plus);
+	search_list = env_search(data, tmp, FALSE);
+	if (plus == FALSE)
+	{
 		is_not_plus(data, key, value, search_list);
+		free(tmp);
+	}
 	else
+	{
 		is_plus(data, &tmp, value, search_list);
-	free(tmp);
+		free(key);
+	}
 }
 
-static char	*get_tmp_key(t_data *data, char *key, t_bool plus, t_list **search_list)
+static char	*get_tmp_key(char *key, t_bool plus)
 {
 	int		i;
 	char	*tmp;
-	
+
 	tmp = ft_strdup("");
 	if (plus == TRUE)
 	{
@@ -62,32 +72,26 @@ static char	*get_tmp_key(t_data *data, char *key, t_bool plus, t_list **search_l
 		while (key[i] != '+')
 			i++;
 		tmp = ft_strncat(tmp, key, i);
-		*search_list = env_search(data, tmp, FALSE);
 	}
-	else if(check_equal(key) == TRUE)
-	{
+	else if (check_equal(key) == TRUE)
 		tmp = ft_strncat(tmp, key, ft_strlen(key) - 1);
-		*search_list = env_search(data, tmp, FALSE);
-	}
 	else
-	{
 		tmp = ft_strncat(tmp, key, ft_strlen(key));
-		*search_list = env_search(data, tmp, FALSE);
-	}
 	return (tmp);
 }
 
-static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_list)
+static void	is_not_plus(t_data *data, \
+							char *key, char *value, t_list *search_list)
 {
-	if(check_equal(key) == FALSE)
+	if (check_equal(key) == FALSE)
 	{
 		if (search_list)
 		{
 			free(key);
 			free(value);
-			return ;
 		}
-		ft_add_env_front(data, key, value);
+		else
+			ft_add_env_front(data, key, value);
 	}
 	else
 	{
@@ -109,11 +113,17 @@ static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_lis
 
 static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list)
 {
-	if(search_list)
-		search_list->env = ft_strjoin(search_list->env, value);
+	if (search_list)
+	{
+		search_list->env = \
+			ft_strncat(search_list->env, value, ft_strlen(value));
+		free(value);
+		free(*tmp);
+	}
 	else
 	{
 		*tmp = ft_strncat(*tmp, "=", 1);
 		ft_add_env_front(data, *tmp, value);
 	}
+
 }

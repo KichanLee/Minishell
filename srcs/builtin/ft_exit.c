@@ -6,26 +6,26 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 00:33:25 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:17:22 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void		ft_exit(t_data *data, t_leaf *cur_root);
+void		ft_exit(t_data *data);
 static void	arg_over_one(t_data *data, int count, char **cmd, int flag);
 static void	arg_over_two(t_data *data, int count, char **cmd, int flag);
 static void	exit_not_num(t_data *data, char *str);
 static int	is_num_str(char *str);
 
-void	ft_exit(t_data *data, t_leaf *cur_root)
+void	ft_exit(t_data *data)
 {
 	long long	status;
 	char		**cmd;
 	int			count;
 	int			flag;
 
-	cmd = ft_join_cmd(cur_root->left_child->right_child);
+	cmd = ft_join_cmd(data->root->left_child->right_child);
 	count = ft_cnt_args(cmd);
 	flag = 1;
 	status = 0;
@@ -44,7 +44,7 @@ static void	arg_over_one(t_data *data, int count, char **cmd, int flag)
 
 	if (count == 2)
 	{
-		if(!ft_strncmp("-9223372036854775808", cmd[1], 20))
+		if (!ft_strncmp("-9223372036854775808", cmd[1], 20))
 		{
 			printf("exit\n");
 			data->error_code = 0;
@@ -57,7 +57,7 @@ static void	arg_over_one(t_data *data, int count, char **cmd, int flag)
 			data->error_code = status % 256;
 			exit(status % 256);
 		}
-			exit_not_num(data, cmd[1]);
+		exit_not_num(data, cmd[1]);
 	}
 	else
 		arg_over_two(data, count, cmd, flag);

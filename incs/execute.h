@@ -24,6 +24,7 @@ void	execute_cmd(t_data *data, int flag);
 int		check_bulitin(t_data *data);
 void	recover_std(t_data *data);
 void	heredoc_flag(t_leaf *leaf, t_data *data);
+void	error_print(char *cmd, char *option, int flag);
 
 /*child*/
 void	do_cmd(t_data *data);

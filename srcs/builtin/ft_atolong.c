@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 20:31:59 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 20:43:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:45:35 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ long long	ft_atolong(char *str, int *flag)
 		if (check_overflow(result, str[i]))
 		{
 			if ((sign == 1 && check_overflow(result, str[i])) || \
-			(sign == -1 && check_underflow(result, str[i])))
+				(sign == -1 && check_underflow(result, str[i])))
 			{
 				*flag = 0;
 				return (0);
@@ -60,7 +60,7 @@ static char	*pass_blank_sign(char *str, int *sign)
 static int	check_overflow(long long result, char ch)
 {
 	if (result > LLONG_MAX / 10 || \
-	(result == LLONG_MAX / 10 && (ch - '0') > LLONG_MAX % 10))
+		(result == LLONG_MAX / 10 && (ch - '0') > LLONG_MAX % 10))
 		return (1);
 	return (0);
 }
@@ -73,4 +73,3 @@ static int	check_underflow(long long result, char ch)
 		return (1);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:39:07 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:16:30 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:30:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_bulitin(t_data *data)
 	if (bulit != 0)
 	{
 		check_redirect(data->root, data);
-		exec_bulitin(bulit, data);
+		data->error_code = exec_bulitin(bulit, data);
 		recover_std(data);
 		return (TRUE);
 	}

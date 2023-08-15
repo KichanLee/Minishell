@@ -17,10 +17,13 @@ void	close_file(t_data *data);
 
 void	check_file(int fd, t_data *data)
 {
+	char	*str;
+
+	str = data->root->left_child->left_child->left_child->token->str;
 	if (fd < 0)
 	{
 		close(fd);
-		data->error_code = 1;
+		error_print(str, 0, 1);
 		if (data->info->parent == 1)
 			exit(1);
 	}

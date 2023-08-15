@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:03:26 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 13:58:21 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:18:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 
 /*builtin*/
 int			check_bulitin_func(char *name);
-void		exec_bulitin(int bulitnum, t_data *data);
+t_bool		exec_bulitin(int bulitnum, t_data *data);
 
 void		ft_pwd(void);
+t_bool		ft_cd(t_data *data);
 void		ft_echo(t_leaf *cmd);
-void		ft_export(t_data *data);
-void		ft_cd(t_data *data, t_leaf *cur_root);
+void		ft_exit(t_data *data);
+t_bool		ft_export(t_data *data);
 void		ft_env(t_data *data, t_leaf *cur_root);
-void		ft_exit(t_data *data, t_leaf *cur_root);
 void		ft_unset(t_data *data, t_leaf *cur_root);
 
 int			ft_cnt_args(char **args);
@@ -39,6 +39,8 @@ void		ft_update_env_export(t_data *data, char *key, char *value);
 
 /*ft_export_print*/
 void		print_export_order(t_data *data);
+void		devide_equal(char *src, char **str1, char **str2, \
+							t_bool key_need_equal);
 
 /*ft_export_check*/
 int			check_plus(char *str);

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:43:59 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:43:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ void	quote_utils(char *input, t_token **token, int *i);
 t_bool	syntax(t_data *data);
 
 void	parser(t_data *data);
-
 
 #endif

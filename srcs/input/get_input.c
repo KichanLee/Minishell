@@ -6,11 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:27:16 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:17:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:49:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+static t_bool	check_blank_input(char *str);
 
 t_bool	get_input(t_data *data)
 {
@@ -20,7 +22,7 @@ t_bool	get_input(t_data *data)
 		printf("exit\n");
 		exit(1);
 	}
-	if (!data->input[0])
+	if (check_blank_input(data->input) == TRUE)
 	{
 		free(data->input);
 		return (FALSE);
@@ -38,4 +40,16 @@ t_bool	get_input(t_data *data)
 	pipe_init(&data->pipe);
 	info_init(&data->info);
 	return (TRUE);
+}
+
+static t_bool	check_blank_input(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '\0')
+		return (TRUE);
+	return (FALSE);
 }

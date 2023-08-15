@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 17:51:42 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:48:51 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,28 @@ void	env_print(t_data *data)
 
 t_list	*env_search(t_data *data, char *key, t_bool flag)
 {
-	char	*tmp;
 	char	*env;
 	t_list	*cur;
 	int		len;
 
-	tmp = ft_strdup(key);
+	env = ft_strdup(key);
 	if (flag == TRUE)
-		env = ft_strncat(tmp, "=", 1);
-	else
-		env = tmp;
+		env = ft_strncat(env, "=", 1);
 	cur = data->envs;
+	len = ft_strlen(env);
 	while (cur)
 	{
-		len = ft_strlen(env);
 		if (!ft_strncmp(cur->env, env, len))
-			if (cur->env[len] == '\0' || cur->env[len] == '=')
-				return (cur);
+		{
+			if (flag == FALSE \
+				&& (cur->env[len] != '\0' && cur->env[len] != '='))
+				break ;
+			free(env);
+			return (cur);
+		}
 		cur = cur->next;
 	}
+	free(env);
 	return (NULL);
 }
 
@@ -59,7 +62,11 @@ t_bool	env_remove(t_data *data, char *key)
 
 	env = env_search(data, key, TRUE);
 	if (!env)
-		return (FALSE);
+	{
+		env = env_search(data, key, FALSE);
+		if (!env)
+			return (FALSE);
+	}
 	if (!env->pre)
 		data->envs = env->next;
 	else

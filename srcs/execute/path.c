@@ -74,8 +74,8 @@ static char	*search_path(t_pipe *base, t_data *data)
 	k = 0;
 	if (!base->cmd_abs)
 	{
-		data->error_code = 127;
-		exit(data->error_code);
+		error_print(data->root->left_child->right_child->token->str, 0, 1);
+		exit (127);
 	}
 	while (base->cmd_abs[k])
 	{

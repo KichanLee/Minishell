@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 14:00:54 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:22:14 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_name(char *str)
 		if (str[j + 1] != '=')
 			return (0);
 	plus = 0;
- 	while (str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		if (str[i] == '+')
 			++plus;
@@ -84,7 +84,6 @@ int	check_underbar(char ch)
 
 t_bool	check_env(t_data *data, char *key, char *value)
 {
-	printf("key %p, value %p\n", key, value);
 	if (!key)
 		program_error_exit("bash");
 	if (!check_name(key))
@@ -94,7 +93,8 @@ t_bool	check_env(t_data *data, char *key, char *value)
 		free(key);
 		if (value)
 			free(value);
-		return (FALSE); //에러처리중
+		return (FALSE);
 	}
 	ft_update_env_export(data, key, value);
+	return (TRUE);
 }

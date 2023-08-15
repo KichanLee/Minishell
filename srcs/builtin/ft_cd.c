@@ -6,38 +6,46 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 00:41:11 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:39:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void		ft_cd(t_data *data, t_leaf *cur_root);
+t_bool		ft_cd(t_data *data);
 static int	change_directory(t_data *data, char *path);
 static int	change_home(void);
 
-void	ft_cd(t_data *data, t_leaf *cur_root)
+t_bool	ft_cd(t_data *data)
 {
 	char	*option;
-	char	pwd[1024];
+	char	*pwd;
 
 	option = NULL;
-	if (!(cur_root->left_child->right_child->right_child))
-		change_directory(data, "HOME");
-	else if (change_directory(data, \
-	cur_root->left_child->right_child->right_child->token->str) != 0)
+	pwd = (char *)ft_calloc(1024, sizeof(char));
+	if (!pwd)
+		program_error_exit("bash");
+	if (!(data->root->left_child->right_child->right_child))
 	{
-		option = cur_root->left_child->right_child->right_child->token->str;
+		change_directory(data, "HOME");
+		free(pwd);
+	}
+	else if (change_directory(data, \
+			data->root->left_child->right_child->right_child->token->str) != 0)
+	{
+		option = data->root->left_child->right_child->right_child->token->str;
 		printf("bash: %s: No such file or directory\n", option);
-		data->error_code = 1;
+		free(pwd);
+		return (FALSE);
 	}
 	else
 	{
 		getcwd(pwd, 1024);
-		printf("current directory : %s\n", pwd);
-		ft_update_env_cd(data, "OLDPWD", env_search(data, "PWD", TRUE)->env);
-		ft_update_env_cd(data, "PWD", pwd);
+		ft_update_env_cd(data, ft_strdup("OLDPWD"), \
+							ft_strdup(env_search(data, "PWD", TRUE)->env + 4));
+		ft_update_env_cd(data, ft_strdup("PWD"), pwd);
 	}
+	return (TRUE);
 }
 
 static int	change_directory(t_data *data, char *path)
@@ -56,7 +64,7 @@ static int	change_directory(t_data *data, char *path)
 	else
 		buf = ft_strdup(path);
 	if (!buf)
-		perror("ft_strdup fail!\n");
+		program_error_exit("bash");
 	res = chdir(buf);
 	getcwd(pwd, 1024);
 	free(buf);

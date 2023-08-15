@@ -1,111 +1,124 @@
-	/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export_three.c                                  :+:      :+:    :+:   */
+/*   ft_export_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/14 11:59:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 15:57:23 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/15 18:48:19 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/15 18:51:01 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void		print_export_order(t_data *data);
-static char	**sort_bubble(char **str, int size);
-static char	**check_sort(char **res, int sorted);
+void		devide_equal(char *src, char **str1, char **str2, \
+							t_bool key_need_equal);
+static char	**sort_bubble(char **str);
 static void	print_export_quote(char **order_set);
+static void	free_d_char_ptr(char **str);
 
 void	print_export_order(t_data *data)
 {
 	int		i;
-	int		lst_size;
 	char	**order_set;
 	char	**order_copy;
 	t_list	*cur;
 
 	i = 0;
-	lst_size = ft_lstsize(data->envs);
 	cur = data->envs;
-	order_copy = (char **)ft_calloc(lst_size + 1, sizeof(char *));
+	order_copy = (char **)ft_calloc(ft_lstsize(data->envs) + 1, sizeof(char *));
 	while (cur)
 	{
 		order_copy[i] = ft_strdup(cur->env);
 		cur = cur->next;
 		++i;
 	}
-	order_set = sort_bubble(order_copy, lst_size);
+	order_set = sort_bubble(order_copy);
 	print_export_quote(order_set);
+	free_d_char_ptr(order_set);
 }
 
-static char	**sort_bubble(char **str, int size)
+void	devide_equal(char *src, char **str1, char **str2, t_bool key_need_equal)
 {
-	char	**res;
-	int		sorted;
-	int		i;
+	int		equal_len;
+	int		value_len;
 
-	sorted = 0;
-	i = -1;
-	res = (char **)ft_calloc(sizeof(char *), (size + 1));
-	if (!res)
-		program_error_exit("Memory allocation error!");
-	while (str[++i])
-	{
-		res[i] = ft_strdup(str[i]);
-		if (!res[i])
-			program_error_exit("Memory allocation error!");
-	}
-	res[i] = NULL;
-	res = check_sort(res, sorted);
-	return (res);
+	equal_len = 0;
+	while (src[equal_len] != '=')
+		equal_len++;
+	equal_len++;
+	value_len = ft_strlen(&src[equal_len]);
+	if (key_need_equal == TRUE)
+		*str1 = ft_substr(src, 0, equal_len);
+	else
+		*str1 = ft_substr(src, 0, equal_len - 1);
+	*str2 = ft_substr(src, equal_len, value_len);
+	if (!*str1 || !*str2)
+		program_error_exit("bash");
 }
 
-static char	**check_sort(char **res, int sorted)
+static char	**sort_bubble(char **str)
 {
 	int		i;
 	char	*tmp;
+	int		sorted;
 
 	i = 0;
+	sorted = 0;
 	while (!sorted)
 	{
 		sorted = 1;
 		i = -1;
-		while (res[++i + 1])
+		while (str[++i + 1])
 		{
-			if (ft_strncmp(res[i], res[i + 1], ft_strlen(res[i])) > 0)
+			if (ft_strncmp(str[i], str[i + 1], ft_strlen(str[i])) > 0)
 			{
-				tmp = res[i];
-				res[i] = res[i + 1];
-				res[i + 1] = tmp;
+				tmp = str[i];
+				str[i] = str[i + 1];
+				str[i + 1] = tmp;
 				sorted = 0;
 			}
 		}
 	}
-	return (res);
+	return (str);
 }
 
 static void	print_export_quote(char **order_set)
 {
 	int		i;
-	char	**res_split;
+	char	*str1;
+	char	*str2;
+	t_bool	flag;
 
 	i = 0;
 	while (order_set[i])
 	{
-		t_bool flag = check_equal(order_set[i]);
-		res_split = ft_split(order_set[i], '=');
+		flag = check_equal(order_set[i]);
+		devide_equal(order_set[i], &str1, &str2, FALSE);
 		printf("declare -x  ");
 		if (flag == TRUE)
 		{
-			if (!res_split[1])
-				printf("%s=\"\"\n", res_split[0]);
+			if (!str2)
+				printf("%s=\"\"\n", str1);
 			else
-				printf("%s=\"%s\"\n", res_split[0], res_split[1]);
+				printf("%s=\"%s\"\n", str1, str2);
 		}
 		else
-			printf("%s\n", res_split[0]);
+			printf("%s\n", str1);
+		free(str1);
+		free(str2);
 		++i;
 	}
 }
 
+static void	free_d_char_ptr(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 20:17:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:32:53 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	init_base(int ac)
 	struct termios	termi;
 
 	if (ac != 1)
+	{
+		printf("Too many arguments\n");
 		exit(1);
+	}
 	if (tcgetattr(STDIN_FILENO, &termi) == -1)
 		exit(1);
 	termi.c_lflag &= ~(ECHOCTL);

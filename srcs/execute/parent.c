@@ -12,9 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-void		wait_child_processes(t_data *data);
-static void	check_error(int num, t_data *data);
-
 void	wait_child_processes(t_data *data)
 {
 	int	i;
@@ -29,8 +26,6 @@ void	wait_child_processes(t_data *data)
 			data->error_code = WEXITSTATUS(status);
 		if (WIFSIGNALED(status) && !data->info->heredoc_flag)
 			data->error_code = 128 + WTERMSIG(status);
-		if (WEXITSTATUS(status))
-			check_error(WEXITSTATUS(status), data);
 		i++;
 	}
 	if (WTERMSIG (status) == 2)
@@ -38,18 +33,4 @@ void	wait_child_processes(t_data *data)
 	else if (WTERMSIG (status) == 3)
 		ft_putendl_fd("Quit: 3", STDOUT_FILENO);
 	close_file(data);
-}
-
-static void	check_error(int num, t_data *data)
-{
-	if (num == 127)
-	{
-		printf("bash: %s: command not found\n", \
-		data->root->left_child->right_child->token->str);
-	}
-	if (num == 1)
-	{
-		printf("bash: %s: No such file or directory\n", \
-		data->root->left_child->right_child->token->str);
-	}
 }
