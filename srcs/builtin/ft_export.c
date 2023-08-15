@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:50:55 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 00:37:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:58:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@ static void combined_token(t_data *data, t_list **tmp);
 void	ft_export(t_data *data)
 {
 	int		args;
-	t_list	*tmp;
+	t_list	*cur;
 
 	args = cnt_args(data->tokens);
 	if (args == 0)
 		print_export_order(data);
-	tmp = data->tokens->next;
+	cur = data->tokens->next;
 	while (args--)
 	{
-		if (check_equal(tmp->token->str) == TRUE)
+		if (check_equal(cur->token->str) == TRUE)
 		{
-			if (tmp->token->str[ft_strlen(tmp->token->str) - 1] == '=')
-				separated_token(data, &tmp);
+			if (cur->token->str[ft_strlen(cur->token->str) - 1] == '=')
+				separated_token(data, &cur);
 			else
-				combined_token(data, &tmp);
+				combined_token(data, &cur);
 		}
 		else
 		{
-			check_env(data, tmp->token->str, NULL);
-			tmp = tmp->next;
+			check_env(data, ft_strdup(cur->token->str), NULL);
+			cur = cur->next;
 		}
 	}
 }
@@ -57,31 +57,38 @@ static int	cnt_args(t_list *tmp)
 	return (args);
 }
 
-static void separated_token(t_data *data, t_list **tmp)
+static void separated_token(t_data *data, t_list **cur)
 {
-	if (!(*tmp)->next)
-		check_env(data, (*tmp)->token->str, NULL);
+	char	*tmp;
+	
+	if (!(*cur)->next)
+		check_env(data, ft_strdup((*cur)->token->str), NULL);
 	else
 	{
-		check_env(data, (*tmp)->token->str, (*tmp)->next->token->str);
-		*tmp = (*tmp)->next->next;
-	}
+		tmp = ft_strdup((*cur)->next->token->str);
+		if (!tmp)
+			program_error_exit("bash");
+		check_env(data, ft_strdup((*cur)->token->str), tmp);
+		*cur = (*cur)->next->next;
+	} 
 }
 
-static void combined_token(t_data *data, t_list **tmp)
+static void combined_token(t_data *data, t_list **cur)
 {
-	int		i;
+	int		equal_len;
+	int		value_len;
 	char	*str1;
 	char	*str2;
 
-	i = 0;
-	while ((*tmp)->token->str[i] != '=')
-		i++;
-	i++;
-	str1 = (char *)ft_calloc(i, sizeof(char));
-	ft_memmove(str1, (*tmp)->token->str, i);
-	str2 = (char *)ft_calloc(ft_strlen(&(*tmp)->token->str[i]), sizeof(char));
-	ft_memmove(str2, &(*tmp)->token->str[i], ft_strlen(&(*tmp)->token->str[i]));
+	equal_len = 0;
+	while ((*cur)->token->str[equal_len] != '=')
+		equal_len++;
+	equal_len++;
+	value_len = ft_strlen(&(*cur)->token->str[equal_len]);
+	str1 = ft_substr((*cur)->token->str, 0, equal_len);
+	str2 = ft_substr((*cur)->token->str, equal_len, value_len);
+	if (!str1 || !str2)
+		program_error_exit("bash");
 	check_env(data, str1, str2);
-	*tmp = (*tmp)->next;
+	*cur = (*cur)->next;
 }

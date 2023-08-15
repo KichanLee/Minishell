@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 20:38:22 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:41:24 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:56:10 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ static t_list	*create_env_node(char *key, char *value)
 		return (NULL);
 	}
 	if (value)
-		new_node->env = ft_strjoin(key, value);
+	{
+		new_node->env = ft_strncat(key, value, ft_strlen(value));
+		free(value);
+	}
 	else
-		new_node->env = ft_strdup(key);
+		new_node->env = key;
 	return (new_node);
 }
 

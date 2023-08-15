@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:03:26 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:40:38 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:58:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ int			check_plus(char *str);
 int			check_name(char *str);
 int			check_equal(char *str);
 int			check_underbar(char ch);
-void		check_env(t_data *data, char *key, char *value);
+t_bool		check_env(t_data *data, char *key, char *value);
 
 #endif

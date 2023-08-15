@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 00:37:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 12:34:59 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:54:37 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_update_env_cd(t_data *data, char *key, char *value);
 void		ft_update_env_export(t_data *data, char *key, char *value);
 static char	*get_tmp_key(t_data *data, char *key, t_bool plus, t_list **search_list);
 static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_list);
-static void	is_plus(t_data *data, char *tmp, char *value, t_list *search_list);
+static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list);
 
 void	ft_update_env_cd(t_data *data, char *key, char *value)
 {
@@ -46,7 +46,7 @@ void	ft_update_env_export(t_data *data, char *key, char *value)
 	if(plus == FALSE)
 		is_not_plus(data, key, value, search_list);
 	else
-		is_plus(data, tmp, value, search_list);
+		is_plus(data, &tmp, value, search_list);
 	free(tmp);
 }
 
@@ -82,7 +82,11 @@ static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_lis
 	if(check_equal(key) == FALSE)
 	{
 		if (search_list)
+		{
+			free(key);
+			free(value);
 			return ;
+		}
 		ft_add_env_front(data, key, value);
 	}
 	else
@@ -91,22 +95,25 @@ static void	is_not_plus(t_data *data, char *key, char *value, t_list *search_lis
 		{
 			free(search_list->env);
 			if (value)
-				search_list->env = ft_strjoin(key, value);
+			{
+				search_list->env = ft_strncat(key, value, ft_strlen(value));
+				free(value);
+			}
 			else
-				search_list->env = ft_strdup(key);
+				search_list->env = key;
 		}
 		else
 			ft_add_env_front(data, key, value);
 	}
 }
 
-static void	is_plus(t_data *data, char *tmp, char *value, t_list *search_list)
+static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list)
 {
 	if(search_list)
 		search_list->env = ft_strjoin(search_list->env, value);
 	else
 	{
-		tmp = ft_strncat(tmp, "=", 1);
-		ft_add_env_front(data, tmp, value);
+		*tmp = ft_strncat(*tmp, "=", 1);
+		ft_add_env_front(data, *tmp, value);
 	}
 }

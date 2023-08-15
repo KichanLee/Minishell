@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:13:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:45:19 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	program_error_exit(char *str);
 void	input_free(t_data *data);
 void	data_free(t_data *data);
 
-//input 관련 에러일 때 사용
 t_bool	error_back_readline(t_data *data, char *str, int error_code, int flag)
 {
 	if (flag)
@@ -28,14 +27,12 @@ t_bool	error_back_readline(t_data *data, char *str, int error_code, int flag)
 	return (FALSE);
 }
 
-//system 관련 에러일 때
 void	program_error_exit(char *str)
 {
 	perror(str);
 	exit(errno);
 }
 
-//input 한번 끝났을 때 사용
 void	input_free(t_data *data)
 {
 	int	i;
@@ -46,8 +43,8 @@ void	input_free(t_data *data)
 	data->input = NULL;
 	tree_clear(data->root);
 	data->root = NULL;
-	free(data->pipe);
 	free(data->pipe->com);
+	free(data->pipe);
 	i = -1;
 	while (++i < data->info->heredoc_flag)
 		free(data->info->heredoc_file[i]);
@@ -55,7 +52,6 @@ void	input_free(t_data *data)
 	free(data->info);
 }
 
-//정상종료 시 사용
 void	data_free(t_data *data)
 {
 	ft_lstclear(&data->envs);

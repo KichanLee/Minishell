@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:41:15 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:00:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		check_plus(char *str);
 int		check_equal(char *str);
 int		check_name(char *str);
 int		check_underbar(char ch);
-void	check_env(t_data *data, char *key, char *value);
+t_bool	check_env(t_data *data, char *key, char *value);
 
 int	check_plus(char *str)
 {
@@ -82,13 +82,19 @@ int	check_underbar(char ch)
 	return (0);
 }
 
-void	check_env(t_data *data, char *key, char *value)
+t_bool	check_env(t_data *data, char *key, char *value)
 {
+	printf("key %p, value %p\n", key, value);
+	if (!key)
+		program_error_exit("bash");
 	if (!check_name(key))
 	{
 		printf("bash: export: '%s': not a valid identifier\n", key);
 		data->error_code = 1;
-		return ;
+		free(key);
+		if (value)
+			free(value);
+		return (FALSE); //에러처리중
 	}
 	ft_update_env_export(data, key, value);
 }

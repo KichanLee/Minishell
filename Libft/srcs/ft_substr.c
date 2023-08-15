@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:55:14 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/25 16:48:59 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:20:57 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		size = ft_strlen(s + start);
 	else
 		size = len;
-	tmp = (char *)malloc(sizeof(char) * (size + 1));
+	tmp = (char *)ft_calloc((size + 1), sizeof(char));
 	if (!tmp)
 		return (0);
 	idx = 0;
