@@ -6,14 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 22:10:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 00:41:11 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void		ft_cd(t_data *data, t_leaf *cur_root);
-static void	update_env_cd(t_data *data, char *key, char *value);
 static int	change_directory(t_data *data, char *path);
 static int	change_home(void);
 
@@ -36,27 +35,8 @@ void	ft_cd(t_data *data, t_leaf *cur_root)
 	{
 		getcwd(pwd, 1024);
 		printf("current directory : %s\n", pwd);
-		update_env_cd(data, "OLDPWD", env_search(data, "PWD", TRUE)->env);
-		update_env_cd(data, "PWD", pwd);
-	}
-}
-
-static void	update_env_cd(t_data *data, char *key, char *value)
-{
-	t_list	*tmp;
-	char	*key_equal;
-
-	tmp = env_search(data, key,TRUE);
-	if (!tmp)
-		ft_add_env_front(data, key, value);
-	else
-	{
-		free(tmp->env);
-		key_equal = (char *)ft_calloc(sizeof(char), ft_strlen(key) + 2);
-		key_equal = ft_strdup(key);
-		key_equal[ft_strlen(key)] = '=';
-		key_equal[ft_strlen(key) + 1] = '\0';
-		tmp->env = ft_strjoin(key_equal, value);
+		ft_update_env_cd(data, "OLDPWD", env_search(data, "PWD", TRUE)->env);
+		ft_update_env_cd(data, "PWD", pwd);
 	}
 }
 

@@ -34,7 +34,8 @@ SRCS =	minishell.c \
 		utils/temp.c \
 		builtin/builtin.c \
 		builtin/ft_join_cmd.c \
-		builtin/ft_count_args.c \
+		builtin/ft_cnt_args.c \
+		builtin/ft_update_env.c \
 		builtin/ft_add_env_front.c \
 		builtin/ft_cd.c \
 		builtin/ft_echo.c \

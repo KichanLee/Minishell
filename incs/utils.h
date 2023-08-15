@@ -6,11 +6,9 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 16:03:25 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 00:38:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//환경변수, 자료구조 및 기타 함수
 
 #ifndef UTILS_H
 # define UTILS_H
@@ -39,6 +37,7 @@ void	program_error_exit(char *str);
 void	input_free(t_data *data);
 void	data_free(t_data *data);
 void	init_base(int ac);
+
 /*temp.c 임시 함수*/
 void	tree_print(t_leaf *leaf);
 void	print_token(t_data *data);

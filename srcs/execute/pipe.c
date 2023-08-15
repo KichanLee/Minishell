@@ -6,11 +6,15 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:38:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:16:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 00:46:01 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int		link_pipe(int i, t_pipe *base, t_data *data);
+void	close_pipe(int i, t_pipe *base, t_data *data);
+void	count_pipe(t_data *data);
 
 int	link_pipe(int i, t_pipe *base, t_data *data)
 {
@@ -50,7 +54,7 @@ void	close_pipe(int i, t_pipe *base, t_data *data)
 	}
 }
 
-void	count_pipe(t_data*data)
+void	count_pipe(t_data *data)
 {
 	t_leaf	*temp;
 

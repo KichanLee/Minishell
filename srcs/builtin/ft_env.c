@@ -21,13 +21,11 @@ void	ft_env(t_data *data, t_leaf *cur_root)
 {
 	char	**cmd;
 	int		arg_cnt;
-	t_list	*tmp;
 
-	tmp = data->tokens;
 	cmd = ft_join_cmd(cur_root->left_child->right_child);
 	if (!cmd)
 		program_error_exit("bash");
-	arg_cnt = ft_count_args(cmd);
+	arg_cnt = ft_cnt_args(cmd);
 	if (arg_cnt == 1)
 		env_print(data);
 	else if (arg_cnt != 2)

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/14 20:47:16 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/15 00:33:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exit(t_data *data, t_leaf *cur_root)
 	int			flag;
 
 	cmd = ft_join_cmd(cur_root->left_child->right_child);
-	count = ft_count_args(cmd);
+	count = ft_cnt_args(cmd);
 	flag = 1;
 	status = 0;
 	if (count == 1)

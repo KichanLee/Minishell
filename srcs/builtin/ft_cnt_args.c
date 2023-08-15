@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_args.c                                    :+:      :+:    :+:   */
+/*   ft_cnt_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,9 @@
 
 #include "../../incs/minishell.h"
 
-int	ft_count_args(char **args);
+int	ft_cnt_args(char **args);
 
-int	ft_count_args(char **args)
+int	ft_cnt_args(char **args)
 {
 	int	count;
 
