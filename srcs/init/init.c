@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:29:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:55:23 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	init(t_data **data, char **envp);
 void	env_init(t_data *data, char **envp);

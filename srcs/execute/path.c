@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:43:04 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:47:42 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:39:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char		*set_path(t_data *data, t_leaf *leaf);
 void		abs_path(t_data *data);
 static int	check_path(char *str);
-static char	*search_path(t_pipe *base, t_data *data);
+static char	*search_path(t_pipe *base);
 static char	**get_path_envp(char **env);
 
 char	*set_path(t_data *data, t_leaf *leaf)
@@ -36,7 +36,7 @@ char	*set_path(t_data *data, t_leaf *leaf)
 		return (NULL);
 	}
 	else
-		return (search_path(base, data));
+		return (search_path(base));
 }
 
 void	abs_path(t_data *data)
@@ -66,7 +66,7 @@ static int	check_path(char *str)
 	return (0);
 }
 
-static char	*search_path(t_pipe *base, t_data *data)
+static char	*search_path(t_pipe *base)
 {
 	char	*tmp;
 	int		k;
@@ -74,7 +74,7 @@ static char	*search_path(t_pipe *base, t_data *data)
 	k = 0;
 	if (!base->cmd_abs)
 	{
-		error_print(data->root->left_child->right_child->token->str, 0, 1);
+		error_print(base->cmd_path[0], 0, 1);
 		exit (127);
 	}
 	while (base->cmd_abs[k])

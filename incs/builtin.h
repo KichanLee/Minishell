@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bulitin.h                                          :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:03:26 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 23:02:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:11:32 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  BULITIN_H
-# define BULITIN_H
+#ifndef  builtin_H
+# define builtin_H
 
 # include "struct.h"
 
@@ -19,22 +19,22 @@
 # define LLONG_MIN -9223372036854775808ULL
 
 /*builtin*/
-int			check_bulitin_func(char *name);
-t_bool		exec_bulitin(int bulitnum, t_data *data);
+int			check_builtin_func(char *name);
+int			exec_builtin(int builtnum, t_data *data);
 
 void		ft_pwd(void);
 t_bool		ft_cd(t_data *data);
-void		ft_echo(t_leaf *cmd);
+void		ft_echo(t_leaf *arg);
 void		ft_exit(t_data *data);
-t_bool		ft_export(t_data *data);
-void		ft_env(t_data *data, t_leaf *cur_root);
+t_bool		ft_export(t_data *data, t_leaf *cmd);
+t_bool		ft_env(t_data *data);
 
 /*ft_unset*/
 void		ft_unset(t_data *data, t_leaf *cur_root);
 void		update_env_double_char(t_data *data);
 
 int			ft_cnt_args(char **args);
-char		**ft_join_cmd(t_leaf *com_leaf);
+char		**ft_join_cmd(t_leaf *leaf);
 long long	ft_atolong(char *str, int *flag);
 void		ft_add_env_front(t_data *head, char *key, char *value);
 void		ft_update_env_cd(t_data *data, char *key, char *value);

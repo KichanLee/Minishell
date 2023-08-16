@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 19:17:22 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 20:49:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void		ft_exit(t_data *data);
 static void	arg_over_one(t_data *data, int count, char **cmd, int flag);
@@ -36,6 +36,7 @@ void	ft_exit(t_data *data)
 	}
 	else
 		arg_over_one(data, count, cmd, flag);
+	free(cmd);
 }
 
 static void	arg_over_one(t_data *data, int count, char **cmd, int flag)

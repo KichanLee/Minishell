@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:36:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 23:02:57 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:37:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	do_cmd(t_data *data)
 		exit(258);
 	}
 	if (temp != NULL)
-		builtnum = check_bulitin_func(temp->token->str);
+		builtnum = check_builtin_func(temp->token->str);
 	if (data->root->left_child->left_child != NULL)
 		check_redirect (data->root, data);
 	if (temp == NULL)
 		exit(0);
 	if (builtnum != 0)
 	{
-		exec_bulitin(builtnum, data);
+		exec_builtin(builtnum, data);
 		exit(0);
 	}
 	else
@@ -53,7 +53,7 @@ void	exec_fork(t_data *data)
 	base->command = set_path(data, data->root->left_child->right_child);
 	if (!base->command)
 	{
-		error_print(data->root->left_child->right_child->token->str, 0, 0);
+		error_print(base->cmd_path[0], 0, 0);
 		exit(127);
 	}
 	execve(base->command, base->cmd_path, data->env_array);

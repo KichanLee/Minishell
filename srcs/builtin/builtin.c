@@ -6,16 +6,16 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:42:18 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 22:40:20 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:09:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		check_bulitin_func(char *name);
-t_bool	exec_bulitin(int bulitnum, t_data *data);
+int	check_builtin_func(char *name);
+int	exec_builtin(int builtnum, t_data *data);
 
-int	check_bulitin_func(char *name)
+int	check_builtin_func(char *name)
 {
 	if (!ft_strncmp(name, "cd", 3))
 		return (1);
@@ -34,27 +34,30 @@ int	check_bulitin_func(char *name)
 	return (0);
 }
 
-t_bool	exec_bulitin(int bulitnum, t_data *data)
+int	exec_builtin(int builtnum, t_data *data)
 {
-	if (bulitnum == 1)
+	if (builtnum == 1)
 	{
 		if (ft_cd(data) == FALSE)
-			return (TRUE);
+			return (1);
 	}
-	if (bulitnum == 2)
-		ft_echo(data->root->left_child->right_child);
-	if (bulitnum == 3)
+	if (builtnum == 2)
+		ft_echo(data->root->left_child->right_child->right_child);
+	if (builtnum == 3)
 		ft_exit(data);
-	if (bulitnum == 4)
+	if (builtnum == 4)
 		ft_pwd();
-	if (bulitnum == 5)
+	if (builtnum == 5)
 		ft_unset(data, data->root);
-	if (bulitnum == 6)
+	if (builtnum == 6)
 	{
-		if (ft_export(data) == FALSE)
-			return (TRUE);
+		if (ft_export(data, data->root->left_child->right_child) == FALSE)
+			return (1);
 	}
-	if (bulitnum == 7)
-		ft_env(data, data->root);
+	if (builtnum == 7)
+	{
+		if (ft_env(data) == FALSE)
+			return (127);
+	}
 	return (FALSE);
 }

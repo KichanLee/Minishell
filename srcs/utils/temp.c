@@ -80,7 +80,7 @@ void	print_token(t_data *data)
 			printf("token: arg, ");
 			printf("str: %s", tmp->token->str);
 		}
-		printf(" blank: %d\n", tmp->token->blank);
+		printf(" blank: %d quote: %d\n", tmp->token->blank, tmp->token->quote);
 		tmp = tmp->next;
 	}
 }

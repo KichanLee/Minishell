@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:31:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:52:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:48:02 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute(t_data *data)
 	if (!data->info->heredoc_file)
 		program_error_exit("bash");
 	if (!data->info->pipe_num && !data->info->heredoc_flag)
-		if (check_bulitin(data) == TRUE)
+		if (check_builtin(data) == TRUE)
 			return ;
 	if (data->info->heredoc_flag)
 	{

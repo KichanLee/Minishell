@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 17:51:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:44:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_bool	expand(t_data *data, t_token **token, int *i, t_bool quote)
 	if (quote == FALSE)
 	{
 		if (check_end(data->input[*i]) == TRUE)
-			(*token)->blank = FALSE;
+			(*token)->blank = TRUE;
 		*i -= 1;
 	}
 	return (FALSE);

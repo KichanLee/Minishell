@@ -6,34 +6,34 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:39:07 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 19:30:51 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:48:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int		check_bulitin(t_data *data);
+int		check_builtin(t_data *data);
 void	recover_std(t_data *data);
 void	heredoc_flag(t_leaf *leaf, t_data *data);
 
-int	check_bulitin(t_data *data)
+int	check_builtin(t_data *data)
 {
-	int		bulit;
+	int		built;
 	t_leaf	*temp;
 
 	temp = data->root->left_child->right_child;
 	if (temp != NULL)
-		bulit = check_bulitin_func(temp->token->str);
+		built = check_builtin_func(temp->token->str);
 	if (temp == NULL)
 	{
 		check_redirect(data->root, data);
 		recover_std(data);
 		return (TRUE);
 	}
-	if (bulit != 0)
+	if (built != 0)
 	{
 		check_redirect(data->root, data);
-		data->error_code = exec_bulitin(bulit, data);
+		data->error_code = exec_builtin(built, data);
 		recover_std(data);
 		return (TRUE);
 	}

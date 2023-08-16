@@ -6,57 +6,97 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:15:42 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 16:09:34 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 20:47:47 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
-char		**ft_join_cmd(t_leaf *com_leaf);
-static char	**input_leaf(t_leaf *com_leaf, char **input);
+char		**ft_join_cmd(t_leaf *leaf);
+static int	get_str_cnt(t_leaf *leaf);
+static int	get_blank_in_str(char *str);
+static char	**input_leaf(t_leaf *leaf, char **input);
+static void	devide_str(char **str, char *tmp, int *i);
 
-char	**ft_join_cmd(t_leaf *com_leaf)
+char	**ft_join_cmd(t_leaf *leaf)
 {
-	int		i;
+	int		cnt_str;
 	char	**str;
-	t_leaf	*temp;
-	t_leaf	*leaf;
 
-	i = 1;
-	temp = com_leaf;
-	leaf = com_leaf;
-	while (temp && temp->right_child)
-	{
-		temp = temp->right_child;
-		i++;
-	}
-	str = (char **)ft_calloc(i + 1, sizeof(char *));
+	cnt_str = get_str_cnt(leaf);
+	str = (char **)ft_calloc(cnt_str + 1, sizeof(char *));
 	if (!str)
 		return (NULL);
-	str[0] = leaf->token->str;
 	str = input_leaf(leaf, str);
 	return (str);
 }
 
-static char	**input_leaf(t_leaf *com_leaf, char **input)
+static int	get_str_cnt(t_leaf *leaf)
 {
-	t_leaf	*leaf;
-	int		i;
-	char	**str;
+	int	cnt;
 
-	i = 1;
-	leaf = com_leaf;
-	str = input;
+	cnt = 0;
 	while (leaf)
 	{
-		if (leaf->right_child)
+		if (!leaf->token->quote)
+			cnt += get_blank_in_str(leaf->token->str);
+		cnt++;
+		leaf = leaf->right_child;
+	}
+	return (cnt);
+}
+
+static int	get_blank_in_str(char *str)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			cnt++;
+		i++;
+	}
+	return (cnt);
+}
+
+static char	**input_leaf(t_leaf *leaf, char **str)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (leaf)
+	{
+		tmp = ft_strdup(leaf->token->str);
+		while (leaf->token->blank == FALSE && leaf->right_child)
 		{
-			str[i] = leaf->right_child->token->str;
 			leaf = leaf->right_child;
-			i++;
+			tmp = ft_strncat(tmp, leaf->token->str, ft_strlen(leaf->token->str));
 		}
-		else
-			break ;
+		devide_str(str, tmp, &i);
+		leaf = leaf->right_child;
 	}
 	return (str);
+}
+
+static void	devide_str(char **str, char *tmp, int *i)
+{
+	int	pre_blank;
+	int	next_blank;
+	int	cnt;
+
+	cnt = get_blank_in_str(tmp) + 1;
+	pre_blank = 0;
+	next_blank = 0;
+	while (cnt--)
+	{
+		while (check_end(tmp[next_blank]) == FALSE)
+			next_blank++;
+		str[*i] = ft_substr(tmp, pre_blank, next_blank - pre_blank);
+		*i += 1;
+		pre_blank = next_blank + 1;
+	}
 }

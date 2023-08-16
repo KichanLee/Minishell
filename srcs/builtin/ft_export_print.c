@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:48:19 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 18:51:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void		print_export_order(t_data *data);
 void		devide_equal(char *src, char **str1, char **str2, \

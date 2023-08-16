@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:40:34 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 23:28:25 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:55:55 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	init_base(int ac);
 void	handle_sigint(int sig);
@@ -38,7 +38,7 @@ void	handle_sigint(int sig)
 {
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 	(void)sig;
 }

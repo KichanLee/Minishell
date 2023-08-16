@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 23:19:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:01 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 t_bool			ft_cd(t_data *data);
 static int		change_directory(t_data *data, char *path);
@@ -24,7 +24,7 @@ t_bool	ft_cd(t_data *data)
 	char	*pwd;
 
 	option = NULL;
-	pwd = (char *)ft_calloc(1024, sizeof(char));
+	pwd = (char *)ft_calloc(BUF_SIZE, sizeof(char));
 	if (!pwd)
 		program_error_exit("bash");
 	if (!(data->root->left_child->right_child->right_child))
@@ -44,7 +44,7 @@ static int	change_directory(t_data *data, char *path)
 {
 	char	*buf;
 	int		res;
-	char	pwd[1024];
+	char	pwd[BUF_SIZE];
 
 	if (!ft_strncmp(path, "HOME", 5))
 	{
@@ -58,7 +58,7 @@ static int	change_directory(t_data *data, char *path)
 	if (!buf)
 		program_error_exit("bash");
 	res = chdir(buf);
-	getcwd(pwd, 1024);
+	getcwd(pwd, BUF_SIZE);
 	free(buf);
 	return (res);
 }
@@ -79,7 +79,7 @@ static t_bool	is_failuer(t_data *data, char *pwd, char *option)
 
 static void	is_success(t_data *data, char *pwd)
 {
-	getcwd(pwd, 1024);
+	getcwd(pwd, BUF_SIZE);
 	ft_update_env_cd(data, ft_strdup("OLDPWD"), \
 						ft_strdup(env_search(data, "PWD", TRUE)->env + 4));
 	ft_update_env_cd(data, ft_strdup("PWD"), pwd);

@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 23:02:38 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:44 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	ft_unset(t_data *data, t_leaf *cur_root);
 void	update_env_double_char(t_data *data);

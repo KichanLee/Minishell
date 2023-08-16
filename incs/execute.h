@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 17:49:19 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:54:21 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:15:52 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute(t_data *data);
 void	execute_cmd(t_data *data, int flag);
 
 /*execve utils*/
-int		check_bulitin(t_data *data);
+int		check_builtin(t_data *data);
 void	recover_std(t_data *data);
 void	heredoc_flag(t_leaf *leaf, t_data *data);
 void	error_print(char *cmd, char *option, int flag);

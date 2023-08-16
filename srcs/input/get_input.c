@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:27:16 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 18:49:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:15:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 static t_bool	check_blank_input(char *str);
 

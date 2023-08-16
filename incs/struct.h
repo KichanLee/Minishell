@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 22:54:18 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:16:48 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef enum e_type
 	T_OUTPUT,
 	T_HEREDOC,
 	T_APPEND,
+	T_SINGLE,
+	T_DOUBLE
 }t_type;
 
 typedef struct s_token
@@ -40,7 +42,8 @@ typedef struct s_token
 	int		redirect_type;
 	char	*str;
 	t_bool	blank;
-}	t_token;
+	int		quote;
+}t_token;
 
 typedef struct s_list
 {
@@ -65,7 +68,7 @@ typedef struct s_pid
 {
 	pid_t	pid;
 	int		fd[2];
-}				t_pid;
+}t_pid;
 
 typedef struct s_pipe
 {
@@ -73,7 +76,7 @@ typedef struct s_pipe
 	char	**cmd_path;
 	char	*command;
 	char	**cmd_abs;
-}	t_pipe;
+}t_pipe;
 
 typedef struct s_info
 {
@@ -86,7 +89,7 @@ typedef struct s_info
 	int			parent;
 	int			pipe_index;
 	int			fd;
-}	t_info;
+}t_info;
 
 typedef struct s_data
 {
@@ -99,6 +102,6 @@ typedef struct s_data
 	t_info		*info;
 	int			error_code;
 	char		*abs_home;
-}	t_data;
+}t_data;
 
 #endif

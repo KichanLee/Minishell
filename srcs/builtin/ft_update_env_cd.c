@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 23:24:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 23:25:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:47 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	ft_update_env_cd(t_data *data, char *key, char *value);
 

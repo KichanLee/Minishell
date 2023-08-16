@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 23:06:39 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:56:04 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type);
 t_bool	tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);

@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:24:31 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/15 19:18:16 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:41 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 void	ft_pwd(void);
 

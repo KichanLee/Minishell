@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:05:33 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:47:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:49:18 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "struct.h"
 # include "init.h"
 # include "parse.h"
-# include "bulitin.h"
+# include "builtin.h"
 # include "execute.h"
 # include "utils.h"
 # include "message.h"

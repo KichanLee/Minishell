@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 19:22:14 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:23 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../../incs/minishell.h"
 
 int		check_plus(char *str);
 int		check_equal(char *str);
