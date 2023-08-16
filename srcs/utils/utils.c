@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 19:40:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 13:45:19 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:51:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	input_free(t_data *data)
 
 void	data_free(t_data *data)
 {
+	free(data->env_array);
 	ft_lstclear(&data->envs);
 	free(data);
 }
