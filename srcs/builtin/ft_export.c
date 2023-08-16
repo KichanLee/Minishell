@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:50:55 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/16 21:00:56 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:41:03 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,11 @@ static t_bool	separated_token(t_data *data, t_leaf **cur)
 {
 	char	*tmp;
 
-	if (!(*cur)->right_child)
+	if (!(*cur)->right_child || (*cur)->token->blank == TRUE)
 	{
 		if (check_env(data, ft_strdup((*cur)->token->str), NULL) == FALSE)
 			return (FALSE);
+		*cur = (*cur)->right_child;
 	}
 	else
 	{

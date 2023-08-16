@@ -26,7 +26,7 @@ t_bool	ft_env(t_data *data)
 	if (arg_cnt != 1)
 	{
 		printf("env: %s: No such file or directory\n", cmd[1]);
-		free(cmd);
+		free_d_char_ptr(cmd);
 		return (FALSE);
 	}
 	free_d_char_ptr(cmd);

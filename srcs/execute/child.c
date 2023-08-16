@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:36:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 16:37:33 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 01:24:10 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,17 @@ void	error_print(char *cmd, char *option, int flag)
 	str = ft_strdup (cmd);
 	tmp = str;
 	str = ft_strjoinstr ("bash: ", str);
-	free (tmp);
+	free(tmp);
 	if (option)
 	{
 		tmp = str;
-		str = ft_strjoin (str, ": ");
-		free (tmp);
+		str = ft_strjoin(str, ": ");
+		free(tmp);
 		tmp = str;
-		str = ft_strjoin (str, option);
-		free (tmp);
+		str = ft_strjoin(str, option);
+		free(tmp);
 	}
-	check_errortype (str, flag);
+	check_errortype(str, flag);
 }
 
 void	check_errortype(char *str, int flag)
@@ -106,10 +106,10 @@ void	check_errortype(char *str, int flag)
 
 	tmp = str;
 	if (flag == 0)
-		str = ft_strjoinstr (str, ": command not found\n");
+		str = ft_strjoinstr(str, ": command not found\n");
 	else if (flag == 1)
-		str = ft_strjoinstr (str, ": No such file or directory\n");
-	free (tmp);
-	write (2, str, ft_strlen (str));
-	free (str);
+		str = ft_strjoinstr(str, ": No such file or directory\n");
+	free(tmp);
+	write(2, str, ft_strlen (str));
+	free(str);
 }

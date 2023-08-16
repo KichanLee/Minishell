@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 20:38:22 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 18:01:28 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 01:04:01 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ static void	ft_lstadd_front(t_list **lst, t_list *new)
 	if (!lst || !new)
 		return ;
 	new->next = *lst;
+	(*lst)->pre = new;
 	*lst = new;
 }

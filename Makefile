@@ -8,7 +8,6 @@ SRCS_DIR = srcs
 OBJS_DIR = objs
 
 CC = cc
-# CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
 RLFLAGS = -lreadline -ltermcap
 
@@ -83,8 +82,8 @@ ${OBJS_DIR}:
 
 $(NAME): $(L_NAME) $(OBJS)
 	@echo "MINISHELL DONE"
-	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib
-	# $(CC) $^ -o $@ -I $(INCS_DIR) -fsanitize=address
+	# @$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib
+	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib -fsanitize=address -g3
 
 $(L_NAME):
 	@$(MAKE) -C $(L_DIR)
