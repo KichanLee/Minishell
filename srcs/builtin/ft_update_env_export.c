@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 00:37:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 15:54:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:21:50 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_tmp_key(char *key, t_bool plus);
 static void	is_not_plus(t_data *data, \
 							char *key, char *value, t_list *search_list);
 static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list);
-static void	is_not_equal(t_data *data, \
+static void	is_equal(t_data *data, \
 							char *key, char *value, t_list *search_list);
 
 void	ft_update_env_export(t_data *data, char *key, char *value)
@@ -75,26 +75,30 @@ static void	is_not_plus(t_data *data, \
 			ft_add_env_front(data, key, value);
 	}
 	else
-		is_not_equal(data, key, value, search_list);
+		is_equal(data, key, value, search_list);
 }
 
 static void	is_plus(t_data *data, char **tmp, char *value, t_list *search_list)
 {
 	if (search_list)
 	{
-		search_list->env = \
-			ft_strncat(search_list->env, value, ft_strlen(value));
+		if (check_equal(search_list->env) == TRUE)
+			search_list->env = \
+				ft_strncat(search_list->env, value, ft_strlen(value));
+		else
+		{
+			search_list->env = ft_strncat(search_list->env, "=", 1);
+			search_list->env = \
+				ft_strncat(search_list->env, value, ft_strlen(value));
+		}
 		free(value);
 		free(*tmp);
 	}
 	else
-	{
-		*tmp = ft_strncat(*tmp, "=", 1);
 		ft_add_env_front(data, *tmp, value);
-	}
 }
 
-static void	is_not_equal(t_data *data, \
+static void	is_equal(t_data *data, \
 							char *key, char *value, t_list *search_list)
 {
 	if (search_list)

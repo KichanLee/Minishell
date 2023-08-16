@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:48:19 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 15:54:27 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:09:17 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void		print_export_order(t_data *data);
 void		devide_equal(char *src, char **str1, char **str2, \
 							t_bool key_need_equal);
+void		free_d_char_ptr(char **str);
 static char	**sort_bubble(char **str);
 static void	print_export_quote(char **order_set);
-static void	free_d_char_ptr(char **str);
 
 void	print_export_order(t_data *data)
 {
@@ -57,6 +57,16 @@ void	devide_equal(char *src, char **str1, char **str2, t_bool key_need_equal)
 	*str2 = ft_substr(src, equal_len, value_len);
 	if (!*str1 || !*str2)
 		program_error_exit("bash");
+}
+
+void	free_d_char_ptr(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
 }
 
 static char	**sort_bubble(char **str)
@@ -111,14 +121,4 @@ static void	print_export_quote(char **order_set)
 		free(str2);
 		++i;
 	}
-}
-
-static void	free_d_char_ptr(char **str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
 }

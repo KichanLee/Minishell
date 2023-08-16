@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/14 18:03:26 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 19:11:32 by eunwolee         ###   ########.fr       */
+/*   Created: 2023/08/16 21:22:15 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/16 22:09:43 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  builtin_H
-# define builtin_H
+#ifndef  BUILTIN_H
+# define BUILTIN_H
 
 # include "struct.h"
 
@@ -26,8 +26,11 @@ void		ft_pwd(void);
 t_bool		ft_cd(t_data *data);
 void		ft_echo(t_leaf *arg);
 void		ft_exit(t_data *data);
-t_bool		ft_export(t_data *data, t_leaf *cmd);
 t_bool		ft_env(t_data *data);
+
+/*ft_export*/
+t_bool		ft_export(t_data *data, t_leaf *cmd);
+void		free_d_char_ptr(char **str);
 
 /*ft_unset*/
 void		ft_unset(t_data *data, t_leaf *cur_root);

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 22:51:02 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/16 15:54:44 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:09:56 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_unset(t_data *data, t_leaf *cur_root)
 		env_remove(data, cmd[i]);
 		++i;
 	}
-	free(cmd);
+	free_d_char_ptr(cmd);
 	update_env_double_char(data);
 }
 

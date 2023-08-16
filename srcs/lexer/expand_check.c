@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:23:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 22:49:08 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:04:13 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ t_bool	check_question(t_data *data, t_token *token, int *i)
 		token->str = ft_strncat(token->str, tmp, ft_strlen(tmp));
 		if (!token->str)
 			program_error_exit("bash");
-		if (check_end(data->input[*i + 1]) == FALSE)
-			token->blank = FALSE;
+		token->blank = check_end(data->input[*i + 1]);
 		*i += 1;
 		free(tmp);
 		return (TRUE);

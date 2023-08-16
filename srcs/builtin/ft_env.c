@@ -29,7 +29,7 @@ t_bool	ft_env(t_data *data)
 		free(cmd);
 		return (FALSE);
 	}
-	free(cmd);
+	free_d_char_ptr(cmd);
 	env_print(data);
 	return (TRUE);
 }

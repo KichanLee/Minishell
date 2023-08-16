@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:24:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 18:16:48 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:54:25 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct s_info
 	int			pipe_num;
 	int			parent;
 	int			pipe_index;
-	int			fd;
 }t_info;
 
 typedef struct s_data

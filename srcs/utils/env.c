@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 20:50:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:21:35 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env_print(t_data *data)
 	cur = data->envs;
 	while (cur)
 	{
-		if(check_equal(cur->env) == TRUE)
+		if (check_equal(cur->env) == TRUE)
 			printf("%s\n", cur->env);
 		cur = cur->next;
 	}

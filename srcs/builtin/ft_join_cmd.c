@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:15:42 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 20:47:47 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:26:50 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ static char	**input_leaf(t_leaf *leaf, char **str)
 		while (leaf->token->blank == FALSE && leaf->right_child)
 		{
 			leaf = leaf->right_child;
-			tmp = ft_strncat(tmp, leaf->token->str, ft_strlen(leaf->token->str));
+			tmp = ft_strncat(tmp, leaf->token->str, \
+				ft_strlen(leaf->token->str));
 		}
 		devide_str(str, tmp, &i);
 		leaf = leaf->right_child;
+		free(tmp);
 	}
 	return (str);
 }
