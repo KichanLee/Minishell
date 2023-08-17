@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/17 13:34:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:31:37 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ static void	arg_over_one(t_data *data, int count, char **cmd, int flag)
 		if (!ft_strncmp("-9223372036854775808", cmd[1], 20))
 		{
 			printf("exit\n");
-			data->error_code = 0;
+			error_code = 0;
 			exit(0);
 		}
 		status = ft_atolong(cmd[1], &flag);
 		if (flag && is_num_str(cmd[1]) && ft_strlen(cmd[1]) <= 20)
 		{
 			printf("exit\n");
-			data->error_code = status % 256;
+			error_code = status % 256;
 			exit(status % 256);
 		}
 		exit_not_num(data, cmd[1]);
@@ -75,7 +75,7 @@ static void	arg_over_two(t_data *data, int count, char **cmd, int flag)
 		if (flag && is_num_str(cmd[i]) && ft_strlen(cmd[i]) <= 20)
 		{
 			check_errortype("error", 3);
-			data->error_code = 1;
+			error_code = 1;
 			break ;
 		}
 		else
@@ -86,8 +86,9 @@ static void	arg_over_two(t_data *data, int count, char **cmd, int flag)
 
 static void	exit_not_num(t_data *data, char *str)
 {
+	(void) data;
 	check_errortype(str, 4);
-	data->error_code = 255;
+	error_code = 255;
 	exit(255);
 }
 

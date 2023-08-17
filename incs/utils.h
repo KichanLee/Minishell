@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 15:09:33 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:37:01 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void		error_print(char *cmd, char *option, int flag);
 void		check_errortype(char *str, int flag);
 t_bool		error_back_readline(t_data *data, \
-				char *str, int error_code, int flag);
+				char *str, int error_code_b, int flag);
 void		program_error_exit(char *str);
 
 void		env_print(t_data *data);

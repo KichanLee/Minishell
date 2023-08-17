@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:53:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 14:57:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:52 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,14 @@ static char	*ft_strjoinstr(char *s1, char *s2)
 	return (tmp);
 }
 
-t_bool	error_back_readline(t_data *data, char *str, int error_code, int flag)
+t_bool	error_back_readline(t_data *data, char *str, int error_code_b, int flag)
 {
+	(void) data;
 	if (flag)
 		perror(str);
 	else
 		printf("%s\n", str);
-	data->error_code = error_code;
+	error_code = error_code_b;
 	return (FALSE);
 }
 

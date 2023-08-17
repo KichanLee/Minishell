@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:21:48 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:22:52 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:27:50 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	fork_heredoc(t_data *data)
 		signal (SIGINT, child_handler);
 		mk_heredoc_pipe(data);
 		execute_cmd(data, 1);
-		exit(data->error_code);
+		exit(error_code);
 	}
 	else
 	{
 		signal (SIGINT, SIG_IGN);
 		waitpid(-1, &status, 0);
-		data->error_code = WEXITSTATUS(status);
+		error_code = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
 		{
-			data->error_code = WTERMSIG (status);
+			error_code = WTERMSIG (status);
 			ft_putendl_fd("", STDERR_FILENO);
 			return (1);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:23:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 13:27:51 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:28:09 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	check_question(t_data *data, t_token *token, int *i)
 
 	if (data->input[*i] == '?')
 	{
-		tmp = ft_itoa(data->error_code);
+		tmp = ft_itoa(error_code);
 		token->str = ft_strncat(token->str, tmp, ft_strlen(tmp));
 		token->blank = check_end(data->input[*i + 1]);
 		*i += 1;

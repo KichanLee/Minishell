@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:37:35 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:16:40 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:28:21 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	wait_child_processes(t_data *data)
 	{	
 		if (wait(&status) \
 			== data->pipe->com[data->info->pipe_num].pid)
-			data->error_code = WEXITSTATUS(status);
+			error_code = WEXITSTATUS(status);
 		if (WIFSIGNALED(status) && !data->info->heredoc_flag)
-			data->error_code = 128 + WTERMSIG(status);
+			error_code = 128 + WTERMSIG(status);
 		i++;
 	}
 	if (WTERMSIG (status) == 2)
