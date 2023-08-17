@@ -6,7 +6,7 @@
 /*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:32:09 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:37:01 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/17 21:36:49 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void		tree_clear(t_leaf *leaf);
 void		input_free(t_data *data);
 void		data_free(t_data *data);
 
-/*temp.c 임시 함수*/
 void		tree_print(t_leaf *leaf);
 void		print_token(t_data *data);
 void		env_array_print(t_data *data);

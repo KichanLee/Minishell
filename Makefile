@@ -59,7 +59,6 @@ SRCS =	minishell.c \
 		utils/list_clear.c \
 		utils/tree.c \
 		utils/free.c \
-		utils/temp.c \
 		Libft/ft_isalpha.c \
 		Libft/ft_isalnum.c \
 		Libft/ft_isdigit.c \

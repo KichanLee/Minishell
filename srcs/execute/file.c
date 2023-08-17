@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:53:28 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 21:30:21 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:04:04 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	check_file(int fd, t_data *data);
+int		check_file(int fd, t_data *data);
 void	close_file(t_data *data);
 
-void	check_file(int fd, t_data *data)
+int	check_file(int fd, t_data *data)
 {
 	char	*str;
 
@@ -27,7 +27,9 @@ void	check_file(int fd, t_data *data)
 		error_print(str, 0, 1);
 		if (data->info->parent == 1)
 			exit(1);
+		return (0);
 	}
+	return (1);
 }
 
 void	close_file(t_data *data)
