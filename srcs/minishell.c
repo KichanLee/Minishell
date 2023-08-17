@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 09:34:12 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:34:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,12 @@ int	main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	init_base(argc);
 	data->env_array = env_to_array(data);
-	if (!data->env_array)
-		program_error_exit("bash");
 	while (TRUE)
 	{
 		sig();
 		if (get_input(data) == FALSE)
 			continue ;
 		execute(data);
-		check_leak();
 		input_free(data);
 	}
 	data_free(data);

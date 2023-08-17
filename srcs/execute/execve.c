@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:31:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 15:48:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:58:20 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	execute(t_data *data)
 {
 	count_pipe(data);
 	heredoc_flag(data->root, data);
-	data->info->heredoc_file = (char **)ft_calloc(data->info->heredoc_flag + 1, \
-	sizeof(char *));
+	data->info->heredoc_file = \
+		(char **)ft_calloc(data->info->heredoc_flag + 1, sizeof(char *));
 	if (!data->info->heredoc_file)
 		program_error_exit("bash");
 	if (!data->info->pipe_num && !data->info->heredoc_flag)

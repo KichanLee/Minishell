@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 21:22:15 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 22:09:43 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:16:46 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void		devide_equal(char *src, char **str1, char **str2, \
 							t_bool key_need_equal);
 
 /*ft_export_check*/
+t_bool		check_env(t_data *data, char *key, char *value);
 int			check_plus(char *str);
 int			check_name(char *str);
 int			check_equal(char *str);
 int			check_underbar(char ch);
-t_bool		check_env(t_data *data, char *key, char *value);
 
 #endif

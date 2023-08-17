@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 20:38:22 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 01:04:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:30:35 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,9 @@ static t_list	*create_env_node(char *key, char *value)
 	t_list	*new_node;
 
 	new_node = ft_lstnew();
-	if (!new_node)
-		return (NULL);
 	new_node->token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new_node->token)
-	{
-		free(new_node);
-		return (NULL);
-	}
+		program_error_exit("bash");
 	if (value)
 	{
 		new_node->env = ft_strncat(key, value, ft_strlen(value));

@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:28:06 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/17 13:30:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:32:46 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
 static int	cnt_digit(long n)
 {
@@ -41,9 +41,9 @@ char	*ft_itoa(int n)
 
 	num = (long)n;
 	size = cnt_digit(num);
-	dest = (char *)malloc(sizeof(char) * (size + 1));
+	dest = (char *)ft_calloc((size + 1), sizeof(char));
 	if (!dest)
-		return (0);
+		program_error_exit("bash");
 	idx = size - 1;
 	if (!num)
 		dest[0] = '0';

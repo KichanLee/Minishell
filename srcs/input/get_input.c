@@ -6,12 +6,13 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:27:16 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 19:15:48 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:59:53 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+t_bool			get_input(t_data *data);
 static t_bool	check_blank_input(char *str);
 
 t_bool	get_input(t_data *data)

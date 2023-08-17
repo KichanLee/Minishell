@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:48:19 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 22:09:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:29:26 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	print_export_order(t_data *data)
 	i = 0;
 	cur = data->envs;
 	order_copy = (char **)ft_calloc(ft_lstsize(data->envs) + 1, sizeof(char *));
+	if (!order_copy)
+		program_error_exit("bash");
 	while (cur)
 	{
 		order_copy[i] = ft_strdup(cur->env);
@@ -55,8 +57,6 @@ void	devide_equal(char *src, char **str1, char **str2, t_bool key_need_equal)
 	else
 		*str1 = ft_substr(src, 0, equal_len - 1);
 	*str2 = ft_substr(src, equal_len, value_len);
-	if (!*str1 || !*str2)
-		program_error_exit("bash");
 }
 
 void	free_d_char_ptr(char **str)

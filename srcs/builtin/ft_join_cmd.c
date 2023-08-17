@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:15:42 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 09:29:45 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:32:30 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**ft_join_cmd(t_leaf *leaf)
 	cnt_str = get_str_cnt(leaf);
 	str = (char **)ft_calloc(cnt_str + 1, sizeof(char *));
 	if (!str)
-		return (NULL);
+		program_error_exit("bash");
 	str = input_leaf(leaf, str);
 	return (str);
 }

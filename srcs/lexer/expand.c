@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 09:32:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:27:28 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,9 @@ static char	*get_name(t_data *data, int *i)
 	char	*name;
 
 	name = ft_strdup("");
-	if (!name)
-		program_error_exit("bash");
 	while (ft_isalnum(data->input[*i]) || data->input[*i] == '_')
 	{
 		name = ft_strncat(name, &data->input[*i], 1);
-		if (!name)
-			program_error_exit("bash");
 		*i += 1;
 	}
 	return (name);
@@ -68,8 +64,6 @@ static void	replace(t_data *data, t_token *token, char *name)
 			j++;
 		token->str = ft_strncat(token->str, \
 			&tmp->env[j + 1], ft_strlen(&tmp->env[j + 1]));
-		if (!token->str)
-			program_error_exit("bash");
 	}
 	free(name);
 }

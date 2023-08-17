@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/13 17:03:12 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:31:08 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_token	*token_create(void)
 	token->blank = TRUE;
 	token->type = T_WORD;
 	token->str = ft_strdup("");
-	if (!token->str)
-		program_error_exit("bash");
 	return (token);
 }
 
@@ -77,14 +75,8 @@ void	token_add_list(t_list **head, t_token **token, t_bool create_flag)
 	if ((*token)->type == T_WORD && !(*token)->str[0])
 		return ;
 	new = ft_lstnew();
-	if (!new)
-		program_error_exit("bash");
 	new->token = *token;
 	ft_lstadd_back(head, new);
 	if (create_flag == TRUE)
-	{
 		*token = token_create();
-		if (!*token)
-			program_error_exit("bash");
-	}
 }

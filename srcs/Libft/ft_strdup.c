@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 16:08:41 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/17 15:37:54 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/12 18:07:32 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:33:05 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+char	*ft_strdup(const char *s1)
 {
-	size_t	len;
+	size_t		len;
+	char		*dest;
 
-	len = ft_strlen(src);
-	if (!dstsize)
-		return (len);
-	while (*src && dstsize > 1)
-	{
-		*dst++ = *src++;
-		dstsize--;
-	}
-	*dst = '\0';
-	return (len);
+	len = ft_strlen(s1);
+	dest = (char *)ft_calloc((len + 1), sizeof(char));
+	if (!dest)
+		program_error_exit("bash");
+	ft_strlcpy(dest, s1, len + 1);
+	return (dest);
 }

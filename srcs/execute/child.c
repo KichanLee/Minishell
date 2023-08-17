@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:36:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 01:24:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:34:36 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	do_cmd(t_data *data);
 void	exec_fork(t_data *data);
+void	error_print(char *cmd, char *option, int flag);
 void	check_errortype(char *str, int flag);
 
 void	do_cmd(t_data *data)
@@ -84,9 +85,9 @@ void	error_print(char *cmd, char *option, int flag)
 	char	*tmp;
 	char	*str;
 
-	str = ft_strdup (cmd);
+	str = ft_strdup(cmd);
 	tmp = str;
-	str = ft_strjoinstr ("bash: ", str);
+	str = ft_strjoinstr("bash: ", str);
 	free(tmp);
 	if (option)
 	{
@@ -109,6 +110,21 @@ void	check_errortype(char *str, int flag)
 		str = ft_strjoinstr(str, ": command not found\n");
 	else if (flag == 1)
 		str = ft_strjoinstr(str, ": No such file or directory\n");
+	else if (flag == 2)
+	{
+		// 형 수정
+	}
+	else if (flag == 3)
+	{
+		str = "bash: exit: too many arguments\n";
+		write(2, str, ft_strlen (str));
+		return ;
+	}
+	else if (flag == 4)
+	{
+		write(2, "bash: exit: ", 12);
+		str = ft_strjoinstr(str, " numeric argument required\n");
+	}
 	free(tmp);
 	write(2, str, ft_strlen (str));
 	free(str);

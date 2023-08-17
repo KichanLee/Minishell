@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 16:53:01 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/07/12 19:39:50 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:36:05 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstnew(void)
 
 	tmp = (t_list *)ft_calloc(1, sizeof(t_list));
 	if (!tmp)
-		return (NULL);
+		program_error_exit("bash");
 	return (tmp);
 }
 

@@ -26,18 +26,7 @@ SRCS =	minishell.c \
 		lexer/lexer_utils.c \
 		parser/syntax.c \
 		parser/parser.c \
-		utils/env.c \
-		utils/list.c \
-		utils/list_clear.c \
-		utils/tree.c \
-		utils/utils.c \
-		utils/temp.c \
 		builtin/builtin.c \
-		builtin/ft_join_cmd.c \
-		builtin/ft_cnt_args.c \
-		builtin/ft_update_env_cd.c \
-		builtin/ft_update_env_export.c \
-		builtin/ft_add_env_front.c \
 		builtin/ft_cd.c \
 		builtin/ft_echo.c \
 		builtin/ft_exit.c \
@@ -48,6 +37,11 @@ SRCS =	minishell.c \
 		builtin/ft_export_check.c \
 		builtin/ft_env.c \
 		builtin/ft_atolong.c \
+		builtin/ft_join_cmd.c \
+		builtin/ft_cnt_args.c \
+		builtin/ft_update_env_cd.c \
+		builtin/ft_update_env_export.c \
+		builtin/ft_add_env_front.c \
 		execute/execve.c \
 		execute/execve_utils.c \
 		execute/child.c \
@@ -55,10 +49,32 @@ SRCS =	minishell.c \
 		execute/pipe.c \
 		execute/path.c \
 		execute/file.c \
-		redirect/heredoc_parser.c \
 		redirect/heredoc.c \
+		redirect/heredoc_parser.c \
 		redirect/redirect.c \
-		signal/signal.c
+		signal/signal.c \
+		utils/env.c \
+		utils/list.c \
+		utils/list_clear.c \
+		utils/tree.c \
+		utils/utils.c \
+		utils/temp.c \
+		Libft/ft_isalpha.c \
+		Libft/ft_isalnum.c \
+		Libft/ft_isdigit.c \
+		Libft/ft_itoa.c \
+		Libft/ft_split.c \
+		Libft/ft_substr.c \
+		Libft/ft_strjoin.c \
+		Libft/ft_strncmp.c \
+		Libft/ft_strncat.c \
+		Libft/ft_strdup.c \
+		Libft/ft_strlen.c \
+		Libft/ft_strlcat.c \
+		Libft/ft_strlcpy.c \
+		Libft/ft_calloc.c \
+		Libft/ft_memset.c \
+		Libft/ft_putendl_fd.c \
 
 SRCS_WITH_PATH = $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS = $(SRCS_WITH_PATH:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
@@ -67,7 +83,6 @@ all: $(NAME)
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	@$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
-	# @$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib -fsanitize=address -g3
 
 ${OBJS_DIR}:
 	@echo "*---MINISHELL BUILD---*"
@@ -81,23 +96,18 @@ ${OBJS_DIR}:
 	@mkdir ${OBJS_DIR}/execute
 	@mkdir ${OBJS_DIR}/redirect
 	@mkdir ${OBJS_DIR}/signal
+	@mkdir ${OBJS_DIR}/Libft
 
-$(NAME): $(L_NAME) $(OBJS)
+$(NAME): $(OBJS)
 	@echo "MINISHELL DONE"
 	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L $(READ_DIR)/lib
 
-$(L_NAME):
-	@$(MAKE) -C $(L_DIR)
-	@cp ./$(L_DIR)/$(L_NAME) .
-
 clean:
 	@echo "MINISHELL CLEAN"
-	@$(MAKE) fclean -C $(L_DIR)
 	@$(RM) $(OBJS_DIR)
 	@$(RM) $(L_NAME)
 
 fclean:
-	@$(MAKE) fclean -C $(L_DIR)
 	@$(MAKE) clean
 	@echo "MINISHELL FCLEAN"
 	@$(RM) $(NAME)

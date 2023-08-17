@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 15:33:02 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/26 16:38:32 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/12 15:48:24 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:33:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
-void	ft_bzero(void	*s, size_t	n)
+size_t	ft_strlen(const char *s)
 {
-	unsigned char	*str;
+	size_t	len;
 
-	str = (unsigned char *)s;
-	while (n--)
-		*str++ = 0;
+	len = 0;
+	if (!s)
+		return (0);
+	while (s[len])
+		len++;
+	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 02:31:18 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/16 15:54:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:25:23 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static int	change_directory(t_data *data, char *path)
 	}
 	else
 		buf = ft_strdup(path);
-	if (!buf)
-		program_error_exit("bash");
 	res = chdir(buf);
 	getcwd(pwd, BUF_SIZE);
 	free(buf);

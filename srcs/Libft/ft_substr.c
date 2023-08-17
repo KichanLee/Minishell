@@ -6,11 +6,11 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:55:14 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 13:20:57 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:33:30 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -26,7 +26,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		size = len;
 	tmp = (char *)ft_calloc((size + 1), sizeof(char));
 	if (!tmp)
-		return (0);
+		program_error_exit("bash");
 	idx = 0;
 	if (size)
 		while (idx < len && s[start])

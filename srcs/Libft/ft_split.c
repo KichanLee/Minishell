@@ -6,17 +6,16 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 21:52:44 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/04/22 14:58:31 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:33:00 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
 char		**ft_split(char const *s, char c);
 static int	cnt_str(char const *s, int c);
 static int	exe_split(char **dest, const char *s, char c, int *idx);
 static int	cnt_len(char const *s, char c);
-static char	**clear(char **dest, int idx);
 
 char	**ft_split(char const *s, char c)
 {
@@ -27,14 +26,13 @@ char	**ft_split(char const *s, char c)
 	cnt = cnt_str(s, c);
 	dest = (char **)ft_calloc(cnt + 1, sizeof(char *));
 	if (!dest)
-		return (0);
+		program_error_exit("bash");
 	if (!cnt)
 		dest[0] = ft_strdup("");
 	else
 	{
 		idx = 0;
-		if (exe_split(dest, s, c, &idx) == -1)
-			return (clear(dest, idx));
+		exe_split(dest, s, c, &idx);
 	}
 	return (dest);
 }
@@ -72,8 +70,6 @@ static int	exe_split(char **dest, const char *s, char c, int *idx)
 		{
 			size = cnt_len(s, c);
 			dest[*idx] = ft_substr(s, 0, size);
-			if (!dest[*idx])
-				return (-1);
 			s += size;
 			*idx += 1;
 		}
@@ -89,12 +85,4 @@ static int	cnt_len(char const *s, char c)
 	while (s[len] != c && s[len])
 		len++;
 	return (len);
-}
-
-static char	**clear(char **dest, int idx)
-{
-	while (idx--)
-		free (dest[idx]);
-	free (dest);
-	return (0);
 }

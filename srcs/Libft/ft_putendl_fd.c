@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 18:35:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/15 20:29:04 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/16 21:45:36 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:32:56 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	ft_putendl_fd(char *s, int fd)
 {
-	void	*tmp;
-
-	tmp = malloc(size * count);
-	if (!tmp)
-		return (0);
-	ft_memset(tmp, 0, size * count);
-	return (tmp);
+	if (fd < 0)
+		return ;
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:52 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 15:55:23 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:30:40 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	env_init(t_data *data, char **envp)
 	while (envp[++i])
 	{
 		new = ft_lstnew();
-		if (!new)
-			program_error_exit("bash");
 		new->env = ft_strdup(envp[i]);
 		new->equal_flag = 0;
 		if (!new->env)

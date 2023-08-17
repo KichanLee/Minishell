@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:38:38 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 00:46:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:03:24 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	count_pipe(t_data *data)
 	}
 	if (data->info->pipe_num != 0)
 		data->info->pipe_num--;
-	data->pipe->com = (t_pid *)ft_calloc(data->info->pipe_num + 1, \
-	sizeof(t_pid));
+	data->pipe->com = \
+		(t_pid *)ft_calloc(data->info->pipe_num + 1, sizeof(t_pid));
 	if (!data->pipe->com)
 		program_error_exit("bash");
 }

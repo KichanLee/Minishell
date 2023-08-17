@@ -20,8 +20,6 @@ t_bool	ft_env(t_data *data)
 	int		arg_cnt;
 
 	cmd = ft_join_cmd(data->root->left_child->right_child);
-	if (!cmd)
-		program_error_exit("bash");
 	arg_cnt = ft_cnt_args(cmd);
 	if (arg_cnt != 1)
 	{

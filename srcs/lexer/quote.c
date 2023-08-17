@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 07:46:30 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 09:22:30 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:29:07 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static t_bool	find_next_quote(char *input, t_token *token, int i, char quote)
 	if (input[i] == '\0')
 	{
 		token->str = ft_strncat(token->str, &quote, 1);
-		if (!token->str)
-			program_error_exit("bash");
 		return (FALSE);
 	}
 	return (TRUE);
@@ -93,8 +91,6 @@ static t_bool	s_check_char(char *input, \
 	}
 	else
 		token->str = ft_strncat(token->str, &input[*i], 1);
-	if (!token->str)
-		program_error_exit("bash");
 	return (FALSE);
 }
 
@@ -111,7 +107,5 @@ static t_bool	d_check_char(char *input, \
 	}
 	else
 		token->str = ft_strncat(token->str, &input[*i], 1);
-	if (!token->str)
-		program_error_exit("bash");
 	return (FALSE);
 }

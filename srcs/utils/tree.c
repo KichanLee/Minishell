@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:48:39 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 15:56:04 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:36:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_leaf	*tree_create_leaf(t_leaf *parent, int leaf_type)
 
 	new = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
 	if (!new)
-		return (NULL);
+		program_error_exit("bash");
 	new->leaf_type = leaf_type;
 	new->parent = parent;
 	new->left_child = NULL;

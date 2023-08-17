@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*   heredoc_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:20 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/14 18:17:54 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:28:46 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static char	*heredoc_question(t_data *data, char *tmp, int *i)
 
 	temp = ft_itoa(data->error_code);
 	tmp = ft_strncat(tmp, temp, ft_strlen(temp));
-	if (!tmp)
-		program_error_exit("bash");
 	*i += 1;
 	return (tmp);
 }
@@ -99,11 +97,7 @@ static void	heredoc_replace(t_data *data, char **tmp, char *name)
 	if (!env)
 	{
 		*tmp = ft_strncat(*tmp, "$", 1);
-		if (!*tmp)
-			program_error_exit("bash");
 		*tmp = ft_strncat(*tmp, name, ft_strlen(name));
-		if (!*tmp)
-			program_error_exit("bash");
 	}
 	else
 	{
@@ -112,7 +106,5 @@ static void	heredoc_replace(t_data *data, char **tmp, char *name)
 			j++;
 		*tmp = ft_strncat(*tmp, \
 			&env->env[j + 1], ft_strlen(&env->env[j + 1]));
-		if (!*tmp)
-			program_error_exit("bash");
 	}
 }

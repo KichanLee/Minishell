@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:24:31 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/16 15:54:41 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:02:00 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_pwd(void)
 	{
 		buf = (char *)ft_calloc(buf_size, sizeof(char));
 		if (!buf)
-			program_error_exit("ft_calloc fail!");
+			program_error_exit("bash");
 		if (getcwd(buf, buf_size) != NULL)
 		{
 			printf("%s\n", buf);
@@ -34,7 +34,7 @@ void	ft_pwd(void)
 		}
 		free(buf);
 		if (buf_size > SIZE_MAX / 2)
-			program_error_exit("get_cwd fail!");
+			program_error_exit("bash");
 		buf_size *= 2;
 	}
 }

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 17:43:24 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/23 22:52:37 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/12 16:27:27 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:33:15 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	unsigned char		*dest;
-	const unsigned char	*source;
+	int		cnt;
+	size_t	dst_len;
+	size_t	src_len;
 
-	if (!dst && !src)
-		return (0);
-	dest = (unsigned char *)dst;
-	source = (const unsigned char *)src;
-	if (dest > source)
-		while (len--)
-			*(dest + len) = *(source + len);
-	else
-		while (len--)
-			*dest++ = *source++;
-	return (dst);
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (dst_len >= dstsize)
+		return (src_len + dstsize);
+	dst += dst_len;
+	cnt = dstsize - dst_len - 1;
+	while (*src && cnt--)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (dst_len + src_len);
 }

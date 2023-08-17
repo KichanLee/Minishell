@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 17:50:40 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/22 16:00:54 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/09 16:51:21 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:32:37 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char	*str)
-{
-	int	res;
-	int	sign;
+#include "../../incs/minishell.h"
 
-	res = 0;
-	sign = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-		res = (res * 10) + (*str++ - '0');
-	return (res * sign);
+int	ft_isalnum(int c)
+{
+	if (!ft_isalpha(c) && !ft_isdigit(c))
+		return (0);
+	return (1);
 }

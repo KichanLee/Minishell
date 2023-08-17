@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 20:57:36 by eunwolee          #+#    #+#             */
-/*   Updated: 2022/11/15 15:18:15 by eunwolee         ###   ########.fr       */
+/*   Created: 2022/11/12 17:23:49 by eunwolee          #+#    #+#             */
+/*   Updated: 2023/08/17 13:33:27 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incs/minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		idx;
-	char	*str;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
-		return (0);
-	idx = 0;
-	while (*s1)
-		str[idx++] = *s1++;
-	while (*s2)
-		str[idx++] = *s2++;
-	str[idx] = '\0';
-	return (str);
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
+	while (n-- && (*str1 || *str2))
+	{
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
+	}
+	return (0);
 }

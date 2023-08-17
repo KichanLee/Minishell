@@ -6,17 +6,34 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 21:03:17 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:16:37 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+t_bool	check_env(t_data *data, char *key, char *value);
 int		check_plus(char *str);
 int		check_equal(char *str);
 int		check_name(char *str);
 int		check_underbar(char ch);
-t_bool	check_env(t_data *data, char *key, char *value);
+
+t_bool	check_env(t_data *data, char *key, char *value)
+{
+	if (!key)
+		program_error_exit("bash");
+	if (!check_name(key))
+	{
+		printf("bash: export: '%s': not a valid identifier\n", key);
+		data->error_code = 1;
+		free(key);
+		if (value)
+			free(value);
+		return (FALSE);
+	}
+	ft_update_env_export(data, key, value);
+	return (TRUE);
+}
 
 int	check_plus(char *str)
 {
@@ -80,21 +97,4 @@ int	check_underbar(char ch)
 	if (ch == '_')
 		return (1);
 	return (0);
-}
-
-t_bool	check_env(t_data *data, char *key, char *value)
-{
-	if (!key)
-		program_error_exit("bash");
-	if (!check_name(key))
-	{
-		printf("bash: export: '%s': not a valid identifier\n", key);
-		data->error_code = 1;
-		free(key);
-		if (value)
-			free(value);
-		return (FALSE);
-	}
-	ft_update_env_export(data, key, value);
-	return (TRUE);
 }

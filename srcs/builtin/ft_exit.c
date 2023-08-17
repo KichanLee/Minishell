@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:23:29 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/16 22:23:26 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:34:29 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,12 @@ static void	arg_over_two(t_data *data, int count, char **cmd, int flag)
 	int			i;
 
 	i = 1;
-	// status = ft_atolong(cmd[1], &flag);
 	ft_atolong(cmd[1], &flag);
 	while (i < count)
 	{
 		if (flag && is_num_str(cmd[i]) && ft_strlen(cmd[i]) <= 20)
 		{
-			printf("bash: exit: too many arguments\n");
+			check_errortype("error", 3);
 			data->error_code = 1;
 			break ;
 		}
@@ -87,8 +86,7 @@ static void	arg_over_two(t_data *data, int count, char **cmd, int flag)
 
 static void	exit_not_num(t_data *data, char *str)
 {
-	printf("exit\n");
-	printf("bash: exit: %s: numeric argument required\n", str);
+	check_errortype(str, 4);
 	data->error_code = 255;
 	exit(255);
 }
