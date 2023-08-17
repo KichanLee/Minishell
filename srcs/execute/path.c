@@ -6,28 +6,27 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:43:04 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 01:32:53 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:41:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char		*set_path(t_data *data, t_leaf *leaf);
+char		*set_path(t_data *data);
 void		abs_path(t_data *data);
-static int	check_path(char *str);
-static char	*search_path(t_pipe *base);
+int			check_path(char *str);
+char		*search_path(t_pipe *base);
 static char	**get_path_envp(char **env);
 
-char	*set_path(t_data *data, t_leaf *leaf)
+char	*set_path(t_data *data)
 {
 	char	*tmp;
 	t_pipe	*base;
 
 	base = data->pipe;
-	base->cmd_path = ft_join_cmd(leaf);
 	if (!base->cmd_path)
 		exit(1);
-	if (check_path(base->cmd_path[0]) == 1)
+	if (check_path(base->cmd_path[0]) == TRUE)
 	{
 		tmp = ft_strdup(base->cmd_path[0]);
 		if (access(tmp, X_OK) == 0)
@@ -35,8 +34,7 @@ char	*set_path(t_data *data, t_leaf *leaf)
 		free(tmp);
 		return (NULL);
 	}
-	else
-		return (search_path(base));
+	return (search_path(base));
 }
 
 void	abs_path(t_data *data)
@@ -46,7 +44,7 @@ void	abs_path(t_data *data)
 
 	i = 0;
 	data->pipe->cmd_abs = get_path_envp(data->env_array);
-	if (!data->pipe->cmd_abs)
+	if (!data->pipe->cmd_abs || !data->pipe->cmd_abs[1])
 		return ;
 	while (data->pipe->cmd_abs[i])
 	{
@@ -57,7 +55,7 @@ void	abs_path(t_data *data)
 	}
 }
 
-static int	check_path(char *str)
+int	check_path(char *str)
 {
 	if (!ft_strncmp("./", str, 2) || \
 		!ft_strncmp("../", str, 3) || \
@@ -66,7 +64,7 @@ static int	check_path(char *str)
 	return (0);
 }
 
-static char	*search_path(t_pipe *base)
+char	*search_path(t_pipe *base)
 {
 	char	*tmp;
 	int		k;
@@ -93,7 +91,6 @@ static char	**get_path_envp(char **env)
 	char	*path;
 	int		i;
 
-	path = NULL;
 	i = 0;
 	if (*env == NULL)
 		return (NULL);

@@ -6,16 +6,16 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:36:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 13:34:36 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:40:49 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	do_cmd(t_data *data);
-void	exec_fork(t_data *data);
-void	error_print(char *cmd, char *option, int flag);
-void	check_errortype(char *str, int flag);
+void			do_cmd(t_data *data);
+void			exec_fork(t_data *data);
+t_bool			check_dir(char *command);
+static t_bool	check_relative_path(char *command);
 
 void	do_cmd(t_data *data)
 {
@@ -50,82 +50,39 @@ void	exec_fork(t_data *data)
 	base = data->pipe;
 	if (!data->root->left_child->right_child)
 		return ;
-	abs_path(data);
-	base->command = set_path(data, data->root->left_child->right_child);
+	base->cmd_path = ft_join_cmd(data->root->left_child->right_child);
+	if (check_dir(base->cmd_path[0]) == TRUE)
+	{
+		error_print(base->cmd_path[0], 0, 2);
+		exit(126);
+	}
+	if (check_path(base->cmd_path[0]) == FALSE)
+		abs_path(data);
+	base->command = set_path(data);
 	if (!base->command)
 	{
-		error_print(base->cmd_path[0], 0, 0);
+		if (check_relative_path(base->cmd_path[0]) == TRUE)
+			error_print(base->cmd_path[0], 0, 1);
+		else
+			error_print(base->cmd_path[0], 0, 0);
 		exit(127);
 	}
 	execve(base->command, base->cmd_path, data->env_array);
 }
 
-char	*ft_strjoinstr(char *s1, char *s2)
+t_bool	check_dir(char *command)
 {
-	char	*tmp;
-	size_t	lena;
-	size_t	lenb;
+	struct stat	path_stat;
 
-	if (s1 == 0 || s2 == 0)
-		return (0);
-	lena = ft_strlen(s1);
-	lenb = ft_strlen(s2);
-	tmp = (char *)malloc(sizeof(char) * (lena + lenb + 1));
-	if (!tmp)
-		return (0);
-	tmp[0] = '\0';
-	ft_strlcat(tmp, s1, lena + 1);
-	ft_strlcat(tmp, s2, lena + lenb + 1);
-	tmp[lena + lenb] = '\0';
-	return (tmp);
+	if (check_relative_path(command) == TRUE)
+		if (stat(command, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+			return (TRUE);
+	return (FALSE);
 }
 
-void	error_print(char *cmd, char *option, int flag)
+static t_bool	check_relative_path(char *command)
 {
-	char	*tmp;
-	char	*str;
-
-	str = ft_strdup(cmd);
-	tmp = str;
-	str = ft_strjoinstr("bash: ", str);
-	free(tmp);
-	if (option)
-	{
-		tmp = str;
-		str = ft_strjoin(str, ": ");
-		free(tmp);
-		tmp = str;
-		str = ft_strjoin(str, option);
-		free(tmp);
-	}
-	check_errortype(str, flag);
-}
-
-void	check_errortype(char *str, int flag)
-{
-	char	*tmp;
-
-	tmp = str;
-	if (flag == 0)
-		str = ft_strjoinstr(str, ": command not found\n");
-	else if (flag == 1)
-		str = ft_strjoinstr(str, ": No such file or directory\n");
-	else if (flag == 2)
-	{
-		// 형 수정
-	}
-	else if (flag == 3)
-	{
-		str = "bash: exit: too many arguments\n";
-		write(2, str, ft_strlen (str));
-		return ;
-	}
-	else if (flag == 4)
-	{
-		write(2, "bash: exit: ", 12);
-		str = ft_strjoinstr(str, " numeric argument required\n");
-	}
-	free(tmp);
-	write(2, str, ft_strlen (str));
-	free(str);
+	if (!ft_strncmp("./", command, 2) || !ft_strncmp("../", command, 3))
+		return (TRUE);
+	return (FALSE);
 }

@@ -53,11 +53,12 @@ SRCS =	minishell.c \
 		redirect/heredoc_parser.c \
 		redirect/redirect.c \
 		signal/signal.c \
+		utils/error.c \
 		utils/env.c \
 		utils/list.c \
 		utils/list_clear.c \
 		utils/tree.c \
-		utils/utils.c \
+		utils/free.c \
 		utils/temp.c \
 		Libft/ft_isalpha.c \
 		Libft/ft_isalnum.c \

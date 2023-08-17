@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 11:16:37 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:09:19 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_bool	check_env(t_data *data, char *key, char *value)
 		program_error_exit("bash");
 	if (!check_name(key))
 	{
-		printf("bash: export: '%s': not a valid identifier\n", key);
+		if (value)
+			printf("bash: export: '%s%s': not a valid identifier\n", key, value);
+		else
+			printf("bash: export: '%s': not a valid identifier\n", key);
 		data->error_code = 1;
 		free(key);
 		if (value)

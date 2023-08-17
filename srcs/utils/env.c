@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 12:16:34 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:36:02 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,15 @@ t_bool	env_remove(t_data *data, char *key)
 			return (FALSE);
 	}
 	if (!env->pre)
+	{
+		env->next->pre = NULL;
 		data->envs = env->next;
+	}
 	else
+	{
+		env->next->pre = env->pre;
 		env->pre->next = env->next;
+	}
 	ft_lstdelone(env);
 	return (TRUE);
 }
