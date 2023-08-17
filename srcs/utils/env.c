@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 06:38:21 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 15:36:02 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:38:38 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**env_to_array(t_data *data)
 	int		cnt;
 
 	cnt = ft_lstsize(data->envs);
-	array = (char **)ft_calloc(cnt, sizeof(char *));
+	array = (char **)ft_calloc(cnt + 1, sizeof(char *));
 	if (!array)
 		program_error_exit("bash");
 	i = -1;
