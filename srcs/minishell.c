@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 11:06:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 01:43:10 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:34:12 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		if (get_input(data) == FALSE)
 			continue ;
 		execute(data);
+		check_leak();
 		input_free(data);
 	}
 	data_free(data);

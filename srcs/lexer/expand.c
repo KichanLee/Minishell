@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:20:49 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 22:03:49 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:32:02 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	expand(t_data *data, t_token **token, int *i, t_bool quote)
 	*i += 1;
 	if (check_heredoc(data, *token, i) == FALSE \
 		&& check_question(data, *token, i) == FALSE \
-		&& check_blank(data, *token, i, quote) == FALSE \
+		&& check_d_quote(data, *token, i, quote) == FALSE \
 		&& check_other(data, *token, i, quote) == FALSE \
 		&& check_special(data, *token, i) == FALSE)
 	{

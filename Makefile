@@ -6,9 +6,10 @@ L_NAME = libft.a
 INCS_DIR = incs
 SRCS_DIR = srcs
 OBJS_DIR = objs
+READ_DIR = ~/.brew/opt/readline
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -I ~/.brew/opt/readline/include 
+CFLAGS = -Wall -Wextra -Werror  -I $(READ_DIR)/include 
 RLFLAGS = -lreadline -ltermcap
 
 RM = rm -rf
@@ -66,9 +67,10 @@ all: $(NAME)
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	@$(CC) $(CFLAGS) -c $^ -o $@ -I $(INCS_DIR)
+	# @$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib -fsanitize=address -g3
 
 ${OBJS_DIR}:
-	@echo "MINISHELL BUILD"
+	@echo "*---MINISHELL BUILD---*"
 	@mkdir ${OBJS_DIR}
 	@mkdir ${OBJS_DIR}/init
 	@mkdir ${OBJS_DIR}/input
@@ -82,8 +84,7 @@ ${OBJS_DIR}:
 
 $(NAME): $(L_NAME) $(OBJS)
 	@echo "MINISHELL DONE"
-	# @$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib
-	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L ~/.brew/opt/readline/lib -fsanitize=address -g3
+	@$(CC) $(RLFLAGS) $^ -o $@ -I $(INCS_DIR) -L $(READ_DIR)/lib
 
 $(L_NAME):
 	@$(MAKE) -C $(L_DIR)
@@ -102,7 +103,7 @@ fclean:
 	@$(RM) $(NAME)
 
 re:
-	@echo "RE_BUILD"
+	@echo "*------RE_BUILD-------*"
 	@$(MAKE) fclean
 	@$(MAKE) all
 

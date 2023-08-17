@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:23:58 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/16 22:04:13 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:33:20 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_bool	check_heredoc(t_data *data, t_token *token, int *i);
 t_bool	check_question(t_data *data, t_token *token, int *i);
-t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool	check_d_quote(t_data *data, t_token *token, int *i, t_bool quote);
 t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote);
 t_bool	check_special(t_data *data, t_token *token, int *i);
 
@@ -52,7 +52,28 @@ t_bool	check_question(t_data *data, t_token *token, int *i)
 	return (FALSE);
 }
 
-t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote)
+t_bool	check_d_quote(t_data *data, t_token *token, int *i, t_bool quote)
+{
+	int	idx;
+
+	if (data->input[*i] == '\"')
+	{
+		idx = *i;
+		if (quote == FALSE)
+			while (data->input[idx + 1] != '\"' && data->input[idx + 1] != '\0')
+				idx++;
+		if (quote == TRUE || check_end(data->input[idx + 1]) == TRUE)
+		{
+			token->str = ft_strncat(token->str, "$", 1);
+			if (!token->str)
+				program_error_exit("bash");
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote)
 {
 	if (quote == FALSE && (data->input[*i] == ' ' || data->input[*i] == '\t'))
 	{
@@ -61,24 +82,8 @@ t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote)
 			program_error_exit("bash");
 		return (TRUE);
 	}
-	return (FALSE);
-}
-
-t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote)
-{
-	if (data->input[*i] == '\'')
+	else if (data->input[*i] == '\'')
 		return (TRUE);
-	else if (data->input[*i] == '\"')
-	{
-		if (quote == TRUE \
-			|| check_end(data->input[*i + 1]) == TRUE)
-		{
-			token->str = ft_strncat(token->str, "$", 1);
-			if (!token->str)
-				program_error_exit("bash");
-		}
-		return (TRUE);
-	}
 	else if (data->input[*i] == '\0')
 	{
 		token->str = ft_strncat(token->str, "$", 1);

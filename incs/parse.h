@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 07:53:54 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/15 18:43:54 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:33:03 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	expand(t_data *data, t_token **token, int *i, t_bool quote);
 /*expand_check*/
 t_bool	check_heredoc(t_data *data, t_token *token, int *i);
 t_bool	check_question(t_data *data, t_token *token, int *i);
-t_bool	check_blank(t_data *data, t_token *token, int *i, t_bool quote);
+t_bool	check_d_quote(t_data *data, t_token *token, int *i, t_bool quote);
 t_bool	check_other(t_data *data, t_token *token, int *i, t_bool quote);
 t_bool	check_special(t_data *data, t_token *token, int *i);
 
