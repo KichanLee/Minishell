@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:50:55 by kichlee           #+#    #+#             */
-/*   Updated: 2023/08/17 13:28:03 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:14:11 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool	ft_export(t_data *data, t_leaf *cmd)
 	int		args_cnt;
 	char	*tmp;
 
-	args_cnt = cnt_args(cmd);
+	args_cnt = cnt_args(cmd->right_child);
 	if (!cmd || args_cnt == 0)
 	{
 		print_export_order(data);
@@ -58,7 +58,9 @@ static int	cnt_args(t_leaf *tmp)
 	args = 0;
 	while (tmp)
 	{
-		if (tmp->token->blank == 1)
+		if (tmp->token && tmp->token->type == T_ARG && tmp->token->blank == 1)
+			++args;
+		if (!tmp->right_child && tmp->token->blank == 0)
 			++args;
 		tmp = tmp->right_child;
 	}

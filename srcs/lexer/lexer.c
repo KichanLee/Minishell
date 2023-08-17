@@ -6,18 +6,18 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 13:31:01 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:23:34 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void		lexer(t_data *data);
+t_bool		lexer(t_data *data);
 static void	check_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe);
 static void	blank_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe);
 static void	normal_char(t_data *data, t_token **token, int *i);
 
-void	lexer(t_data *data)
+t_bool	lexer(t_data *data)
 {
 	int			i;
 	t_token		*token;
@@ -31,8 +31,14 @@ void	lexer(t_data *data)
 		check_char(data, &token, &i, &pre_pipe);
 	free(token->str);
 	free(token);
+	if (!data->tokens)
+	{
+		free(data->input);
+		return (FALSE);
+	}
 	last_token = ft_lstlast(data->tokens);
 	last_token->token->blank = FALSE;
+	return (TRUE);
 }
 
 static void	check_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe)
@@ -46,7 +52,7 @@ static void	check_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe)
 	else if (data->input[*i] == '$')
 	{
 		expand(data, token, i, FALSE);
-		token_add_list(&data->tokens, token, TRUE);
+		token_add_list(&data->tokens, token);
 	}
 	else if (data->input[*i] == ' ' || data->input[*i] == '\t')
 		blank_char(data, token, i, pre_pipe);
@@ -65,7 +71,7 @@ static void	blank_char(t_data *data, t_token **token, int *i, t_bool *pre_pipe)
 		*i += 1;
 	if (data->input[*i] == '|')
 		*pre_pipe = TRUE;
-	token_add_list(&data->tokens, token, TRUE);
+	token_add_list(&data->tokens, token);
 	*i -= 1;
 }
 
@@ -83,5 +89,5 @@ static void	normal_char(t_data *data, t_token **token, int *i)
 		|| data->input[*i + 1] == '\"' \
 		|| data->input[*i + 1] == '$' \
 		|| data->input[*i + 1] == '\0')
-		token_add_list(&data->tokens, token, TRUE);
+		token_add_list(&data->tokens, token);
 }

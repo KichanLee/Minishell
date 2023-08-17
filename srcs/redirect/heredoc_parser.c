@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:16:20 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:31:50 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/17 21:32:54 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*heredoc_question(t_data *data, char *tmp, int *i)
 	char	*temp;
 
 	(void) data;
-	temp = ft_itoa(error_code);
+	temp = ft_itoa(g_error_code);
 	tmp = ft_strncat(tmp, temp, ft_strlen(temp));
 	*i += 1;
 	return (tmp);

@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:27:16 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 09:59:53 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:40:19 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ t_bool	get_input(t_data *data)
 	if (!data->input)
 	{
 		printf("exit\n");
-		exit(1);
+		g_error_code = 0;
+		exit(0);
 	}
-	if (check_blank_input(data->input) == TRUE)
+	add_history(data->input);
+	if (check_blank_input(data->input) == TRUE || lexer(data) == FALSE)
 	{
 		free(data->input);
 		return (FALSE);
 	}
-	add_history(data->input);
-	lexer(data);
 	if (syntax(data) == FALSE)
 	{
 		tree_clear(data->root);

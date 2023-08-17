@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:26:13 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 13:31:08 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/17 20:28:42 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	tokenizer(t_data *data, t_token **token, int *i);
 t_token	*token_create(void);
 void	token_redirect(t_data *data, t_token *token, int *i);
-void	token_add_list(t_list **head, t_token **token, t_bool create_flag);
+void	token_add_list(t_list **head, t_token **token);
 
 void	tokenizer(t_data *data, t_token **token, int *i)
 {
@@ -27,7 +27,7 @@ void	tokenizer(t_data *data, t_token **token, int *i)
 		single_quote(data->input, token, i);
 	else if (data->input[*i] == '<' || data->input[*i] == '>')
 		token_redirect(data, *token, i);
-	token_add_list(&data->tokens, token, TRUE);
+	token_add_list(&data->tokens, token);
 }
 
 t_token	*token_create(void)
@@ -68,7 +68,7 @@ void	token_redirect(t_data *data, t_token *token, int *i)
 	}
 }
 
-void	token_add_list(t_list **head, t_token **token, t_bool create_flag)
+void	token_add_list(t_list **head, t_token **token)
 {
 	t_list	*new;
 
@@ -77,6 +77,5 @@ void	token_add_list(t_list **head, t_token **token, t_bool create_flag)
 	new = ft_lstnew();
 	new->token = *token;
 	ft_lstadd_back(head, new);
-	if (create_flag == TRUE)
-		*token = token_create();
+	*token = token_create();
 }

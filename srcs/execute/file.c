@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:53:28 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:28:26 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/17 21:30:21 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_file(int fd, t_data *data)
 	if (fd < 0)
 	{
 		close(fd);
-		error_code = 1;
+		g_error_code = 1;
 		error_print(str, 0, 1);
 		if (data->info->parent == 1)
 			exit(1);

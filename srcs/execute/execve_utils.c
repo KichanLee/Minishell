@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:39:07 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:28:32 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/17 21:29:32 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_builtin(t_data *data)
 	if (built != 0)
 	{
 		check_redirect(data->root, data);
-		error_code = exec_builtin(built, data);
+		g_error_code = exec_builtin(built, data);
 		recover_std(data);
 		return (TRUE);
 	}

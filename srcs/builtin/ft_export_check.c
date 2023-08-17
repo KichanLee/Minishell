@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_check.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:42:23 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:28:37 by kichlee          ###   ########.fr       */
+/*   Updated: 2023/08/17 21:31:33 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool	check_env(t_data *data, char *key, char *value)
 			printf("bash: export: '%s%s': not a valid identifier\n", key, value);
 		else
 			printf("bash: export: '%s': not a valid identifier\n", key);
-		error_code = 1;
+		g_error_code = 1;
 		free(key);
 		if (value)
 			free(value);
