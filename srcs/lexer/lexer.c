@@ -6,7 +6,7 @@
 /*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/17 21:23:34 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/18 10:51:29 by eunwolee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ static void	normal_char(t_data *data, t_token **token, int *i)
 {
 	(*token)->blank = FALSE;
 	(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
-	if (check_end(data->input[*i + 1]) == TRUE \
-		&& check_last_blank(data->input, *i + 1) == FALSE)
-		(*token)->blank = TRUE;
+	(*token)->blank = check_last_blank(data->input, *i + 1);
 	if (data->input[*i + 1] == '|' \
 		|| data->input[*i + 1] == '<' \
 		|| data->input[*i + 1] == '>' \
