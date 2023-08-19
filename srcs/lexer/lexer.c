@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunwolee <eunwolee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: kichlee <kichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:24:37 by eunwolee          #+#    #+#             */
-/*   Updated: 2023/08/18 10:51:29 by eunwolee         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:01:28 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ t_bool	lexer(t_data *data)
 	free(token->str);
 	free(token);
 	if (!data->tokens)
-	{
-		free(data->input);
 		return (FALSE);
-	}
 	last_token = ft_lstlast(data->tokens);
 	last_token->token->blank = FALSE;
 	return (TRUE);
